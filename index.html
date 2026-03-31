@@ -1,0 +1,3261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,viewport-fit=cover">
+<title id="page-title">Liquidador Nokia 2026</title>
+<!-- PWA / iPhone -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" id="meta-app-title" content="Liquidador">
+<meta name="theme-color" content="#144E4A">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
+<link rel="manifest" href="manifest.json">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<style>
+:root{
+  --g:#1a9c1a;--go:#0d6e0d;--gl:#27c727;--gf:#e8f7e8;
+  --k:#0a0a0a;--w:#fff;--r:#c0392b;--o:#d68910;--b:#1a5276;
+  --g1:#f4f5f4;--g2:#e0e4e0;--g3:#9ca89c;--g4:#555f55;
+  --rad:8px;--sh:0 2px 12px rgba(0,0,0,.1);--shl:0 8px 32px rgba(0,0,0,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:#f0f2f0;color:var(--k);font-size:13px}
+/* HEADER */
+.hdr{background:var(--k);display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:50px;position:sticky;top:0;z-index:200;border-bottom:3px solid var(--g)}
+.hdr-brand{display:flex;align-items:center;gap:9px}
+.logo{display:flex;align-items:center;flex-shrink:0}
+.bn{color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px}
+.bs{color:var(--gl);font-size:9px;letter-spacing:.5px}
+.htit{color:var(--gl);font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:13px;letter-spacing:2px;text-transform:uppercase;opacity:.85}
+/* NAV */
+.nav{background:#111;display:flex;gap:1px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.06);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nt{background:none;border:none;color:var(--g3);font-family:'Barlow',sans-serif;font-size:11px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;padding:8px 12px;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.nt:hover{color:#fff}.nt.active{color:var(--gl);border-bottom-color:var(--gl)}
+/* USER BADGE */
+.user-badge{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer}
+.ub-admin{background:#fef9c3;color:#856404}.ub-op{background:var(--gf);color:var(--go)}.ub-viewer{background:#e0e7ff;color:#3730a3}
+/* MAIN */
+.main{padding:18px;padding-bottom:max(18px,env(safe-area-inset-bottom));max-width:1400px;margin:0 auto}
+.screen{display:none}.screen.active{display:block}
+/* CARD */
+.card{background:#fff;border-radius:var(--rad);box-shadow:var(--sh);overflow:hidden;margin-bottom:14px}
+.card-h{background:var(--k);color:#fff;padding:9px 16px;display:flex;align-items:center;justify-content:space-between;border-left:4px solid var(--g)}
+.card-h h2{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase}
+.card-b{padding:16px}
+/* NOKIA / SUBC CARDS */
+.nokia-card .card-h{border-left-color:#CDFBF2;background:#144E4A}
+.subc-card .card-h{border-left-color:#FFC000;background:#FFF0CE;color:#000}
+/* BTN */
+.btn{border:none;cursor:pointer;font-family:'Barlow',sans-serif;font-weight:600;font-size:11px;border-radius:20px;padding:7px 14px;transition:all .15s;display:inline-flex;align-items:center;gap:4px}
+.bp{background:var(--g);color:#fff}.bp:hover{background:var(--go)}
+.bd{background:var(--r);color:#fff}.bd:hover{background:#a93226}
+.bo{background:var(--o);color:#fff}.bo:hover{background:#b7770d}
+.bk{background:var(--k);color:#fff}.bk:hover{background:var(--g4)}
+.bou{background:transparent;border:1.5px solid var(--g);color:var(--g)}.bou:hover{background:var(--gf)}
+.b-nokia{background:#1e3a5f;color:#93c5fd}
+.b-subc{background:#3d2800;color:#fde68a}
+.btn-sm{padding:4px 9px;font-size:10px}
+.btn-lg{padding:10px 20px;font-size:13px}
+.btn-del{background:#fde;color:var(--r);border:none;border-radius:4px;padding:2px 7px;font-size:10px;cursor:pointer;font-weight:700}
+.viewer-mode .no-print{display:none!important}
+.viewer-mode input.fc,.viewer-mode select.fc,.viewer-mode input.iq{pointer-events:none;opacity:.7}
+.btn-edit{background:#e8f0fe;color:var(--b);border:none;border-radius:4px;padding:2px 7px;font-size:10px;cursor:pointer;font-weight:700}
+/* FORM */
+.fg{margin-bottom:12px}
+.fl{display:block;font-weight:600;font-size:9px;letter-spacing:.8px;text-transform:uppercase;color:var(--g4);margin-bottom:3px}
+.fc{width:100%;border:1.5px solid var(--g2);border-radius:5px;padding:7px 9px;font-family:'Barlow',sans-serif;font-size:12px;background:#fff;transition:border-color .15s;outline:none}
+.fc:focus{border-color:var(--g)}
+input[type=number].fc{text-align:right}
+input[type=date].fc{min-width:0;width:100%;box-sizing:border-box;-webkit-appearance:none;appearance:none;font-family:'Barlow',sans-serif;font-size:12px;height:34px}
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+/* BADGE */
+.badge{display:inline-block;padding:2px 6px;border-radius:100px;font-size:9px;font-weight:700}
+.bg-g{background:#d4edda;color:#1a6130}.bg-r{background:#fde8e7;color:#c0392b}
+.bg-o{background:#fef3cd;color:#856404}.bg-b{background:#d0e4f7;color:#1a5276}
+.bg-k{background:#e0e0e0;color:#333}.bg-gl{background:#27c727;color:#fff}
+.bg-pu{background:#e9d8fd;color:#553c9a}
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tbl th{background:var(--k);color:var(--gl);font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.7px;text-transform:uppercase;font-size:9px;padding:7px 8px;text-align:left;white-space:nowrap}
+.tbl-nokia th{background:#91A8A7!important;color:#000000!important;font-size:11px!important;font-weight:800!important;padding:9px 10px!important;letter-spacing:.8px!important}
+.tbl-subc th{background:#FFD36C!important;color:#000000!important;font-size:11px!important;font-weight:800!important;padding:9px 10px!important;letter-spacing:.8px!important}
+.tbl-gastos th{background:#FFD36C!important;color:#000000!important;font-size:10px!important;font-weight:700!important;padding:7px 10px!important;letter-spacing:.8px!important}
+.tbl td{padding:6px 8px;border-bottom:1px solid var(--g2);vertical-align:middle}
+.tbl tr:hover td{background:var(--g1)}
+.tbl .num{text-align:right;font-feature-settings:'tnum'}
+.tbl .tr-tot td{background:#dcfce7;font-weight:700;border-top:2px solid #22c55e;color:#14532d}
+.tbl .tr-sect td{background:#144E4A;color:#CDFBF2;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:5px 8px}.tbl .tr-sect-subc td{background:#FFF0CE;color:#000000;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:5px 8px}
+.tbl .tr-nokia td{background:#eff6ff}
+.tbl .tr-subc td{background:#fffbeb}
+.th-nokia{background:#144E4A!important;color:#CDFBF2!important;font-size:11px!important;font-weight:800!important;padding:9px 10px!important;letter-spacing:.8px!important}
+.th-subc{background:#FFF0CE!important;color:#000000!important;font-size:11px!important;font-weight:800!important;padding:9px 10px!important;letter-spacing:.8px!important}
+.th-cr{background:#4a1d96!important;color:#ddd6fe!important}
+/* STAT */
+.stat{background:#fff;border-radius:var(--rad);padding:12px 16px;border-left:4px solid var(--g);box-shadow:var(--sh)}
+.sl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--g4);margin-bottom:4px}
+.sv{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:400;line-height:1;color:var(--k)}
+.ss{font-size:10px;color:var(--g3);margin-top:2px}
+/* MBAR */
+.mbar{height:7px;background:var(--g2);border-radius:4px;overflow:hidden;margin-top:4px}
+.mfill{height:100%;border-radius:4px;background:#1a7a1a;transition:width .4s}
+.mfill.warn{background:#FFC000}.mfill.dang{background:#c0392b}
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;align-items:center;justify-content:center}
+.mo.open{display:flex}
+.modal{background:#fff;border-radius:var(--rad);width:92%;max-width:700px;max-height:92vh;overflow-y:auto;box-shadow:var(--shl)}
+.mh{background:var(--k);color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--g);position:sticky;top:0;z-index:1}
+.mh h3{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:1px}
+.mc{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;opacity:.7;line-height:1}.mc:hover{opacity:1}
+.mb{padding:18px}.mf{padding:12px 18px;border-top:1px solid var(--g2);display:flex;gap:8px;justify-content:flex-end}
+/* ALERT */
+.alert{padding:9px 12px;border-radius:5px;margin-bottom:12px;font-size:11px;font-weight:500;display:flex;align-items:flex-start;gap:7px}
+.al-s{background:#d4edda;color:#1a6130;border-left:3px solid var(--g)}
+.al-w{background:#fff3cd;color:#856404;border-left:3px solid var(--o)}
+.al-i{background:#d0e4f7;color:#1a5276;border-left:3px solid var(--b)}
+.al-e{background:#fde8e7;color:#c0392b;border-left:3px solid var(--r)}
+/* MISC */
+.fb{display:flex;justify-content:space-between;align-items:center}
+.flex{display:flex}.gap8{gap:8px}.gap12{gap:12px}
+.mb0{margin-bottom:0}.mb14{margin-bottom:14px}
+.tg{color:var(--go)}.tr{color:var(--r)}.tm{color:var(--g3)}
+.fw7{font-weight:700}.fw8{font-weight:800}
+hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
+.iq{width:60px;border:1.5px solid var(--g2);border-radius:4px;padding:3px 5px;font-family:inherit;font-size:11px;text-align:center;outline:none}
+.iq:focus{border-color:var(--g)}
+.iv{width:130px;border:1.5px solid var(--g2);border-radius:4px;padding:4px 8px;font-family:inherit;font-size:11px;text-align:right;outline:none}
+.iv:focus{border-color:var(--g)}
+/* TOAST */
+#toast{position:fixed;bottom:18px;right:18px;background:var(--k);color:#fff;padding:9px 16px;border-radius:7px;font-size:11px;font-weight:600;box-shadow:var(--shl);border-left:4px solid var(--g);transform:translateY(60px);opacity:0;transition:all .25s;z-index:999;max-width:280px}
+#toast.show{transform:translateY(0);opacity:1}
+/* CHART CONTAINERS */
+.chart-box{background:#fff;border-radius:var(--rad);padding:16px;box-shadow:var(--sh);margin-bottom:14px}
+.chart-box h3{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--k);margin-bottom:12px;text-transform:uppercase;letter-spacing:.8px}
+/* SECTION DIVIDER */
+.sec-div{background:var(--gf);border:1px solid var(--g2);border-radius:6px;padding:6px 12px;margin:14px 0 4px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--go);border-left:3px solid var(--g)}
+/* PRINT */
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE / iPHONE — responsive overrides
+   Breakpoints: ≤768px tablet/mobile, ≤480px phone
+   ═══════════════════════════════════════════════════════════ */
+@media (max-width:768px){
+
+  /* ── Header ── */
+  .hdr{padding:0 10px;height:46px}
+  .htit{display:none}
+  .hdr-brand img{height:28px!important}
+  .user-badge{font-size:9px;padding:3px 7px}
+  .hdr .flex.gap8{gap:4px}
+  .hdr .btn-sm{padding:3px 7px;font-size:9px}
+
+  /* ── Nav: bottom tab bar on mobile ── */
+  .nav{
+    position:fixed;bottom:0;left:0;right:0;top:auto;
+    background:#111;
+    padding:0;
+    border-top:2px solid var(--g);
+    border-bottom:none;
+    display:flex;justify-content:space-around;
+    z-index:190;
+    height:52px;
+    -webkit-overflow-scrolling:touch;
+    overflow-x:auto;
+    overscroll-behavior:none;
+  }
+  .nt{
+    flex:1;min-width:0;
+    font-size:8px;padding:4px 2px 6px;
+    border-bottom:none;border-top:2px solid transparent;
+    letter-spacing:0;
+    display:flex;flex-direction:column;align-items:center;gap:1px;
+  }
+  .nt.active{border-top-color:var(--gl);border-bottom:none;color:var(--gl)}
+
+  /* ── Main padding + bottom nav clearance ── */
+  .main{padding:10px 10px 70px;max-width:100%}
+  body{padding-bottom:52px}
+
+  /* ── Stat cards: 2 cols on tablet, 1 on phone ── */
+  .g4,.g5{grid-template-columns:1fr 1fr!important;gap:8px}
+  .g3{grid-template-columns:1fr 1fr!important;gap:8px}
+  .g2{grid-template-columns:1fr!important;gap:8px}
+
+  /* ── Dashboard two-col layout → stack ── */
+  #screen-dashboard .main > div[style*="grid-template-columns:1fr 340px"],
+  div[style*="grid-template-columns:1fr 340px"]{
+    display:flex!important;flex-direction:column!important;gap:10px!important;
+  }
+
+  /* ── Page headers ── */
+  h1{font-size:16px!important}
+  .fb{flex-wrap:wrap;gap:6px}
+  .fb .flex.gap8{flex-wrap:wrap;gap:4px}
+
+  /* ── Tables: horizontal scroll ── */
+  .card > div[style*="overflow-x:auto"]{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tbl{font-size:10px}
+  .tbl th{font-size:8px;padding:5px 6px}
+  .tbl td{padding:5px 6px}
+
+  /* ── Dashboard table: hide less critical cols ── */
+  #tbl-dash th:nth-child(4),#tbl-dash td:nth-child(4),
+  #tbl-dash th:nth-child(6),#tbl-dash td:nth-child(6){display:none}
+
+  /* ── Cards ── */
+  .card-b{padding:10px}
+  .card-h h2{font-size:12px}
+
+  /* ── Liquidador: 4-col → 2-col → 1-col ── */
+  div[style*="grid-template-columns:1fr 1fr 1fr 1fr"]{
+    grid-template-columns:1fr 1fr!important;
+  }
+  div[style*="grid-template-columns:1fr 1fr;gap:14px"]{
+    grid-template-columns:1fr!important;
+  }
+
+  /* ── Modals ── */
+  .modal{width:96%!important;max-height:88vh}
+  .mb{padding:12px}
+
+  /* ── Charts ── */
+  .chart-box{padding:10px}
+  .chart-box canvas{max-height:200px}
+
+  /* ── Filtro row wrap ── */
+  .flex.gap8{flex-wrap:wrap}
+
+  /* ── Buttons ── */
+  .btn-lg{padding:8px 14px;font-size:12px}
+
+  /* ── Login modal ── */
+  #login-overlay > div{width:88%!important;padding:20px!important}
+
+  /* ── Catálogo header sticky offset ── */
+  #screen-catalogo .fb.mb14[style*="sticky"]{top:46px}
+}
+
+@media (max-width:480px){
+  /* Phone-only overrides */
+  .g4,.g5{grid-template-columns:1fr 1fr!important}
+
+  /* Stats: 2 cols */
+  #stats-cards{grid-template-columns:1fr 1fr!important}
+  .sv{font-size:18px}
+
+  /* Nav text shorter */
+  .nt{font-size:7px}
+
+  /* Dashboard: hide Ciudad col too */
+  #tbl-dash th:nth-child(3),#tbl-dash td:nth-child(3){display:none}
+
+  /* Liquidador header 4-col → 1-col */
+  div[style*="grid-template-columns:1fr 1fr 1fr 1fr"]{
+    grid-template-columns:1fr!important;
+  }
+
+  /* Liquidador dual card → stack */
+  #liq-content > div[style*="grid"]{
+    display:flex!important;flex-direction:column!important;
+  }
+}
+
+@media print{.hdr,.nav,.no-print{display:none!important}body{background:#fff}.main{padding:0;max-width:100%}}
+/* PROFILE SETUP */
+.profile-card{background:#fff;border-radius:var(--rad);padding:24px;box-shadow:var(--shl);max-width:360px;margin:60px auto;text-align:center}
+.profile-card h2{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;margin-bottom:16px}
+.fecha-picker{position:relative;display:inline-block}
+.fecha-picker-btn{background:#fff;border:1px solid var(--g2);border-radius:20px;padding:5px 12px;font-size:11px;cursor:pointer;font-family:'Barlow',sans-serif;font-weight:600;color:var(--k);white-space:nowrap}
+.fecha-picker-btn:hover{background:var(--g1)}
+.fecha-picker-drop{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:1px solid var(--g2);border-radius:8px;box-shadow:var(--sh);z-index:500;min-width:220px;padding:8px}
+.fecha-picker-drop.open{display:block}
+.fecha-picker-drop .fp-year{font-weight:700;font-size:11px;padding:4px 8px;cursor:pointer;border-radius:4px;display:flex;align-items:center;gap:4px}
+.fecha-picker-drop .fp-year:hover{background:var(--g1)}
+.fecha-picker-drop .fp-mes{font-size:10px;padding:3px 8px 3px 24px;cursor:pointer;border-radius:4px}
+.fecha-picker-drop .fp-mes:hover{background:var(--g1)}
+.fecha-picker-drop .fp-selected{background:var(--gf);color:var(--g);font-weight:700}
+.fecha-picker-drop .fp-all{font-size:10px;padding:4px 8px;cursor:pointer;border-radius:4px;border-bottom:1px solid var(--g2);margin-bottom:4px;font-weight:600}
+.fecha-picker-drop .fp-all:hover{background:var(--g1)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:500;display:flex;align-items:center;justify-content:center">
+  <div class="profile-card" style="max-width:420px;width:90%">
+    <div style="width:90px;height:90px;border:3px solid var(--g);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px">
+      <svg width="52" height="52" viewBox="0 0 54 54" fill="none">
+        <circle cx="27" cy="11" r="5" stroke="#1a9c1a" stroke-width="2" fill="none"/>
+        <circle cx="11" cy="40" r="5" stroke="#1a9c1a" stroke-width="2" fill="none"/>
+        <circle cx="43" cy="40" r="5" stroke="#1a9c1a" stroke-width="2" fill="none"/>
+        <line x1="27" y1="16" x2="11" y2="35" stroke="#1a9c1a" stroke-width="1.8"/>
+        <line x1="27" y1="16" x2="43" y2="35" stroke="#1a9c1a" stroke-width="1.8"/>
+        <line x1="11" y1="40" x2="43" y2="40" stroke="#1a9c1a" stroke-width="1.8"/>
+      </svg>
+    </div>
+    <img id="empresa-logo-header" src="" style="height:50px;width:auto;object-fit:contain;margin-bottom:4px;display:none" alt="Logo"><span id="empresa-nombre-header" style="font-size:18px;font-weight:700;color:#CDFBF2;letter-spacing:1px">EMPRESA</span>
+    <div style="color:var(--g3);font-size:13px;margin-bottom:24px">Liquidador Nokia 2026</div>
+    <div class="fg"><label class="fl">Email</label>
+      <input type="email" class="fc" id="login-email" placeholder="usuario@ingetel.com"
+        onkeydown="if(event.key==='Enter')document.getElementById('login-password').focus()">
+    </div>
+    <div class="fg"><label class="fl">Contraseña</label>
+      <input type="password" class="fc" id="login-password" placeholder="••••••••"
+        onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div id="login-err" style="display:none;color:#c0392b;font-size:12px;margin-bottom:8px;padding:6px 10px;background:#fef2f2;border-radius:4px;border-left:3px solid #c0392b">Credenciales incorrectas</div>
+    <button class="btn bp btn-lg" style="width:100%;justify-content:center" id="login-btn" onclick="doLogin()">
+      Ingresar
+    </button>
+  </div>
+</div>
+<div class="hdr">
+  <div class="hdr-brand">
+    <img id="empresa-logo-login" src="" style="height:38px;width:auto;object-fit:contain;display:none" alt="Logo"><span id="empresa-nombre-login" style="font-size:22px;font-weight:700;color:#144E4A">EMPRESA</span>
+  </div>
+  <div class="htit">Liquidador Nokia 2026</div>
+  <div class="flex gap8" style="align-items:center">
+    <span id="hdr-user-badge" class="user-badge ub-op" onclick="doLogout()">👤 Operador ▸ Salir</span>
+    <button class="btn bp btn-sm no-print" onclick="openModal('m-nuevo-sitio')">＋ Sitio</button>
+    <button class="btn bo btn-sm no-print" onclick="openModal('m-nuevo-tss')">＋ TSS</button>
+    <button class="btn bk btn-sm no-print" onclick="exportarExcel()">⬇ Excel</button>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nt active" onclick="showScreen('dashboard',this)">Dashboard</button>
+  <button class="nt" onclick="showScreen('sitios',this)">Sitios</button>
+  <button class="nt" onclick="showScreen('sitios-tss',this)">TSS</button>
+  <button class="nt" onclick="showScreen('liquidador',this)">Liquidador</button>
+  <button class="nt" onclick="showScreen('gastos',this)">Gastos</button>
+  <button class="nt" onclick="showScreen('reportes',this)">Reportes</button>
+  <button class="nt" onclick="showScreen('analitica',this)">Analítica</button>
+  <button class="nt" id="nav-catalogo" onclick="showScreen('catalogo',this)" style="display:none">Catálogo</button>
+  <button class="nt" id="nav-config" onclick="showScreen('config',this)" style="display:none">⚙ Config</button>
+</div>
+
+<div class="main">
+
+<!-- DASHBOARD -->
+<div id="screen-dashboard" class="screen active">
+  <div class="fb mb14">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Proyecto Nokia 2026</h1>
+    <div class="flex gap8">
+      <input type="text" class="fc" placeholder="🔍 Buscar sitio…" style="width:160px" oninput="buscarSitio(this.value)">
+      <div class="fecha-picker" id="fp-dash"></div>
+      <select class="fc" id="dash-tipo-cuadrilla" style="width:140px" onchange="renderDashboard()">
+        <option value="todos">Todas las Cuadrillas (LC)</option>
+        <option value="TI Ingetel">TI Ingetel</option>
+        <option value="TSS Ingetel">TSS Ingetel</option>
+        <option value="Ingetel">Ingetel (TI+TSS)</option>
+        <option value="TI Scytel">TI Scytel</option>
+        <option value="TSS Scytel">TSS Scytel</option>
+        <option value="Scytel">Scytel (TI+TSS)</option>
+        <option value="TSS">TSS (todas)</option>
+        <option value="TI">TI (todas)</option>
+      </select>
+      <button class="btn bp no-print" onclick="openModal('m-nuevo-sitio')">＋ Nuevo Sitio</button>
+      <button class="btn bo no-print" onclick="openModal('m-nuevo-tss')">＋ TSS</button>
+    </div>
+  </div>
+  <div class="g5 mb14" id="stats-cards" style="grid-template-columns:repeat(5,1fr)"></div>
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:14px">
+    <div class="card">
+      <div class="card-h"><h2>Sitios del Proyecto</h2></div>
+      <div style="padding:0;overflow-x:auto;max-height:calc(100vh - 320px);overflow-y:auto">
+        <table class="tbl" id="tbl-dash">
+          <thead style="position:sticky;top:0;z-index:2"><tr>
+            <th>Sitio</th><th>LC</th><th>Liquidación</th><th>Ciudad</th>
+            <th class="num th-nokia">Venta Nokia</th>
+            <th class="num th-subc">Costo SubC</th>
+            <th class="num">Utilidad</th><th class="num">% Margen</th><th></th>
+          </tr></thead>
+          <tbody id="tbody-dash"></tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-h"><h2>Márgenes</h2></div>
+        <div class="card-b" id="margen-bars" style="max-height:calc(100vh - 400px);overflow-y:auto"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h2>Acciones Rápidas</h2></div>
+        <div class="card-b" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <button class="btn bp btn-lg" onclick="openModal('m-nuevo-sitio')">＋ Sitio TI</button>
+          <button class="btn bo btn-lg" onclick="openModal('m-nuevo-tss')">＋ TSS</button>
+          <button class="btn bd btn-lg" onclick="openModal('m-gastos')">＋ Gastos</button>
+          <button class="btn bk btn-lg" onclick="exportarExcel()">⬇ Exportar</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SITIOS / CONSOLIDATED -->
+<div id="screen-sitios" class="screen">
+  <div class="fb mb14">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Consolidado — Todos los Sitios</h1>
+      <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
+    <div class="flex gap8">
+      <select class="fc" id="fil-lc-sitios" style="width:200px" onchange="renderConsolidado()">
+        <option value="">Todas las Cuadrillas (LC)</option>
+      </select>
+      <button class="btn bp no-print" onclick="openModal('m-nuevo-sitio')">＋ Nuevo</button>
+    </div>
+  </div>
+  <div class="card">
+    <div style="padding:0;overflow-x:auto;max-height:calc(100vh - 240px);overflow-y:auto">
+      <table class="tbl" id="tbl-cons">
+        <thead style="position:sticky;top:0;z-index:2">
+          <tr>
+            <th rowspan="2">Sitio</th><th rowspan="2">Ciudad</th>
+            <th rowspan="2">Fecha</th><th rowspan="2">LC</th><th rowspan="2">Cat</th>
+            <th class="num th-nokia" colspan="5">VENTA NOKIA</th>
+            <th class="num th-subc" colspan="6">COSTOS SITIO</th>
+            <th rowspan="2"></th>
+          </tr>
+          <tr>
+            <th class="num th-nokia">TI</th><th class="num th-nokia">ADJ</th>
+            <th class="num th-nokia">CW</th><th class="num th-nokia">CR</th>
+            <th class="num th-nokia" style="border-right:2px solid #60a5fa">MIMO</th>
+            <th class="num th-subc">SubC TI</th><th class="num th-subc">SubC CW</th>
+            <th class="num th-subc">Mat TI</th><th class="num th-subc">Mat CW</th>
+            <th class="num th-subc">Logística</th><th class="num th-subc" style="border-right:2px solid #fbbf24">Adicionales</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-cons"></tbody>
+        <tfoot id="tfoot-cons" style="position:sticky;bottom:0;z-index:2"></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SITIOS TSS -->
+<div id="screen-sitios-tss" class="screen">
+  <div class="fb mb14">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Consolidado TSS</h1>
+    <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
+    <div class="flex gap8">
+      <select class="fc" id="tss-fil-lc" style="width:200px" onchange="renderConsolidadoTSS()">
+        <option value="">Todas las Cuadrillas (LC)</option>
+      </select>
+    </div>
+  </div>
+  <div class="card">
+    <div style="padding:0;overflow-x:auto;max-height:calc(100vh - 200px);overflow-y:auto">
+      <table class="tbl" id="tbl-tss-cons">
+        <thead style="position:sticky;top:0;z-index:2"><tr>
+          <th>Sitio</th><th>Fecha</th><th>LC</th><th>Ciudad</th><th>Cat</th>
+          <th class="num th-nokia">Venta TSS</th><th class="num th-subc">Costo SubC</th>
+          <th rowspan="1"></th>
+        </tr></thead>
+        <tbody id="tbody-tss-cons"></tbody>
+        <tfoot id="tfoot-tss-cons" style="position:sticky;bottom:0;z-index:2"></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- LIQUIDADOR -->
+<div id="screen-liquidador" class="screen">
+  <div class="fb mb14">
+    <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">
+      Liquidador: <span id="liq-tit" style="color:var(--g)">Selecciona un sitio</span>
+    </h1>
+    <div class="flex gap8">
+      <select class="fc" id="sel-liq" onchange="cargarSitio(this.value)" style="width:200px"></select>
+      <button class="btn bp no-print" onclick="openModal('m-nuevo-sitio')">＋ Nuevo</button>
+      <button class="btn bk btn-sm no-print" onclick="window.print()">🖨 Imprimir</button>
+    </div>
+  </div>
+  <div id="liq-content">
+    <div style="text-align:center;padding:50px;color:var(--g3)"><div style="font-size:40px;margin-bottom:10px">📋</div><div style="font-weight:600;color:var(--g4)">Selecciona un sitio para liquidar</div></div>
+  </div>
+</div>
+
+<!-- GASTOS -->
+<div id="screen-gastos" class="screen">
+  <div class="fb mb14">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Gastos y Adicionales</h1>
+      <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
+    <div class="flex gap8">
+      <select class="fc" id="fil-gasto-sitio" style="width:200px" onchange="renderGastos()">
+        <option value="">Todos los sitios</option>
+      </select>
+      <button class="btn bd no-print" onclick="openModal('m-gastos')">＋ Agregar</button>
+    </div>
+  </div>
+  <div class="card">
+    <div style="padding:0">
+      <table class="tbl" id="tbl-gastos">
+        <thead><tr><th>Sitio</th><th>Tipo</th><th>Descripción</th><th class="num">Valor</th><th></th></tr></thead>
+        <tbody id="tbody-gastos"></tbody>
+        <tfoot id="tfoot-gastos"></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- REPORTES -->
+<div id="screen-reportes" class="screen">
+  <div class="fb mb14">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Reportes por Mes</h1>
+      <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
+    <div class="flex gap8">
+      <div class="fecha-picker" id="fp-rep"></div>
+      <select class="fc" id="rep-tipo-cuadrilla" data-lc="true" style="width:140px" onchange="renderReportes()">
+        <option value="todos">Todas las Cuadrillas (LC)</option>
+        <option value="TI Ingetel">TI Ingetel</option>
+        <option value="TSS Ingetel">TSS Ingetel</option>
+        <option value="Ingetel">Ingetel (TI+TSS)</option>
+        <option value="TI Scytel">TI Scytel</option>
+        <option value="TSS Scytel">TSS Scytel</option>
+        <option value="Scytel">Scytel (TI+TSS)</option>
+        <option value="TSS">TSS (todas)</option>
+        <option value="TI">TI (todas)</option>
+      </select>
+
+      <button class="btn bp btn-sm" onclick="exportarReporteExcel()">⬇ Excel</button>
+      <button class="btn bk btn-sm" onclick="window.print()">🖨 PDF</button>
+    </div>
+  </div>
+  <div class="g3 mb14" id="rep-stats"></div>
+  <div class="card">
+    <div class="card-h"><h2>Sitios por Mes</h2></div>
+    <div style="padding:0;overflow-x:auto">
+      <table class="tbl" id="tbl-rep">
+        <thead><tr><th>Mes</th><th class="num">Sitios</th>
+          <th class="num th-nokia">Venta Nokia</th>
+          <th class="num th-subc">Costo SubC</th>
+          <th class="num">Utilidad</th><th class="num">% Margen</th>
+        </tr></thead>
+        <tbody id="tbody-rep"></tbody>
+        <tfoot id="tfoot-rep"></tfoot>
+      </table>
+    </div>
+  </div>
+  <div id="rep-sitios-detalle" class="card" style="display:none">
+    <div class="card-h"><h2 id="rep-detalle-titulo">Detalle del Mes</h2></div>
+    <div style="padding:0;overflow-x:auto"><table class="tbl" id="tbl-rep-det">
+      <thead><tr><th>Sitio</th><th>LC</th><th class="num">Venta</th><th class="num">Costo</th><th class="num">Utilidad</th><th class="num">% Margen</th></tr></thead>
+      <tbody id="tbody-rep-det"></tbody>
+    </table></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div class="chart-box"><h3>Venta vs Costo por Mes</h3><canvas id="chart-meses" height="220"></canvas></div>
+    <div class="chart-box"><h3>Margen % por Mes</h3><canvas id="chart-margen-mes" height="220"></canvas></div>
+  </div>
+</div>
+
+<!-- ANALÍTICA -->
+<div id="screen-analitica" class="screen">
+  <div class="fb mb14">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Analítica Gerencial</h1>
+      <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
+    <select class="fc" id="ana-lc-filter" style="width:200px" onchange="renderAnalitica()">
+      <option value="">Todas las Cuadrillas (LC)</option>
+    </select>
+  </div>
+  <div class="g4 mb14" id="ana-stats"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div class="chart-box"><h3>📈 Venta Acumulada en el Tiempo (COP)</h3><canvas id="chart-venta-acum" height="240"></canvas></div>
+    <div class="chart-box"><h3>📊 Producción por LC / Cuadrilla</h3><canvas id="chart-lc" height="240"></canvas></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div class="chart-box"><h3>🎯 Margen % por Sitio</h3><canvas id="chart-sitio-mg" height="240"></canvas></div>
+    <div class="chart-box"><h3>⚡ Evolución de Utilidad por Mes</h3><canvas id="chart-util-mes" height="240"></canvas></div>
+  </div>
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px">
+    <div class="chart-box"><h3>🔵 Dispersión: Venta vs Costo por Sitio</h3><canvas id="chart-scatter" height="260"></canvas></div>
+    <div class="chart-box"><h3>🍩 Distribución TI / ADJ / CW / CR</h3><canvas id="chart-dist" height="260"></canvas></div>
+  </div>
+</div>
+
+<!-- CATÁLOGO -->
+<div id="screen-catalogo" class="screen">
+  <div class="fb mb14" style="position:sticky;top:50px;z-index:100;background:#f4f5f4;padding:10px 0;margin:-4px 0 10px;border-bottom:1px solid var(--g2)">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Catálogo de Precios 2026</h1>
+      <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
+    <div class="flex gap8">
+      <select class="fc" id="cat-zona" onchange="renderCatalogo()" style="width:180px">
+        <option value="Ciudad_Principal">Ciudad Principal</option>
+        <option value="Ciudad_Secundaria">Ciudad Secundaria</option>
+        <option value="Ciudad_Intermedia">Ciudad Intermedia</option>
+        <option value="Dificil Acceso">Difícil Acceso</option>
+      </select>
+      <input type="file" id="file-cat-upload" accept=".csv,.xlsx,.xls" style="display:none" onchange="importarPrecios(this)">
+      <button class="btn" id="btn-cat-upload" style="display:none;border-radius:20px;padding:6px 16px" onclick="document.getElementById('file-cat-upload').click()">📥 Cargar Precios</button>
+      <button class="btn" id="btn-cat-save" style="display:none;background:#144E4A;color:#CDFBF2;font-weight:700;border-radius:20px;padding:6px 16px" onclick="guardarCatalogo()">💾 Guardar Catálogo</button>
+      <span id="cat-lock-badge" class="badge bg-r" style="padding:5px 10px;font-size:10px">🔒 Lectura</span>
+    </div>
+  </div>
+  <div id="cat-admin-msg" class="alert al-i" style="position:sticky;top:calc(50px + 52px);z-index:99;margin-bottom:10px">Catálogo en modo lectura. Solo el administrador puede editar.</div>
+
+  <!-- BASE -->
+  <div class="sec-div" style="display:flex;justify-content:space-between;align-items:center">BASE — Implementación TI<button id="btn-add-cat-base" class="btn bp btn-sm no-print" style="display:none;font-size:10px" onclick="addCatRow('BASE')">＋ Nueva</button></div>
+  <div class="card"><div style="padding:0;overflow-x:auto">
+    <table class="tbl" id="tbl-cat-base">
+      <thead><tr><th style="min-width:180px">Actividad</th><th>Unidad</th>
+        <th class="num th-nokia" style="min-width:120px">Nokia</th>
+        <th class="num th-subc" style="min-width:110px">SubC A</th><th class="num th-subc" style="min-width:110px">SubC AA</th><th class="num th-subc" style="min-width:110px">SubC AAA</th>
+        <th id="th-cat-base-act" class="no-print"></th>
+      </tr></thead>
+      <tbody id="tbody-cat-base"></tbody>
+    </table>
+  </div></div>
+
+  <!-- ADJ -->
+  <div class="sec-div" style="display:flex;justify-content:space-between;align-items:center">SERVICIOS ADICIONALES — ADJ_NB2B / ADJ_B2B<button id="btn-add-cat-adj" class="btn bp btn-sm no-print" style="display:none;font-size:10px" onclick="addCatRow('ADJ')">＋ Nueva</button></div>
+  <div class="card"><div style="padding:0;overflow-x:auto">
+    <table class="tbl" id="tbl-cat-adj">
+      <thead><tr><th>Actividad</th><th>Unidad</th>
+        <th class="num th-nokia">Nokia</th>
+        <th class="num th-subc">SubC A</th><th class="num th-subc">SubC AA</th><th class="num th-subc">SubC AAA</th>
+        <th id="th-cat-adj-act" class="no-print"></th>
+      </tr></thead>
+      <tbody id="tbody-cat-adj"></tbody>
+    </table>
+  </div></div>
+
+  <!-- CR -->
+  <div class="sec-div" style="display:flex;justify-content:space-between;align-items:center">CR — Adicionales creados en Skytool<button id="btn-add-cat-cr" class="btn bp btn-sm no-print" style="display:none;font-size:10px" onclick="addCatRow('CR')">＋ Nueva</button></div>
+  <div class="card"><div style="padding:0;overflow-x:auto">
+    <table class="tbl" id="tbl-cat-cr">
+      <thead><tr><th>Actividad</th><th>Unidad</th>
+        <th class="num th-nokia">Nokia</th>
+        <th class="num th-subc">SubC A</th><th class="num th-subc">SubC AA</th><th class="num th-subc">SubC AAA</th>
+        <th id="th-cat-cr-act" class="no-print"></th>
+      </tr></thead>
+      <tbody id="tbody-cat-cr"></tbody>
+    </table>
+  </div></div>
+
+  <!-- SUBCONTRATISTAS -->
+  <div class="sec-div">Subcontratistas</div>
+  <div class="card">
+    <div class="card-h"><h2>Lista de Subcontratistas</h2>
+      <button class="btn bp btn-sm no-print" id="btn-add-subc" style="display:none" onclick="addSubcRow()">＋ Agregar</button>
+    </div>
+    <div style="padding:0">
+      <table class="tbl" id="tbl-subc">
+        <thead><tr><th>LC / Nombre</th><th>Empresa</th><th>Categoría</th><th>Tipo Cuadrilla</th><th>Teléfono</th><th>Email</th><th id="th-subc-act"></th></tr></thead>
+        <tbody id="tbody-subc"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<!-- ====== MODALS ====== -->
+<!-- NUEVO SITIO -->
+<div class="mo" id="m-nuevo-sitio">
+  <div class="modal">
+    <div class="mh"><h3>🏗 Nuevo Sitio TI</h3><button class="mc" onclick="closeModal('m-nuevo-sitio')">×</button></div>
+    <div class="mb">
+      <div class="g2">
+        <div class="fg"><label class="fl">Nombre del Sitio *</label><input type="text" class="fc" id="ns-nom" placeholder="Ej: CAL.Vallegrande-3"></div>
+        <div class="fg"><label class="fl">Fecha</label><input type="date" class="fc" id="ns-fecha"></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label class="fl">Tipo Ciudad *</label>
+          <select class="fc" id="ns-ciudad">
+            <option value="Ciudad_Principal">Ciudad Principal</option>
+            <option value="Ciudad_Secundaria">Ciudad Secundaria</option>
+            <option value="Ciudad_Intermedia">Ciudad Intermedia</option>
+            <option value="Dificil Acceso">Difícil Acceso</option>
+          </select>
+        </div>
+        <div class="fg"><label class="fl">LC / Subcontratista *</label><select class="fc" id="ns-lc"></select></div>
+      </div>
+      <div class="g2">
+        <div class="fg"><label class="fl">¿Incluye CW (Obra Civil)?</label>
+          <select class="fc" id="ns-cw"><option value="no">No aplica</option><option value="si">Sí incluye CW</option><option value="conjunto">CW en Conjunto</option></select>
+        </div>
+        <div class="fg"><label class="fl">Valor CW Nokia</label><input type="number" class="fc" id="ns-cw-val" placeholder="0" min="0"></div>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn bou" onclick="closeModal('m-nuevo-sitio')">Cancelar</button>
+      <button class="btn bp" onclick="crearSitio()">✓ Crear Sitio</button>
+    </div>
+  </div>
+</div>
+
+<!-- NUEVO TSS -->
+<div class="mo" id="m-nuevo-tss">
+  <div class="modal">
+    <div class="mh"><h3>🔍 Nuevo Sitio TSS</h3><button class="mc" onclick="closeModal('m-nuevo-tss')">×</button></div>
+    <div class="mb">
+      <div class="g2">
+        <div class="fg"><label class="fl">Nombre del Sitio TSS *</label><input type="text" class="fc" id="tss-nom" placeholder="Ej: TSS_Enero_2026"></div>
+        <div class="fg"><label class="fl">Fecha</label><input type="date" class="fc" id="tss-fecha"></div>
+      </div>
+      <div class="fg"><label class="fl">LC / Subcontratista *</label><select class="fc" id="tss-lc"></select></div>
+      <hr class="div">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;margin-bottom:8px;color:var(--go)">VISITAS A REGISTRAR</div>
+      <div id="tss-vis-cont"></div>
+      <button class="btn bou btn-sm" onclick="addTSSVisita()">＋ Agregar Visita</button>
+    </div>
+    <div class="mf">
+      <button class="btn bou" onclick="closeModal('m-nuevo-tss')">Cancelar</button>
+      <button class="btn bp" onclick="crearTSS()">✓ Crear TSS</button>
+    </div>
+  </div>
+</div>
+
+<!-- GASTOS -->
+<div class="mo" id="m-gastos">
+  <div class="modal">
+    <div class="mh"><h3>💸 Agregar Gasto</h3><button class="mc" onclick="closeModal('m-gastos')">×</button></div>
+    <div class="mb">
+      <div class="g2">
+        <div class="fg"><label class="fl">Sitio *</label><select class="fc" id="g-sitio"></select></div>
+        <div class="fg"><label class="fl">Tipo *</label>
+          <select class="fc" id="g-tipo">
+            <option value="Materiales TI">Materiales TI</option>
+            <option value="Materiales CW">Materiales CW</option>
+            <option value="Logistica">Logística</option>
+            <option value="Adicionales">Adicionales</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label class="fl">Descripción *</label><input type="text" class="fc" id="g-desc" placeholder="Descripción"></div>
+      <div class="fg"><label class="fl">Valor (COP) *</label><input type="number" class="fc" id="g-valor" placeholder="0" min="0"></div>
+    </div>
+    <div class="mf">
+      <button class="btn bou" onclick="closeModal('m-gastos')">Cancelar</button>
+      <button class="btn bd" onclick="agregarGasto()">✓ Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDITAR ACTIVIDAD -->
+<div class="mo" id="m-edit-act">
+  <div class="modal">
+    <div class="mh"><h3>✏ Editar Actividad</h3><button class="mc" onclick="closeModal('m-edit-act')">×</button></div>
+    <div class="mb">
+      <div class="g2">
+        <div class="fg"><label class="fl">Actividad</label><select class="fc" id="ea-act" style="font-size:11px"></select></div>
+        <div class="fg"><label class="fl">Cantidad</label><input type="number" class="fc" id="ea-cant" min="0"></div>
+      </div>
+      <div class="fg"><label class="fl">Sección</label>
+        <select class="fc" id="ea-sec">
+          <option value="MODERNIZACION">Modernización</option>
+          <option value="5G">5G</option>
+          <option value="MIMO">MIMO</option>
+          <option value="SITIO_NUEVO">Sitio Nuevo</option>
+          <option value="ADJ">ADJ — Servicios Adicionales</option>
+          <option value="CR">CR — Adicionales Skytool</option>
+        </select>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn bou" onclick="closeModal('m-edit-act')">Cancelar</button>
+      <button class="btn bp" onclick="confirmarEditAct()">✓ Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD ACTIVIDAD -->
+<div class="mo" id="m-add-act">
+  <div class="modal">
+    <div class="mh"><h3>＋ Agregar Actividad</h3><button class="mc" onclick="closeModal('m-add-act')">×</button></div>
+    <div class="mb">
+      <div class="fg"><label class="fl">Sección / Categoría</label>
+        <select class="fc" id="aa-sec" onchange="updAddActList()">
+          <option value="MODERNIZACION">Modernización (BASE)</option>
+          <option value="5G">5G (BASE)</option>
+          <option value="MIMO">MIMO (BASE)</option>
+          <option value="SITIO_NUEVO">Sitio Nuevo (BASE)</option>
+          <option value="ADJ">SERVICIOS ADICIONALES (ADJ)</option>
+          <option value="CR">CR — Adicionales Skytool</option>
+        </select>
+      </div>
+      <div class="fg"><label class="fl">Actividad</label><select class="fc" id="aa-act" style="font-size:11px"></select></div>
+      <div class="fg"><label class="fl">Cantidad</label><input type="number" class="fc" id="aa-cant" value="1" min="0"></div>
+    </div>
+    <div class="mf">
+      <button class="btn bou" onclick="closeModal('m-add-act')">Cancelar</button>
+      <button class="btn bp" onclick="confirmarAddAct()">＋ Agregar</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<!-- CONFIGURACIÓN DE EMPRESA -->
+<div id="screen-config" class="screen" style="max-width:600px;margin:0 auto">
+  <div class="fb mb14" style="position:sticky;top:50px;z-index:100;background:#f4f5f4;padding:10px 0;border-bottom:1px solid var(--g2)">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">⚙ Configuración de Empresa</h1>
+    <button class="btn bk btn-sm" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
+  </div>
+  <div class="card" style="padding:20px">
+    <div class="alert al-i mb14">Solo el administrador puede modificar esta configuración. Los cambios se aplican a todos los usuarios.</div>
+    <div style="display:grid;gap:14px">
+      <div>
+        <label class="fl">Nombre de la empresa</label>
+        <input type="text" class="fc" id="cfg-nombre" placeholder="Ej: Ingetel SAS" style="width:100%">
+      </div>
+      <div>
+        <label class="fl">Nombre corto (para reportes)</label>
+        <input type="text" class="fc" id="cfg-nombre-corto" placeholder="Ej: Ingetel" style="width:100%">
+      </div>
+      <div>
+        <label class="fl">URL del logo (imagen pública)</label>
+        <input type="text" class="fc" id="cfg-logo-url" placeholder="https://..." style="width:100%">
+        <small style="color:var(--g3)">Sube tu logo a <a href="https://imgur.com" target="_blank">imgur.com</a> u otro hosting y pega la URL directa aquí</small>
+      </div>
+      <div>
+        <label class="fl">Color primario</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="color" id="cfg-color" value="#144E4A" style="width:50px;height:36px;border:none;cursor:pointer;border-radius:6px">
+          <input type="text" class="fc" id="cfg-color-hex" placeholder="#144E4A" style="width:120px">
+        </div>
+      </div>
+      <div>
+        <label class="fl">Nombre tipo cuadrilla propia</label>
+        <input type="text" class="fc" id="cfg-tipo-cuadrilla" placeholder="Ej: TI Ingetel" style="width:100%">
+        <small style="color:var(--g3)">Este texto aparece en las opciones de tipo de cuadrilla</small>
+      </div>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:8px">
+      <button class="btn" style="background:#144E4A;color:#CDFBF2;font-weight:700;border-radius:20px;padding:8px 20px" onclick="guardarConfigEmpresa()">💾 Guardar Configuración</button>
+      <button class="btn bk btn-sm" onclick="renderConfigEmpresa()">↩ Descartar</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// DATOS CATÁLOGO COMPLETO - Nokia + SubC por categoría
+// ============================================================
+const ZONAS=['Ciudad_Principal','Ciudad_Secundaria','Ciudad_Intermedia','Dificil Acceso'];
+const ZI={'Ciudad_Principal':0,'Ciudad_Secundaria':1,'Ciudad_Intermedia':2,'Dificil Acceso':3};
+const MESES=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const MESES_FULL=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+// ── Unified date picker ──────────────────────────────────────
+const _fpState={};
+const _fpCbs={};
+
+function initFechaPicker(id, onChange){
+  _fpCbs[id]=onChange;
+  if(!_fpState[id]) _fpState[id]={year:'todos',mes:'todos'};
+  if(!_fpCbs['_listener_'+id]){
+    _fpCbs['_listener_'+id]=true;
+    document.addEventListener('click',function(e){
+      var el=document.getElementById(id);
+      if(el&&!el.contains(e.target)){var d=el.querySelector('.fecha-picker-drop');if(d)d.classList.remove('open');}
+    });
+  }
+  _renderFP(id);
+}
+
+function _fpLabel(id){
+  var st=_fpState[id]||{year:'todos',mes:'todos'};
+  if(st.year==='todos') return 'Todas las Fechas';
+  if(st.mes==='todos') return st.year;
+  return MESES_FULL[parseInt(st.mes)]+' '+st.year;
+}
+
+function _renderFP(id){
+  var el=document.getElementById(id);
+  if(!el) return;
+  var st=_fpState[id]||{year:'todos',mes:'todos'};
+  var years=['2026','2025','2024'];
+  var q="'";
+  var rows='<div class="fp-all" onclick="_fpPick('+q+id+q+','+q+'todos'+q+','+q+'todos'+q+')">✓ Todas las Fechas</div>';
+  for(var yi=0;yi<years.length;yi++){
+    var y=years[yi];
+    var ySel=st.year===y;
+    var yCls=ySel&&st.mes==='todos'?'fp-selected':'';
+    rows+='<div class="fp-year '+yCls+'" onclick="_fpPick('+q+id+q+','+q+y+q+','+q+'todos'+q+')">'+(ySel?'▾ ':'▸ ')+y+'</div>';
+    if(ySel){
+      for(var mi=0;mi<MESES_FULL.length;mi++){
+        var mSel=st.mes===String(mi);
+        var mCls=mSel?'fp-selected':'';
+        rows+='<div class="fp-mes '+mCls+'" onclick="_fpPick('+q+id+q+','+q+y+q+','+q+mi+q+')">'+MESES_FULL[mi]+'</div>';
+      }
+    }
+  }
+  el.innerHTML='<button class="fecha-picker-btn" onclick="_fpToggle(this)">'+_fpLabel(id)+' ▾</button><div class="fecha-picker-drop">'+rows+'</div>';
+}
+
+function _fpPick(id,year,mes){
+  _fpState[id]={year:year,mes:String(mes)};
+  _renderFP(id);
+  var drop=document.getElementById(id);
+  if(drop){var d=drop.querySelector('.fecha-picker-drop');if(d)d.classList.add('open');}
+  if(_fpCbs[id]) _fpCbs[id]();
+}
+
+function _fpToggle(btn){var d=btn.nextElementSibling;if(d)d.classList.toggle('open');}
+function fpGetYear(id){ return (_fpState[id]||{year:'todos'}).year; }
+function fpGetMes(id){ return (_fpState[id]||{mes:'todos'}).mes; };
+
+let CAT={
+  BASE:[
+    {id:'PM',nombre:'PM',unidad:'Sitio',
+      nokia:[1899091,2046799,2215607,2321112],A:[null,null,null,null],AA:[null,null,null,null],AAA:[null,null,null,null]},
+    {id:'IMP_RF',nombre:'IMP_RF',unidad:'Unidad',
+      nokia:[1229107,1324704,1433958,1502242],A:[456091,491564,529948,562433],AA:[501700,540721,582942,618676],AAA:[584732,630211,682187,714672]},
+    {id:'IMP_BB',nombre:'IMP_BB',unidad:'Unidad',
+      nokia:[1368107,1474515,1596125,1672131],A:[507670,547156,589880,626038],AA:[558437,601871,648868,688642],AAA:[650859,701482,759336,795495]},
+    {id:'DESMONTE_RF',nombre:'DESMONTE_RF',unidad:'Unidad',
+      nokia:[853223,919585,995427,1042829],A:[316610,341235,367880,390430],AA:[348271,375358,404668,429473],AAA:[405910,437481,473562,496112]},
+    {id:'DESMONTE_BB',nombre:'DESMONTE_BB',unidad:'Unidad',
+      nokia:[1055799,1137916,1231765,1290421],A:[391780,422252,455223,483128],AA:[430958,464477,500745,531441],AAA:[502283,541349,585997,613901]},
+    {id:'TSS_VR',nombre:'TSS_VR (Visita+Reporte)',unidad:'Sitio',
+      nokia:[1134797,1223060,1323930,1386975],A:[530000,530000,730000,830000],AA:[583000,583000,803000,913000],AAA:[639865,681855,729843,899836]},
+    {id:'TSS_V',nombre:'TSS_V (Solo Visita)',unidad:'Sitio',
+      nokia:[624138,672683,728162,762836],A:[400000,400000,600000,700000],AA:[440000,440000,660000,770000],AAA:[496926,498020,596413,762909]},
+    {id:'TSS_R',nombre:'TSS_R (Solo Reporte)',unidad:'Sitio',
+      nokia:[510659,550377,595768,624138],A:[130000,130000,130000,130000],AA:[143000,143000,143000,143000],AAA:[242939,261834,283429,296926]},
+  ],
+  ADJ:[
+    {id:'Pruebas_Probo',nombre:'Pruebas_Probo',unidad:'Sitio',
+      nokia:[917513,988876,1070432,1121405],A:[458756,494438,535216,560702],AA:[504632,543881,588738,616773],AAA:[536495,570445,610244,643494]},
+    {id:'IMP_Power',nombre:'IMP_Power',unidad:'Sitio',
+      nokia:[725546,781978,846471,886779],A:[362773,390989,423235,443389],AA:[399050,430088,465559,487728],AAA:[435129,461016,504198,543874]},
+    {id:'IMP_Rectificador',nombre:'IMP_Rectificador',unidad:'Sitio',
+      nokia:[241848,260659,282157,295593],A:[120924,130329,141078,147796],AA:[133016,143362,155186,162576],AAA:[232056,238005,295232,268624]},
+    {id:'Desmonte_Feeder',nombre:'Desmonte_Feeder',unidad:'Sitio',
+      nokia:[835965,835965,835965,835965],A:[417982,417982,417982,417982],AA:[417982,417982,417982,417982],AAA:[417982,417982,417982,417982]},
+    {id:'Logistica_Inversa_Antenas',nombre:'Logística Inversa Antenas',unidad:'Unidad',
+      nokia:[473992,510858,552991,579324],A:[70000,70000,70000,70000],AA:[70000,70000,70000,70000],AAA:[70000,70000,70000,70000]},
+    {id:'FPMA',nombre:'FPMA',unidad:'Unidad',
+      nokia:[224283,224283,224283,224283],A:[112141,112141,112141,112141],AA:[112141,112141,112141,112141],AAA:[112141,112141,112141,112141]},
+    {id:'REUB_RF_Airscale_AHPCx',nombre:'REUB_RF Airscale AHPCx',unidad:'Unidad',
+      nokia:[449056,462527,499530,549483],A:[224528,231263,249765,274741],AA:[246980,254390,274741,302215],AAA:[324632,362041,379645,385409]},
+    {id:'Log_Func_HW_Airscale',nombre:'Logística Funcional desmontao de HW Airscale (AHPC, AHPCA, BB) por sitio',unidad:'Sitio',
+      nokia:[426611,459792,497713,521414],A:[213305,229896,248856,260707],AA:[213305,229896,248856,260707],AAA:[213305,229896,248856,260707]},
+    {id:'Log_Inv_Flexi',nombre:'Logística Inversa de Módulos Flexi desinstalados encontrados en Sitio',unidad:'Sitio',
+      nokia:[426611,459792,497713,521414],A:[213305,229896,248856,260707],AA:[213305,229896,248856,260707],AAA:[213305,229896,248856,260707]},
+    {id:'Log_Inv_Ultra',nombre:'Logística Inversa de Módulos Ultra desinstalados encontrados en Sitio',unidad:'Sitio',
+      nokia:[511934,551751,597256,625697],A:[255967,275875,298628,312848],AA:[255967,275875,298628,312848],AAA:[255967,275875,298628,312848]},
+    {id:'FO_ABIA',nombre:'FO + ABIA',unidad:'Sitio',
+      nokia:[522165,562777,597588,638201],A:[261082,281388,298794,319100],AA:[287190,309527,328673,351010],AAA:[383413,385734,398295,451616]},
+    {id:'ODH',nombre:'Adicional Traslado a Sitios (ODH)',unidad:'Sitio',
+      nokia:[3678500,3678500,3678500,3678500],A:[2574950,2574950,2942800,2942800],AA:[2574950,2574950,2942800,2942800],AAA:[2574950,2574950,2942800,2942800]},
+  ],
+  CR:[
+    {id:'Carro_Canasta',nombre:'Carro Canasta',unidad:'Diario',
+      nokia:[1630968,1630968,1630968,1630968],A:[775912,775912,775912,775912],AA:[775912,775912,775912,775912],AAA:[775912,775912,775912,775912]},
+    {id:'Andamios',nombre:'Andamios',unidad:'Diario',
+      nokia:[364001,364001,364001,364001],A:[173169,173169,173169,173169],AA:[173169,173169,173169,173169],AAA:[173169,173169,173169,173169]},
+    {id:'Trasiego_Cat5',nombre:'Trasiego_Cuadrilla_Categoria_5',unidad:'Diario',
+      nokia:[314564,314564,314564,314564],A:[149650,149650,149650,149650],AA:[149650,149650,149650,149650],AAA:[149650,149650,149650,149650]},
+    {id:'Trasiego_Cat6',nombre:'Trasiego_Cuadrilla_Categoria_6',unidad:'Diario',
+      nokia:[672219,672219,672219,672219],A:[319800,319800,319800,319800],AA:[319800,319800,319800,319800],AAA:[319800,319800,319800,319800]},
+    {id:'Trasiego_HW_CP_CS',nombre:'Trasiegos HW Ciudad_Principal y Ciudad_Secundaria',unidad:'Sitio',
+      nokia:[0,0,0,0],A:[0,0,0,0],AA:[0,0,0,0],AAA:[0,0,0,0]},
+    {id:'Trasiego_HW_CI_DA',nombre:'Trasiegos HW Ciudad_Intermedia y Difícil Acceso',unidad:'Sitio',
+      nokia:[0,0,2206259,4213955],A:[0,0,0,0],AA:[0,0,0,0],AAA:[0,0,0,0]},
+    {id:'Trasiegos_Power',nombre:'Trasiegos Power',unidad:'Sitio',
+      nokia:[0,0,2206259,4213955],A:[0,0,0,0],AA:[0,0,0,0],AAA:[0,0,0,0]},
+    {id:'Mov_Cuadrillas',nombre:'Movimiento de Cuadrillas Regionales',unidad:'Sitio',
+      nokia:[0,0,0,0],A:[0,0,0,0],AA:[0,0,0,0],AAA:[0,0,0,0]},
+    {id:'Riesgo_Bio_Poda',nombre:'Riesgo Biológico_Poda',unidad:'Sitio',
+      nokia:[474000,474000,474000,474000],A:[225500,225500,225500,225500],AA:[225500,225500,225500,225500],AAA:[225500,225500,225500,225500]},
+    {id:'Riesgo_Bio_Fumig',nombre:'Riesgo Biológico_Fumigación',unidad:'Sitio',
+      nokia:[736856,736856,736856,736856],A:[280440,280440,280440,280440],AA:[280440,280440,280440,280440],AAA:[280440,280440,280440,280440]},
+    {id:'Rec_Bodega_Antenas',nombre:'Recolección de HW en Bodega_Antenas',unidad:'Unidad',
+      nokia:[458761,458761,458761,458761],A:[152775,152775,152775,152775],AA:[152775,152775,152775,152775],AAA:[152775,152775,152775,152775]},
+    {id:'Rec_Bodega_Modulos',nombre:'Recolección de HW en Bodega_Módulos',unidad:'Unidad',
+      nokia:[326230,326230,326230,326230],A:[108640,108640,108640,108640],AA:[108640,108640,108640,108640],AAA:[108640,108640,108640,108640]},
+    {id:'Log_Inv_HW_Falla_Ant',nombre:'Logística_Inversa_HW_Falla_Antenas',unidad:'Unidad',
+      nokia:[458761,504637,550513,715667],A:[40000,40000,40000,40000],AA:[40000,40000,40000,40000],AAA:[40000,40000,40000,40000]},
+    {id:'Log_Inv_HW_Falla_Mod',nombre:'Logística_Inversa_HW_Falla_Módulos',unidad:'Unidad',
+      nokia:[458761,504637,550513,715667],A:[40000,40000,40000,40000],AA:[40000,40000,40000,40000],AAA:[40000,40000,40000,40000]},
+    {id:'Revisitas',nombre:'Revisitas',unidad:'Unidad',
+      nokia:[1237556,1237556,1732578,2119341],A:[380000,380000,855000,855000],AA:[418000,418000,940500,940500],AAA:[688751,688751,924252,1108250]},
+    {id:'Stand_BY',nombre:'Stand BY',unidad:'Unidad',
+      nokia:[0,0,0,728237],A:[0,0,0,485030],AA:[0,0,0,533533],AAA:[0,0,0,596450]},
+    {id:'SISO_dia',nombre:'SISO x día ciudad no base',unidad:'Diario',
+      nokia:[613299,613299,613299,613299],A:[291769,291769,291769,291769],AA:[291769,291769,291769,291769],AAA:[291769,291769,291769,291769]},
+    {id:'SISO_semana',nombre:'SISO x semana ciudad no base',unidad:'Semanal',
+      nokia:[3430133,3430133,3430133,3430133],A:[1631843,1631843,1631843,1631843],AA:[1631843,1631843,1631843,1631843],AAA:[1631843,1631843,1631843,1631843]},
+    {id:'SISO_dia_base',nombre:'SISO x día ciudad base (Bogotá/Barranquilla/Cali)',unidad:'Diario',
+      nokia:[439621,439621,439621,439621],A:[209144,209144,209144,209144],AA:[209144,209144,209144,209144],AAA:[209144,209144,209144,209144]},
+    {id:'SISO_semana_base',nombre:'SISO x semana ciudad base (Bogotá/Barranquilla/Cali)',unidad:'Semanal',
+      nokia:[2417919,2417919,2417919,2417919],A:[1150294,1150294,1150294,1150294],AA:[1150294,1150294,1150294,1150294],AAA:[1150294,1150294,1150294,1150294]},
+    {id:'Trasiego_HW_Falla_Mod',nombre:'Trasiego de HW en falla_Módulos',unidad:'Módulos',
+      nokia:[290625,290625,290625,290625],A:[145312,145312,145312,145312],AA:[145312,145312,145312,145312],AAA:[145312,145312,145312,145312]},
+    {id:'Transporte_Escalera',nombre:'Transporte Escalera',unidad:'Diario',
+      nokia:[252239,252239,252239,302688],A:[126119,126119,126119,151344],AA:[126119,126119,126119,151344],AAA:[126119,126119,126119,151344]},
+    {id:'HW_baja_6kg',nombre:'Paquete de HW de baja no Nokia hasta 6Kg de peso',unidad:'Sitio',
+      nokia:[109485,109485,109485,109485],A:[54742,54742,54742,54742],AA:[54742,54742,54742,54742],AAA:[54742,54742,54742,54742]},
+    {id:'HW_baja_15kg',nombre:'Paquete de HW de baja no Nokia hasta 15Kg de peso',unidad:'Sitio',
+      nokia:[266873,266873,266873,266873],A:[133436,133436,133436,133436],AA:[133436,133436,133436,133436],AAA:[133436,133436,133436,133436]},
+    {id:'HW_baja_20kg',nombre:'Paquete de HW de baja no Nokia hasta 20Kg de Peso',unidad:'Sitio',
+      nokia:[337582,337582,337582,337582],A:[168791,168791,168791,168791],AA:[168791,168791,168791,168791],AAA:[168791,168791,168791,168791]},
+    {id:'HW_baja_25kg',nombre:'Paquete de HW de baja no Nokia hasta 25Kg de Peso',unidad:'Sitio',
+      nokia:[417416,417416,417416,417416],A:[208708,208708,208708,208708],AA:[208708,208708,208708,208708],AAA:[208708,208708,208708,208708]},
+    {id:'HW_baja_50kg',nombre:'Paquete de HW de baja no Nokia hasta 50Kg de Peso',unidad:'Sitio',
+      nokia:[626124,626124,626124,626124],A:[313062,313062,313062,313062],AA:[313062,313062,313062,313062],AAA:[313062,313062,313062,313062]},
+    {id:'Trasiego_paq_25kg',nombre:'Trasiegos de paquetes hasta 25 KG',unidad:'Sitio',
+      nokia:[290625,290625,290625,290625],A:[145312,145312,145312,145312],AA:[145312,145312,145312,145312],AAA:[145312,145312,145312,145312]},
+    {id:'Trasiego_paq_25kg_mas',nombre:'Trasiegos de paquetes de más de 25KG',unidad:'Sitio',
+      nokia:[581251,581251,581251,581251],A:[290625,290625,290625,290625],AA:[290625,290625,290625,290625],AAA:[290625,290625,290625,290625]},
+    {id:'Transp_terrazas',nombre:'Transporte equipos a terrazas y azoteas',unidad:'Sitio',
+      nokia:[315300,315300,315300,315300],A:[157650,157650,157650,157650],AA:[157650,157650,157650,157650],AAA:[157650,157650,157650,157650]},
+    {id:'Trasiego_log_inv_Semov',nombre:'Trasiego logística inversa Semovientes/Acompañamiento/Coteros/Especiales',unidad:'Kilogramo',
+      nokia:[1681,1681,1681,1681],A:[840,840,840,840],AA:[840,840,840,840],AAA:[840,840,840,840]},
+    {id:'Trasiego_log_inv_Fluv',nombre:'Trasiego logística inversa Fluviales y Marítimos',unidad:'Kilogramo',
+      nokia:[2627,2627,2627,2627],A:[1313,1313,1313,1313],AA:[1313,1313,1313,1313],AAA:[1313,1313,1313,1313]},
+    {id:'Tapas_ASIx',nombre:'Tapas ASIx/ABIx',unidad:'Tapa',
+      nokia:[52550,52550,52550,52550],A:[26275,26275,26275,26275],AA:[26275,26275,26275,26275],AAA:[26275,26275,26275,26275]},
+    {id:'Bodegaje_HW',nombre:'Bodegaje temporal de HW durante Implementación',unidad:'Sitio',
+      nokia:[0,0,0,0],A:[0,0,0,0],AA:[0,0,0,0],AAA:[0,0,0,0]},
+    {id:'REUB_RF_AHFIHA',nombre:'REUB_RF_AHFIHA',unidad:'Unidad',
+      nokia:[449056,462527,499530,549483],A:[213632,220041,237645,261409],AA:[213632,220041,237645,261409],AAA:[324632,362041,379645,385409]},
+  ]
+};
+
+let _subcLoadedFromSupabase=false;
+let _catSyncInProgress=false;
+let SUBCS=[
+  {lc:'ALVARO GONZALEZ',empresa:'ALVARO GONZALEZ',cat:'A',tel:'3165363197',email:'algo.65@hotmail.com',tipoCuadrilla:'TI Scytel'},
+  {lc:'JOSE DORRONSORO',empresa:'JOSE DORRONSORO',cat:'A',tel:'3113782638',email:'Josedorronsorobuitrago@gmail.com',tipoCuadrilla:'TI Scytel'},
+  {lc:'EDWIN GIRALDO',empresa:'EDWIN GIRALDO',cat:'A',tel:'3148119240',email:'Edwin.giraldo@telcobras.com',tipoCuadrilla:'TI Scytel'},
+  {lc:'EDRYS CUBILLOS',empresa:'EDRYS CUBILLOS',cat:'AAA',tel:'3106310653',email:'',tipoCuadrilla:'TI Scytel'},
+  {lc:'ERASMO VUELBAS',empresa:'TECNITEL',cat:'A',tel:'3223685144',email:'Erasmo.buelvas@telcobras.com',tipoCuadrilla:'TI Scytel'},
+  {lc:'CARLOS RODRIGUEZ',empresa:'CARLOS RODRIGUEZ',cat:'A',tel:'',email:'cuadrilla5sfd@gmail.com',tipoCuadrilla:'TI Ingetel'},
+  {lc:'YORMAN ORTEGA',empresa:'INGETEL',cat:'A',tel:'',email:'yormano643@gmail.com',tipoCuadrilla:'TI Ingetel'},
+  {lc:'MOISES LADINO',empresa:'MOISES LADINO',cat:'A',tel:'3107484812',email:'moises.av.ladino@gmail.com',tipoCuadrilla:'TI Scytel'},
+  {lc:'JOHAN BOLAÑO',empresa:'JOHAN BOLAÑO',cat:'A',tel:'3202110727',email:'Jbolanos@ingenieros.com',tipoCuadrilla:'TI Scytel'},
+  {lc:'FELIX ZEA',empresa:'EDRYS CUBILLOS',cat:'AAA',tel:'',email:'',tipoCuadrilla:'TI Scytel'},
+  {lc:'JOHAN VELOZA',empresa:'JOHAN VELOZA',cat:'A',tel:'3112401831',email:'johandavidveloza@gmail.com',tipoCuadrilla:'TI Scytel'},
+  {lc:'INGETEL (Cuadrilla Propia)',empresa:'INGETEL',cat:'INGETEL',tel:'',email:'',tipoCuadrilla:'TI Ingetel'},
+  {lc:'BALDOMIRO BENAVIDES',empresa:'BALDOMIRO BENAVIDES',cat:'A',tel:'3152303678',email:'',tipoCuadrilla:'TI Scytel'},
+  {lc:'JECSON FESTES',empresa:'JECSON FESTES',cat:'A',tel:'',email:'',tipoCuadrilla:'TI Ingetel'},
+  {lc:'JHON ALVARO MUÑOZ',empresa:'INGETEL',cat:'A',tel:'',email:'',tipoCuadrilla:'TI Ingetel'},
+  {lc:'EDISON CANO',empresa:'INGETEL',cat:'A',tel:'3128369503',email:'',tipoCuadrilla:'TI Ingetel'},
+  {lc:'JONATAN ANGARITA',empresa:'JONATAN ANGARITA',cat:'A',tel:'3202855500',email:'',tipoCuadrilla:'TI Scytel'},
+  {lc:'JOSE GREGORIO ATILANO',empresa:'JOSE DORRONSORO',cat:'A',tel:'',email:'',tipoCuadrilla:'TI Scytel'},
+  {lc:'ELIAS GUILLERMO ANDRADE',empresa:'JAVIER PUELLO',cat:'A',tel:'3016395679',email:'',tipoCuadrilla:'TI Scytel'},
+];
+
+// Auth handled by Supabase
+const SUPA_URL = 'https://ifmtkoguxbugvbhlvtwc.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlmbXRrb2d1eGJ1Z3ZiaGx2dHdjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxMjQ3MjEsImV4cCI6MjA4OTcwMDcyMX0.BS_u-8cv1j_2FrE-H95R8zWxyvzKHKhLlhqmSle7RrA';
+let _supaClient = null;
+function getSupabase(){
+  if(!_supaClient && window.supabase)
+    _supaClient = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+  return _supaClient;
+}
+const USE_SUPABASE = true;
+let ST={
+  user:'',role:'',isAdmin:false,isViewer:false,
+  sitios:[{"id":"CAL.Vallegrande-2","nombre":"CAL.Vallegrande-2","tipo":"TI","fecha":"2026-01-01","ciudad":"Ciudad_Principal","lc":"JOHAN VELOZA","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":5.0,"unidad":"Unidad"},{"id":"IMP_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":5.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":2.0,"unidad":"Unidad"},{"id":"IMP_RF","sec":"5G","tipo":"BASE","cant":3.0,"unidad":"Unidad"},{"id":"IMP_Rectificador","sec":"ADJ","tipo":"ADJ","cant":1.0,"unidad":"Sitio"}]},{"id":"CAU.Santa Leticia","nombre":"CAU.Santa Leticia","tipo":"TI","fecha":"2026-01-23","ciudad":"Dificil Acceso","lc":"ALVARO GONZALEZ","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":4.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":3.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"Logistica_Inversa_Antenas","sec":"ADJ","tipo":"ADJ","cant":1.0,"unidad":"Unidad"}]},{"id":"FLO.Ciudadela-2","nombre":"FLO.Ciudadela-2","tipo":"TI","fecha":"2026-02-01","ciudad":"Ciudad_Principal","lc":"MOISES LADINO","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":8.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"Logistica_Inversa_Antenas","sec":"ADJ","tipo":"ADJ","cant":2.0,"unidad":"Unidad"}]},{"id":"FLO.Berlin","nombre":"FLO.Berlin","tipo":"TI","fecha":"2026-02-03","ciudad":"Ciudad_Intermedia","lc":"ALVARO GONZALEZ","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":3.0,"unidad":"Unidad"}]},{"id":"NAR.Leiva-2","nombre":"NAR.Leiva-2","tipo":"TI","fecha":"2026-02-07","ciudad":"Ciudad_Intermedia","lc":"JECSON ANDRES FESTES","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":4.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":3.0,"unidad":"Unidad"},{"id":"Logistica_Inversa_Antenas","sec":"ADJ","tipo":"ADJ","cant":2.0,"unidad":"Unidad"}]},{"id":"TOL.El Vergel","nombre":"TOL.El Vergel","tipo":"TI","fecha":"2026-02-09","ciudad":"Dificil Acceso","lc":"JOHAN VELOZA","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":4.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":3.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"Logistica_Inversa_Antenas","sec":"ADJ","tipo":"ADJ","cant":1.0,"unidad":"Unidad"}]},{"id":"FLO.Bocana-2","nombre":"FLO.Bocana-2","tipo":"TI","fecha":"2026-02-09","ciudad":"Ciudad_Intermedia","lc":"MOISES LADINO","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":7.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"Logistica_Inversa_Antenas","sec":"ADJ","tipo":"ADJ","cant":3.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":2.0,"unidad":"Unidad"}]},{"id":"FLO.Villa Monica","nombre":"FLO.Villa Monica","tipo":"TI","fecha":"2026-02-09","ciudad":"Ciudad_Intermedia","lc":"ALVARO GONZALEZ","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"}]},{"id":"VAL.Yumbo-2","nombre":"VAL.Yumbo-2","tipo":"TI","fecha":"2026-01-01","ciudad":"Ciudad_Principal","lc":"JHON ALVARO MUÑOZ","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":8.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":8.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":2.0,"unidad":"Unidad"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":8.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":8.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":2.0,"unidad":"Unidad"}]},{"id":"POP.La Esmeralda","nombre":"POP.La Esmeralda","tipo":"TI","fecha":"2026-02-16","ciudad":"Ciudad_Secundaria","lc":"JECSON  FESTES","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":9.0,"unidad":"Unidad"}]},{"id":"CAD.Guarinocito","nombre":"CAD.Guarinocito","tipo":"TI","fecha":"2026-02-19","ciudad":"Dificil Acceso","lc":"Baldomiro Benavides (Esp)","cat":"AA","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":5.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"}]},{"id":"CAQ.Getucha","nombre":"CAQ.Getucha","tipo":"TI","fecha":"2026-02-19","ciudad":"Dificil Acceso","lc":"ALVARO GONZALEZ","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":9.0,"unidad":"Unidad"},{"id":"IMP_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":4.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":3.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":2.0,"unidad":"Unidad"}]},{"id":"TOL.Chaparral","nombre":"TOL.Chaparral","tipo":"TI","fecha":"2026-02-23","ciudad":"Ciudad_Intermedia","lc":"JOHAN VELOZA","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":5.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":2.0,"unidad":"Unidad"}]},{"id":"TOL.Mariquita","nombre":"TOL.Mariquita","tipo":"TI","fecha":"2026-02-24","ciudad":"Ciudad_Intermedia","lc":"JECSON  FESTES","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":4.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":5.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":2.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":3.0,"unidad":"Unidad"}]},{"id":"CAL.Compartir","nombre":"CAL.Compartir","tipo":"TI","fecha":"2026-03-01","ciudad":"Ciudad_Principal","lc":"MOISES LADINO","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":8.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":7.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":3.0,"unidad":"Unidad"}]},{"id":"CAQ.Doncello","nombre":"CAQ.Doncello","tipo":"TI","fecha":"2026-03-06","ciudad":"Dificil Acceso","lc":"ALVARO GONZALEZ","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"IMP_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":3.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":2.0,"unidad":"Unidad"}]},{"id":"NAR.Tumaco-2","nombre":"NAR.Tumaco-2","tipo":"TI","fecha":"2026-03-09","ciudad":"Ciudad_Intermedia","lc":"BALDOMIRO BENAVIDES","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":7.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":10.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":3.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":2.0,"unidad":"Unidad"}]},{"id":"HUI.Palestina-2","nombre":"HUI.Palestina-2","tipo":"TI","fecha":"2026-03-09","ciudad":"Ciudad_Intermedia","lc":"JECSON  FESTES","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":4.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":2.0,"unidad":"Unidad"},{"id":"Logistica_Inversa_Antenas","sec":"ADJ","tipo":"ADJ","cant":1.0,"unidad":"Unidad"}]},{"id":"ANT.Pueblo Nuevo","nombre":"ANT.Pueblo Nuevo","tipo":"TI","fecha":"2026-03-14","ciudad":"Ciudad_Intermedia","lc":"JOSE DORRONSORO","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":5.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Unidad"},{"id":"Logistica_Inversa_Antenas","sec":"ADJ","tipo":"ADJ","cant":6.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":1.0,"unidad":"Unidad"}]},{"id":"CAL.Prados del Sur","nombre":"CAL.Prados del Sur","tipo":"TI","fecha":"2026-03-14","ciudad":"Ciudad_Principal","lc":"MOISES LADINO","cat":"A","tiene_cw":false,"cw_nokia":0,"cw_costo":0,"costos":{"backoffice":0},"actividades":[{"id":"PM","sec":"MODERNIZACION","tipo":"BASE","cant":1.0,"unidad":"Sitio"},{"id":"IMP_RF","sec":"MODERNIZACION","tipo":"BASE","cant":6.0,"unidad":"Unidad"},{"id":"DESMONTE_RF","sec":"MODERNIZACION","tipo":"BASE","cant":7.0,"unidad":"Unidad"},{"id":"DESMONTE_BB","sec":"MODERNIZACION","tipo":"BASE","cant":2.0,"unidad":"Unidad"},{"id":"Logistica_Inversa_Antenas","sec":"ADJ","tipo":"ADJ","cant":3.0,"unidad":"Unidad"},{"id":"REUB_RF_Airscale_AHPCx","sec":"ADJ","tipo":"ADJ","cant":3.0,"unidad":"Unidad"}]}],
+  gastos:[]
+};
+const _DEFAULT_SITIOS_COUNT=20;
+
+// ============================================================
+// HELPERS
+// ============================================================
+const cop=v=>v==null||v===''?'—':'$'+Math.round(v).toLocaleString('es-CO');
+const copInput=v=>v==null?'':Math.round(v).toLocaleString('es-CO');
+const pct=v=>v==null?'—':(v*100).toFixed(1)+'%';
+const mcls=v=>v>=.3?'bg-g':v>=.2?'bg-o':'bg-r';
+// tipoCuadrilla filter match helper
+function hasSN(s){return !!(s&&s.actividades&&s.actividades.some(function(a){return a.sec==='SITIO NUEVO'||a.sec==='SITIO_NUEVO';}));}
+function tipoBadge(s){
+  if(hasSN(s)) return '<span class="badge" style="background:#1a1a1a;color:#fff;font-size:8px">TI (SN)</span>';
+  if(s.tipo==='TSS') return '<span class="badge bg-b" style="font-size:8px">TSS</span>';
+  return '<span class="badge bg-k" style="font-size:8px">TI</span>';
+}
+function matchTipoCuadrilla(s, filTC){
+  if(!filTC||filTC==='todos') return true;
+  const sub=SUBCS.find(x=>x.lc===s.lc);
+  const tc=sub?.tipoCuadrilla||'TI Ingetel';
+  if(filTC==='Ingetel') return tc==='TI Ingetel'||tc==='TSS Ingetel';
+  if(filTC==='Scytel')  return tc==='TI Scytel'||tc==='TSS Scytel';
+  if(filTC==='TI')      return tc==='TI Ingetel'||tc==='TI Scytel';
+  if(filTC==='TSS')     return tc==='TSS Ingetel'||tc==='TSS Scytel';
+  return tc===filTC;
+}
+const mfcls=v=>v>=.3?'':v>=.2?'warn':'dang';
+function toast(m,t='ok'){const el=document.getElementById('toast');el.textContent=m;el.style.borderLeftColor=t==='err'?'#c0392b':'#1a9c1a';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800)}
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+document.querySelectorAll('.mo').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+
+function showScreen(name,btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nt').forEach(t=>t.classList.remove('active'));
+  const scr=document.getElementById('screen-'+name);
+  if(!scr){console.warn('Screen not found:',name);return;}
+  scr.classList.add('active');
+  if(btn)btn.classList.add('active');
+  if(name==='dashboard')renderDashboard();
+  else if(name==='sitios')renderConsolidado();
+  else if(name==='sitios-tss')renderConsolidadoTSS();
+  else if(name==='gastos')renderGastos();
+  else if(name==='catalogo')renderCatalogo();
+  else if(name==='config')renderConfigEmpresa();
+  else if(name==='reportes')renderReportes();
+  else if(name==='analitica')renderAnalitica();
+  else if(name==='liquidador')initSelLiq();
+}
+
+// ============================================================
+// LOGIN
+// ============================================================
+async function doLogin(){
+  const email=document.getElementById('login-email').value.trim();
+  const password=document.getElementById('login-password').value;
+  const _e=document.getElementById('login-err');
+  const btn=document.getElementById('login-btn');
+  _e.style.display='none';
+  if(!email){_e.textContent='Ingresa tu email';_e.style.display='block';return;}
+  if(!password){_e.textContent='Ingresa tu contraseña';_e.style.display='block';return;}
+  btn.textContent='Ingresando...';btn.disabled=true;
+  try{
+    const supa=getSupabase();
+    const {data,error}=await supa.auth.signInWithPassword({email,password});
+    if(error){
+      _e.textContent='Credenciales incorrectas';
+      _e.style.display='block';
+      document.getElementById('login-password').value='';
+      btn.textContent='Ingresar';btn.disabled=false;
+      return;
+    }
+    const {data:roleData}=await supa.from('user_roles')
+      .select('role,nombre').eq('user_id',data.user.id).single();
+    const role=roleData?.role||'operador';
+    const nombre=roleData?.nombre||email;
+    ST.user=email;ST.role=role;
+    ST.isAdmin=(role==='admin');ST.isViewer=(role==='viewer');
+    // Catálogo visible solo para admin
+    var navCat=document.getElementById('nav-catalogo');
+    if(navCat) navCat.style.display=ST.isAdmin?'':'none';
+    var navCfg=document.getElementById('nav-config');
+    if(navCfg) navCfg.style.display=ST.isAdmin?'':'none';
+    document.getElementById('login-overlay').style.display='none';
+    const badge=document.getElementById('hdr-user-badge');
+    const label=ST.isAdmin?'⚙ Admin':ST.isViewer?'👁 Viewer':'👤 Operador';
+    const badgeClass=ST.isAdmin?'ub-admin':ST.isViewer?'ub-viewer':'ub-op';
+    badge.textContent=label+' ▸ Salir';
+    badge.className='user-badge '+badgeClass;
+    document.body.classList.toggle('viewer-mode',ST.isViewer);
+    renderDashboard();
+    toast('Bienvenido, '+nombre);
+  }catch(e){
+    _e.textContent='Error de conexión';_e.style.display='block';
+    btn.textContent='Ingresar';btn.disabled=false;
+  }
+}
+async function doLogout(){
+  if(!confirm('¿Cerrar sesión?'))return;
+  const supa=getSupabase();
+  if(supa) await supa.auth.signOut();
+  ST.user='';ST.role='';ST.isAdmin=false;ST.isViewer=false;
+  var navCat=document.getElementById('nav-catalogo');
+  if(navCat) navCat.style.display='none';
+  var navCfg=document.getElementById('nav-config');
+  if(navCfg) navCfg.style.display='none';
+  document.body.classList.remove('viewer-mode');
+  // Reset login form completely
+  document.getElementById('login-overlay').style.display='flex';
+  document.getElementById('login-email').value='';
+  document.getElementById('login-password').value='';
+  document.getElementById('login-err').style.display='none';
+  const btn=document.getElementById('login-btn');
+  if(btn){btn.textContent='Ingresar';btn.disabled=false;}
+}
+
+// ============================================================
+// PRECIO LOOKUP
+// ============================================================
+function getPrecio(tipo,id,zona,cat,ciudadTSS){
+  const z=ZI[ciudadTSS||zona]??0;
+  const tipoN=(tipo==='BASE'||tipo==='TI')?'BASE':tipo==='ADJ'?'ADJ':'CR';
+  const primary=tipoN==='BASE'?CAT.BASE:tipoN==='ADJ'?CAT.ADJ:CAT.CR;
+  let def=primary.find(a=>a.id===id);
+  if(!def) def=CAT.BASE.find(a=>a.id===id)||CAT.ADJ.find(a=>a.id===id)||CAT.CR.find(a=>a.id===id);
+  if(!def)return{nokia:0,subc:0,def:null};
+  const nokia=def.nokia?.[z]||0;
+  const cats=['A','AA','AAA'];
+  const cv=cats.includes(cat)?cat:'A';
+  const subc=def[cv]?.[z]||0;
+  return{nokia,subc,def};
+}
+
+// ============================================================
+// CALC SITIO
+// ============================================================
+function calcSitio(sitio){
+  const cat=sitio.catEfectiva||sitio.cat||'A';
+  const isFinal=sitio.estado==='final';
+  const crExclSet=new Set(sitio.crSubcExcluded||[]);
+  let nokiaTI=0,nokiaADJ=0,nokiaCR=0,subcTI=0,subcADJ=0,subcCR=0;
+  const acts=sitio.actividades.map((act,actIdx)=>{
+    const p=isFinal&&act.snapNokia!=null
+      ?{nokia:act.snapNokia,subc:act.snapSubc,def:null}
+      :getPrecio(act.tipo,act.id,sitio.ciudad,cat,act.ciudad||null);
+    const tN=p.nokia*(act.cant||0),tS=p.subc*(act.cant||0);
+    const at=act.tipo||'BASE';
+    const subcExcluded=at==='CR'&&crExclSet.has(actIdx);
+    if(at==='CR'){nokiaCR+=tN;if(!subcExcluded)subcCR+=tS;}
+    else if(at==='ADJ'){nokiaADJ+=tN;subcADJ+=tS}
+    else{nokiaTI+=tN;subcTI+=tS}
+    return{...act,def:p.def||null,preNokia:p.nokia,preSubc:p.subc,
+           totalNokia:tN,totalSubc:subcExcluded?0:tS,subcExcluded};
+  });
+  const nokiaCW=sitio.cw_nokia||0,subcCW=sitio.cw_costo||0;
+  const totalVenta=nokiaTI+nokiaADJ+nokiaCW+nokiaCR;
+  const gastosS=ST.gastos.filter(g=>g.sitio===sitio.id);
+  const logist=gastosS.filter(g=>g.tipo==='Logistica').reduce((s,g)=>s+(g.valor||0),0);
+  const adicion=gastosS.filter(g=>g.tipo==='Adicionales').reduce((s,g)=>s+(g.valor||0),0);
+  const matTI=gastosS.filter(g=>g.tipo==='Materiales TI').reduce((s,g)=>s+(g.valor||0),0);
+  const matCW=gastosS.filter(g=>g.tipo==='Materiales CW').reduce((s,g)=>s+(g.valor||0),0);
+  const backoffice=sitio.costos?.backoffice||0;
+  // FIX #1: subcADJ now included in totalCosto
+  const totalCosto=subcTI+subcADJ+subcCR+subcCW+matTI+matCW+logist+adicion+backoffice;
+  const utilidad=totalVenta-totalCosto;
+  const margen=totalVenta>0?utilidad/totalVenta:0;
+  return{acts,nokiaTI,nokiaADJ,nokiaCW,nokiaCR,totalVenta,subcTI,subcADJ,subcCR,subcCW,matTI,matCW,logist,adicion,backoffice,totalCosto,utilidad,margen,cat};
+}
+
+// ============================================================
+// DASHBOARD
+// ============================================================
+function renderDashboard(){
+  const filTCDash=(document.getElementById('dash-tipo-cuadrilla')?.value)||'todos';
+  const filYear=fpGetYear('fp-dash');
+  const filMes=fpGetMes('fp-dash');
+  const sitiosDash=ST.sitios.filter(s=>{
+    if(!matchTipoCuadrilla(s,filTCDash)) return false;
+    if(filYear!=='todos'||filMes!=='todos'){
+      if(!s.fecha) return false;
+      const d=new Date(s.fecha);
+      if(filYear!=='todos'&&d.getFullYear()!==parseInt(filYear)) return false;
+      if(filMes!=='todos'&&d.getMonth()!==parseInt(filMes)) return false;
+    }
+    return true;
+  });
+  const calcs=sitiosDash.map(s=>({s,c:calcSitio(s)}));
+  const tV=calcs.reduce((s,x)=>s+x.c.totalVenta,0);
+  const tC=calcs.reduce((s,x)=>s+x.c.totalCosto,0);
+  const tU=tV-tC,avgM=tV>0?tU/tV:0;
+  const _mc=avgM>=0.3?'#1a7a1a':avgM>=0.2?'#FFC000':'#c0392b';
+  document.getElementById('stats-cards').innerHTML=`
+    <div class="stat">
+      <div class="sl">Total Sitios</div>
+      <div class="sv" style="font-size:24px;font-weight:500">${sitiosDash.length}</div>
+      <div class="ss">${sitiosDash.filter(s=>s.tipo==='TSS').length} TSS · ${sitiosDash.filter(s=>s.tipo==='TI').length} TI</div>
+    </div>
+    <div class="stat" style="border-color:var(--b)">
+      <div class="sl">Venta Nokia</div>
+      <div class="sv" style="font-size:17px;color:var(--b);font-weight:500">${cop(tV)}</div>
+      <div class="ss">TI+ADJ+CW+CR</div>
+    </div>
+    <div class="stat" style="border-color:var(--o)">
+      <div class="sl">Costo SubC</div>
+      <div class="sv" style="font-size:17px;color:var(--o);font-weight:500">${cop(tC)}</div>
+      <div class="ss">SubC+Mat+Log+Adic</div>
+    </div>
+    <div class="stat" style="border-color:#1a7a1a">
+      <div class="sl">Utilidad</div>
+      <div class="sv" style="font-size:17px;color:#1a7a1a;font-weight:500">${cop(tU)}</div>
+      <div class="ss">Margen: ${pct(avgM)}</div>
+    </div>
+    <div class="stat" style="border-color:${_mc}">
+      <div class="sl">Margen Promedio</div>
+      <div class="sv"><span style="font-size:20px;font-weight:500;color:${_mc}">${pct(avgM)}</span></div>
+      <div class="ss">Utilidad: ${cop(tU)}</div>
+    </div>`;
+  document.getElementById('tbody-dash').innerHTML=calcs.map(({s,c})=>`<tr>
+    <td style="white-space:nowrap"><strong>${s.nombre}</strong> ${tipoBadge(s)}${s.catEfectiva?' <span style="background:#7c3aed;color:#fff;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800">E</span>':''}</td>
+    <td style="font-size:10px">${s.lc}</td>
+    <td>${s.estado==='final'?'<span class="badge" style="background:#1a7a1a;color:#fff;font-size:9px;padding:2px 8px">FINAL</span>':'<span class="badge" style="background:#d68910;color:#fff;font-size:9px;padding:2px 8px">PRE</span>'}</td>
+    <td><span class="badge bg-b" style="font-size:8px">${s.ciudad==='varios'?'Var':s.ciudad.replace('Ciudad_','').substring(0,4)}</span></td>
+    <td class="num" style="color:var(--b);font-weight:700">${cop(c.totalVenta)}</td>
+    <td class="num" style="color:var(--o)">${cop(c.totalCosto)}</td>
+    <td class="num fw7 ${c.utilidad>=0?'tg':'tr'}">${cop(c.utilidad)}</td>
+    <td class="num"><span class="badge ${mcls(c.margen)}">${pct(c.margen)}</span></td>
+    <td><button class="btn bou btn-sm" onclick="abrirLiquidador('${s.id}')">Abrir</button></td>
+  </tr>`).join('');
+  document.getElementById('margen-bars').innerHTML=calcs.map(({s,c})=>`
+    <div style="margin-bottom:8px">
+      <div class="fb" style="margin-bottom:2px"><span style="font-size:10px;font-weight:600">${s.nombre}</span><span style="font-size:10px;color:var(--g4)">${pct(c.margen)}</span></div>
+      <div class="mbar"><div class="mfill ${mfcls(c.margen)}" style="width:${Math.min(c.margen*100,100)}%"></div></div>
+    </div>`).join('');
+  initFechaPicker('fp-dash', renderDashboard);
+}
+
+// ============================================================
+// CONSOLIDATED
+// ============================================================
+function renderConsolidado(){
+  const filTC='todos';
+  const filLCSit=(document.getElementById('fil-lc-sitios')?.value)||'';
+  const lcSelSit=document.getElementById('fil-lc-sitios');
+  if(lcSelSit){const cur=lcSelSit.value;const lcs=[...new Set(ST.sitios.filter(s=>matchTipoCuadrilla(s,filTC)).map(s=>s.lc).filter(Boolean))].sort();lcSelSit.innerHTML='<option value="">Todas las Cuadrillas (LC)</option>'+lcs.map(l=>`<option value="${l}" ${l===cur?'selected':''}>${l}</option>`).join('');if(cur)lcSelSit.value=cur;}
+  let tV=0,tC=0,tTI=0,tADJ=0,tCW=0,tCR=0,tSTC=0,tSCW=0,tMTI=0,tMCW=0,tLog=0,tAd=0,tMIMOtot=0;
+  const sitiosFiltrados=ST.sitios.filter(s=>{
+    if(!matchTipoCuadrilla(s,filTC)) return false;
+    if(filLCSit&&s.lc!==filLCSit) return false;
+    return true;
+  });
+  const rows=sitiosFiltrados.map(s=>{
+    const c=calcSitio(s),sub=SUBCS.find(x=>x.lc===s.lc);
+    // Calculate MIMO total from MIMO-section activities
+    const mimoTotal=s.actividades.filter(a=>a.sec==='MIMO').reduce((sum,a)=>{
+      const p=getPrecio(a.tipo||'BASE',a.id,s.ciudad,s.catEfectiva||s.cat,null);
+      return sum+p.nokia*(a.cant||0);
+    },0);
+    const adjTotal=s.actividades.filter(a=>a.sec==='ADJ'||a.tipo==='ADJ').reduce((sum,a)=>{
+      const p=getPrecio('ADJ',a.id,s.ciudad,s.catEfectiva||s.cat,null);
+      return sum+p.nokia*(a.cant||0);
+    },0);
+    tADJ+=adjTotal;
+    tV+=c.totalVenta;tC+=c.totalCosto;tTI+=c.nokiaTI;tADJ+=adjTotal;
+    tCW+=c.nokiaCW;tCR+=c.nokiaCR;tSTC+=c.subcTI;tSCW+=c.subcCW;
+    tMTI+=c.matTI;tMCW+=c.matCW;tLog+=c.logist;tAd+=c.adicion;
+    let tMIMO=0; tMIMO+=mimoTotal; tMIMOtot+=mimoTotal;
+    return`<tr>
+      <td style="white-space:nowrap"><strong>${s.nombre}</strong> ${tipoBadge(s)}${s.catEfectiva?` <span style="background:#7c3aed;color:#fff;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800">E</span>`:''}</td>
+      <td><span class="badge bg-b" style="font-size:8px">${(s.ciudad||'').replace('Ciudad_','').substring(0,4)}</span></td>
+      <td style="font-size:10px">${s.fecha}</td>
+      <td style="font-size:10px">${s.lc}</td>
+      <td><span class="badge bg-gl" style="font-size:8px">${s.catEfectiva||s.cat}</span></td>
+      <td class="num" style="background:#eff6ff">${cop(c.nokiaTI)}</td>
+      <td class="num" style="background:#eff6ff">${cop(adjTotal)}</td>
+      <td class="num" style="background:#eff6ff">${c.nokiaCW>0?cop(c.nokiaCW):'<span class="tm">N/A</span>'}</td>
+      <td class="num" style="background:#eff6ff">${cop(c.nokiaCR)}</td>
+      <td class="num fw7" style="background:#dbeafe;border-right:2px solid #93c5fd">${mimoTotal>0?cop(mimoTotal):'<span class="tm">$0</span>'}</td>
+      <td class="num" style="background:#fffbeb">${cop(c.subcTI)}</td>
+      <td class="num" style="background:#fffbeb">${c.subcCW>0?cop(c.subcCW):'<span class="tm">N/A</span>'}</td>
+      <td class="num" style="background:#fffbeb">${cop(c.matTI)}</td>
+      <td class="num" style="background:#fffbeb">${cop(c.matCW)}</td>
+      <td class="num" style="background:#fffbeb">${cop(c.logist)}</td>
+      <td class="num" style="background:#fffbeb;border-right:2px solid #fbbf24">${cop(c.adicion)}</td>
+      <td><button class="btn bou btn-sm" onclick="abrirLiquidador('${s.id}')">Abrir</button>
+      ${(s.estado!=='final')?'<button class="btn-del" onclick="eliminarSitio(\''+s.id+'\')">✕</button>':''}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tbody-cons').innerHTML=rows;
+  const tU=tV-tC,tM=tV>0?tU/tV:0;
+  document.getElementById('tfoot-cons').innerHTML=`<tr class="tr-tot">
+    <td colspan="5"><strong>TOTAL PROYECTO</strong></td>
+    <td class="num">${cop(tTI)}</td><td class="num">${cop(tADJ)}</td>
+    <td class="num">${cop(tCW)}</td><td class="num">${cop(tCR)}</td>
+    <td class="num fw8">${cop(tMIMOtot)}</td>
+    <td class="num">${cop(tSTC)}</td><td class="num">${cop(tSCW)}</td>
+    <td class="num">${cop(tMTI)}</td><td class="num">${cop(tMCW)}</td>
+    <td class="num">${cop(tLog)}</td><td class="num">${cop(tAd)}</td>
+    <td></td>
+  </tr>`;
+}
+
+// ============================================================
+// LIQUIDADOR - DOBLE CARD (Nokia + SubC)
+// ============================================================
+function renderConsolidadoTSS(){
+  const filTC='todos';
+  const filLC=(document.getElementById('tss-fil-lc')?.value)||'';
+  // Populate LC dropdown
+  const lcSel=document.getElementById('tss-fil-lc');
+  if(lcSel){const cur=lcSel.value;const lcs=[...new Set(ST.sitios.filter(s=>s.tipo==='TSS').map(s=>s.lc).filter(Boolean))].sort();lcSel.innerHTML='<option value="">Todas las Cuadrillas (LC)</option>'+lcs.map(l=>`<option value="${l}" ${l===cur?'selected':''}>${l}</option>`).join('');if(cur)lcSel.value=cur;}
+  const tss=ST.sitios.filter(s=>s.tipo==='TSS'&&matchTipoCuadrilla(s,filTC)&&(!filLC||s.lc===filLC));
+  let tV=0,tC=0;
+  const rows=tss.map(s=>{
+    const cc=calcSitio(s),sub=SUBCS.find(x=>x.lc===s.lc);
+    tV+=cc.totalVenta;tC+=cc.totalCosto;
+    return`<tr>
+      <td style="white-space:nowrap"><strong>${s.nombre}</strong> ${tipoBadge(s)}</td>
+      <td style="font-size:10px">${s.fecha||'—'}</td>
+      <td style="font-size:10px">${s.lc||'—'}</td>
+      <td><span class="badge bg-b" style="font-size:8px">${(s.ciudad||'').replace('Ciudad_','')}</span></td>
+      <td><span class="badge bg-gl" style="font-size:8px">${s.cat||'A'}</span></td>
+      <td class="num fw7" style="color:var(--b)">${cop(cc.totalVenta)}</td>
+      <td class="num" style="color:var(--o)">${cop(cc.totalCosto)}</td>
+      <td><button class="btn bou btn-sm" onclick="abrirLiquidador('${s.id}')">Abrir</button>
+      ${(s.estado!=='final')?'<button class="btn-del" onclick="eliminarSitio(\''+s.id+'\')">✕</button>':''}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('tbody-tss-cons').innerHTML=rows||'<tr><td colspan="8" class="tm" style="padding:20px;text-align:center">Sin sitios TSS</td></tr>';
+  const tU=tV-tC,tM=tV>0?tU/tV:0;
+  document.getElementById('tfoot-tss-cons').innerHTML=`<tr class="tr-tot">
+    <td colspan="5"><strong>TOTAL TSS</strong></td>
+    <td class="num fw8">${cop(tV)}</td><td class="num fw8">${cop(tC)}</td><td></td>
+  </tr>`;
+}
+function initSelLiq(){
+  const sel=document.getElementById('sel-liq');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— Seleccionar sitio —</option>'+
+    ST.sitios.map(s=>`<option value="${s.id}">${s.id} (${s.tipo})</option>`).join('');
+  if(cur){sel.value=cur;cargarSitio(cur)}
+}
+function abrirLiquidador(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nt').forEach(t=>t.classList.remove('active'));
+  document.getElementById('screen-liquidador').classList.add('active');
+  document.querySelectorAll('.nt')[2].classList.add('active');
+  initSelLiq();
+  document.getElementById('sel-liq').value=id;
+  cargarSitio(id);
+}
+function cargarSitio(id){
+  if(!id){document.getElementById('liq-tit').textContent='Selecciona un sitio';document.getElementById('liq-content').innerHTML='';return}
+  const s=ST.sitios.find(x=>x.id===id);if(!s)return;
+  document.getElementById('liq-tit').textContent=id;
+  saveState();
+  if(s.tipo==='TSS')renderLiqTSS(s);else renderLiqSitio(s);
+}
+
+function _crDelBtn(sid,idx,act,isNokia){
+  if(!isNokia&&(act.tipo==='CR'||act.sec==='CR'))
+    return '<button class="btn-del" title="Excluir de SubC" onclick="exclCRSubc(\''+sid+'\','+idx+')">✕ SubC</button>';
+  return '<button class="btn-del" onclick="delAct(\''+sid+'\','+idx+')">✕</button>';
+}
+function buildActTable(sitio,c,modo){
+  const isNokia=modo==='nokia';
+  const locked=sitio.estado==='final'; // ALL users: read-only when final
+  const crExcl=new Set(sitio.crSubcExcluded||[]);
+  const secciones={};
+  const filteredActs=modo==='subc'
+    ?c.acts.filter((a,i)=>a.id!=='PM'&&!(crExcl.has(i)&&(a.tipo==='CR'||a.sec==='CR')))
+    :c.acts;
+  filteredActs.forEach(act=>{const k=act.sec||'OTROS';if(!secciones[k])secciones[k]=[];secciones[k].push(act)});
+  let rows='';
+  for(const[sec,acts]of Object.entries(secciones)){
+    rows+=`<tr class="${isNokia?'tr-sect':'tr-sect-subc'}"><td colspan="6">${sec}</td></tr>`;
+    acts.forEach((act,i)=>{
+      const aIdx=sitio.actividades.indexOf(sitio.actividades.find(a=>a.id===act.id&&a.sec===act.sec&&a.tipo===act.tipo));
+      const pShow=modo==='nokia'?act.preNokia:act.preSubc;
+      const tShow=modo==='nokia'?act.totalNokia:act.totalSubc;
+      rows+=`<tr>
+        <td>${act.def?.nombre||act.nombre||act.id}</td>
+        <td><span class="badge bg-k">${act.def?.unidad||act.unidad||''}</span></td>
+        <td>${locked
+          ?`<span style="font-weight:600;padding:2px 8px;font-size:12px">${act.cant||0}</span>`
+          :`<input class="iq" type="number" value="${act.cant||0}" min="0" onchange="updCant('${sitio.id}',${aIdx},this.value)">`
+        }</td>
+        <td class="num">${cop(pShow)}</td>
+        <td class="num fw7" id="${modo==='nokia'?`act-tot-${sitio.id}-${aIdx}`:`act-tots-${sitio.id}-${aIdx}`}">${cop(tShow)}</td>
+        <td class="no-print">${locked?'':`
+          <button class="btn-edit" onclick="editAct('${sitio.id}',${aIdx})">✏</button>
+          ${_crDelBtn(sitio.id,aIdx,act,isNokia)}`
+        }</td>
+      </tr>`;
+    });
+  }
+
+  // CW row in subc card (when active)
+  if(modo==='subc'&&sitio.tiene_cw&&(sitio.cw_costo>0||sitio.cw_nokia>0)){
+    const cwVal=modo==='subc'?sitio.cw_costo:sitio.cw_nokia;
+    rows+=`<tr class="${isNokia?'tr-sect':'tr-sect-subc'}"><td colspan="6">CW</td></tr>`;
+    rows+=`<tr>
+      <td>${sitio.cw_conjunto?'CW en Conjunto':'CW Obra Civil'}</td>
+      <td><span class="badge bg-k">Sitio</span></td>
+      <td><input class="iq" type="number" value="1" disabled style="opacity:.5"></td>
+      <td class="num">${cop(sitio.cw_costo)}</td>
+      <td class="num fw7">${cop(sitio.cw_costo)}</td>
+      <td></td>
+    </tr>`;
+  }
+  if(modo==='nokia'&&sitio.tiene_cw&&sitio.cw_nokia>0){
+    rows+=`<tr class="${isNokia?'tr-sect':'tr-sect-subc'}"><td colspan="6">CW</td></tr>`;
+    rows+=`<tr>
+      <td>${sitio.cw_conjunto?'CW en Conjunto':'CW Obra Civil'}</td>
+      <td><span class="badge bg-k">Sitio</span></td>
+      <td><input class="iq" type="number" value="1" disabled style="opacity:.5"></td>
+      <td class="num">${cop(sitio.cw_nokia)}</td>
+      <td class="num fw7">${cop(sitio.cw_nokia)}</td>
+      <td></td>
+    </tr>`;
+  }
+
+  // Dynamic TOTAL label - only show categories that have values
+  const hasTI = c.nokiaTI>0||c.subcTI>0;
+  const hasADJ = c.nokiaADJ>0||(c.subcADJ||0)>0;
+  const hasCR = c.nokiaCR>0||(c.subcCR||0)>0;
+  const hasCW = sitio.tiene_cw&&(sitio.cw_nokia>0||sitio.cw_costo>0);
+  const parts=[];
+  if(hasTI)parts.push('TI');
+  if(hasADJ)parts.push('ADJ');
+  if(hasCR)parts.push('CR');
+  if(hasCW)parts.push('CW');
+  const totLabel=parts.length?'TOTAL '+parts.join('+'):'TOTAL';
+
+  const totNokia=c.nokiaTI+c.nokiaADJ+c.nokiaCR+(hasCW?sitio.cw_nokia:0);
+  const totSubc=c.subcTI+(c.subcADJ||0)+(c.subcCR||0)+(hasCW?sitio.cw_costo:0);
+  const totBg=isNokia?'#91A8A7':'#fef3c7';
+  const totClr=isNokia?'#000000':'#78350f';
+  rows+=`<tr style="background:${totBg};border-top:2px solid ${totClr}30">
+    <td colspan="3" style="padding:8px;font-weight:800;color:${totClr}">${totLabel}</td>
+    <td></td>
+    <td style="text-align:right;padding:8px;font-weight:900;font-size:13px;color:${totClr}" id="${isNokia?'liq-tot-nokia-row-':'liq-tot-subc-row-'}${sitio.id}">${cop(isNokia?totNokia:totSubc)}</td>
+    <td></td>
+  </tr>`;
+  return rows;
+}
+
+function renderLiqSitio(sitio){
+  const c=calcSitio(sitio);
+  const mc2=c.margen>=.3?'#1a7a1a':c.margen>=.2?'#FFC000':'#c0392b';
+  const gastosSitio=ST.gastos.filter(g=>g.sitio===sitio.id);
+
+  const _liqBadge=_getLiqBadge(sitio);
+  const _liqBtn=_getLiqBtn(sitio.id,sitio.estado);
+  const infoHeader=`
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-h" style="display:flex;justify-content:space-between;align-items:center">
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:1px">${sitio.nombre.toUpperCase()}</h2>
+        <div class="flex gap8" style="align-items:center">${_liqBadge} ${_liqBtn}</div>
+      </div>
+      <div class="card-b">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;overflow:hidden">
+          <div class="fg mb0"><label class="fl">Tipo Ciudad</label>
+            <select class="fc" style="border:2px solid #1a5276" ${sitio.estado==='final'?'disabled':''} onchange="updSitio('${sitio.id}','ciudad',this.value)">
+              ${ZONAS.map(z=>`<option value="${z}" ${sitio.ciudad===z?'selected':''}>${z.replace('Ciudad_','')}</option>`).join('')}
+            </select></div>
+          <div class="fg mb0"><label class="fl">LC / Subcontratista</label>
+            <select class="fc" style="border:2px solid #1a5276" ${sitio.estado==='final'?'disabled':''} onchange="updSitio('${sitio.id}','lc',this.value)">
+              ${SUBCS.map(s=>`<option value="${s.lc}" ${sitio.lc===s.lc?'selected':''}>${s.lc} (Cat ${s.cat})</option>`).join('')}
+            </select></div>
+          <div class="fg mb0"><label class="fl">Subir Categoría</label>
+            ${_catEspHtml(sitio)}
+          </div>
+          <div class="fg mb0"><label class="fl">Fecha</label>
+            <input type="date" class="fc" style="border:2px solid #1a5276;box-sizing:border-box;width:100%;max-width:100%;min-width:0" ${sitio.estado==='final'?'disabled':''} value="${sitio.fecha}" onchange="updSitio('${sitio.id}','fecha',this.value)">
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  const actRows=buildActTable(sitio,c,'nokia');
+  const actRowsSubc=buildActTable(sitio,c,'subc');
+
+  const addBtn=sitio.estado==='final'?'':`<button class="btn btn-sm no-print" style="background:#CDFBF2;color:#000000;font-weight:700" onclick="openAddAct('${sitio.id}')">＋ Actividad</button>`;
+  const addBtnSubc=sitio.estado==='final'?'':`<button class="btn btn-sm no-print" style="background:#FFC000;color:#000000;font-weight:700" onclick="openAddAct('${sitio.id}')">＋ Actividad</button>`;
+
+  // CW row
+  const cwLabel=sitio.cw_conjunto?'CW en Conjunto':sitio.tiene_cw?'Incluye CW':'Sin CW';
+  const cwBlock=`
+    <div class="card">
+      <div class="card-h" style="background:#144E4A;border-left-color:#CDFBF2"><h2 style="color:#CDFBF2">CW — Obra Civil</h2>
+        <span class="badge" style="background:#144E4A;color:#CDFBF2;border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700">${cwLabel}</span>
+      </div>
+      <div class="card-b">
+        ${sitio.tiene_cw?`<div class="g2">
+          <div class="fg mb0"><label class="fl" style="color:var(--b)">Valor CW Nokia (venta)</label>
+            <input class="fc" type="text" value="${copInput(sitio.cw_nokia||0)}"
+              oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+              onchange="updSitio('${sitio.id}','cw_nokia',parseInt(this.value.replace(/[^0-9]/g,''))||0)">
+          </div>
+          <div class="fg mb0"><label class="fl" style="color:#78350f">Costo CW SubContratista</label>
+            <input class="fc" type="text" value="${copInput(sitio.cw_costo||0)}"
+              oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+              onchange="updSitio('${sitio.id}','cw_costo',parseInt(this.value.replace(/[^0-9]/g,''))||0)">
+          </div>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn btn-sm no-print" style="background:#144E4A;color:#CDFBF2;font-weight:700" onclick="activarCW('${sitio.id}','individual')">＋ Cambiar a CW</button>
+          <button class="btn btn-sm no-print" style="background:#144E4A;color:#CDFBF2;font-weight:700" onclick="activarCW('${sitio.id}','conjunto')">Cambiar a CW en Conjunto</button>
+          <button class="btn btn-sm no-print" style="background:#C00000;color:#FFFFFF;font-weight:700" onclick="activarCW('${sitio.id}','no')">✕ Quitar CW</button>
+        </div>`
+        :`<div class="alert al-i mb0" style="margin-bottom:10px">Este sitio no incluye obra civil.</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-sm no-print" style="background:#144E4A;color:#CDFBF2;font-weight:700" onclick="activarCW('${sitio.id}','individual')">＋ Activar CW</button>
+          <button class="btn btn-sm no-print" style="background:#144E4A;color:#CDFBF2;font-weight:700" onclick="activarCW('${sitio.id}','conjunto')">Activar CW en Conjunto</button>
+        </div>`}
+      </div>
+    </div>`;
+
+  const gastosRows=gastosSitio.length?gastosSitio.map(g=>{
+    const gi=ST.gastos.indexOf(g);
+    return`<tr><td><span class="badge bg-o" style="font-size:9px">${g.tipo}</span></td>
+      <td style="font-size:10px">${g.desc}</td><td class="num">${cop(g.valor)}</td>
+      <td><button class="btn-del" onclick="eliminarGasto(${gi});cargarSitio('${sitio.id}')">✕</button></td></tr>`;
+  }).join(''):'<tr><td colspan="4" style="text-align:center;color:var(--g3);padding:10px;font-size:10px">Sin gastos</td></tr>';
+
+  const costoPanel=`
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-h" style="background:#FFD36C;border-left-color:#FFC000"><h2 style="color:#000">BackOffice</h2></div>
+      <div class="card-b">
+        <div class="fg mb0"><label class="fl">Costo BackOffice</label>
+          <input class="fc" type="text" id="inp-bo-${sitio.id}"
+            value="${copInput(sitio.costos?.backoffice||0)}"
+            oninput="fmtCopInput(this)"
+            onblur="updCosto('${sitio.id}','backoffice',this.value)"
+            style="border-color:#FFC000;font-weight:700">
+        </div>
+        <div style="font-size:10px;color:var(--g3);margin-top:4px">Gestión, coordinación y administración del sitio</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-h" style="background:#FFF0CE;border-left-color:#FFC000"><h2 style="color:#000">Costos Operativos</h2></div>
+      <div class="card-b">
+        <table style="width:100%;font-size:11px;margin-top:6px">
+          <tr><td style="color:var(--g4);padding:3px 0">SubC TI+ADJ+CR</td><td style="text-align:right;font-weight:600">${cop((c.subcTI||0)+(c.subcADJ||0)+(c.subcCR||0))}</td></tr>
+          <tr><td style="color:var(--g4);padding:3px 0">SubC CW</td><td style="text-align:right;font-weight:600">${c.subcCW>0?cop(c.subcCW):"N/A"}</td></tr>
+          <tr style="background:#FFFAEE"><td style="padding:3px 0;color:#000000;font-weight:700">Materiales TI</td><td style="text-align:right;font-weight:600">${cop(c.matTI)}</td></tr>
+          <tr style="background:#FFFAEE"><td style="padding:3px 0;color:#000000;font-weight:700">Materiales CW</td><td style="text-align:right;font-weight:600">${cop(c.matCW)}</td></tr>
+          <tr style="background:#FFFAEE"><td style="padding:3px 0;color:#000000;font-weight:700">Logística</td><td style="text-align:right;font-weight:600">${cop(c.logist)}</td></tr>
+          <tr style="background:#FFFAEE"><td style="padding:3px 0;color:#000000;font-weight:700">Adicionales</td><td style="text-align:right;font-weight:600">${cop(c.adicion)}</td></tr>
+          <tr style="background:#FFFAEE"><td style="padding:3px 0;color:#000000;font-weight:700">BackOffice</td><td style="text-align:right;font-weight:800;color:#000000" id="liq-bo-val-${sitio.id}">${cop(c.backoffice)}</td></tr>
+          <tr><td colspan="2"><hr class="div"></td></tr>
+          <tr><td style="font-weight:700">Total Costo</td><td style="text-align:right;font-weight:800;color:var(--r)" id="liq-tot-val-${sitio.id}">${cop(c.totalCosto)}</td></tr>
+        </table>
+      </div>
+    </div>`;
+
+  const resumenPanel=`
+    <div class="card">
+      <div class="card-h"><h2>Utilidad & Margen</h2></div>
+      <div class="card-b">
+        <table style="width:100%;font-size:12px">
+          <tr><td style="color:var(--b);font-weight:700">Total Venta Nokia</td><td style="text-align:right;font-weight:800;font-size:16px;color:var(--b)">${cop(c.totalVenta)}</td></tr>
+          <tr><td style="color:var(--r)">Total Costo</td><td style="text-align:right;font-weight:700;color:var(--r)" id="liq-tot2-val-${sitio.id}">${cop(c.totalCosto)}</td></tr>
+          <tr><td colspan="2"><hr class="div"></td></tr>
+          <tr><td style="font-weight:800">UTILIDAD</td><td style="text-align:right;font-weight:800;font-size:20px;color:${mc2}" id="liq-ut-val-${sitio.id}">${cop(c.utilidad)}</td></tr>
+        </table>
+        <div style="margin-top:10px">
+          <div class="fb" style="margin-bottom:3px"><span style="font-size:10px;font-weight:700">% MARGEN</span><span style="font-size:20px;font-weight:800;color:${mc2}" id="liq-mg-val-${sitio.id}">${pct(c.margen)}</span></div>
+          <div class="mbar"><div class="mfill ${mfcls(c.margen)}" id="liq-bar-${sitio.id}" style="width:${Math.min(c.margen*100,100)}%"></div></div>
+        </div>
+      </div>
+    </div>`;
+
+  const gastosCard=`
+    <div class="card">
+      <div class="card-h" style="background:#FFF0CE;border-left-color:#FFC000;color:#000;display:flex;justify-content:space-between;align-items:center"><h2>Gastos Registrados</h2>
+        <button class="btn bd no-print" style="margin-left:auto;border-radius:20px;font-weight:700" onclick="openGastoFor('${sitio.id}')">＋ Agregar Gasto</button>
+      </div>
+      <div style="padding:0"><table class="tbl">
+        <thead><tr style="background:#FFD36C">
+          <th style="background:#FFD36C!important;color:#000000!important">Tipo</th>
+          <th style="background:#FFD36C!important;color:#000000!important">Desc</th>
+          <th class="num" style="background:#FFD36C!important;color:#000000!important">Valor</th>
+          <th style="background:#FFD36C!important"></th>
+        </tr></thead>
+        <tbody>${gastosRows}</tbody>
+      </table></div>
+    </div>`;
+
+  document.getElementById('liq-content').innerHTML=`
+    ${infoHeader}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+      <!-- NOKIA CARD -->
+      <div>
+        <div class="card nokia-card">
+          <div class="card-h"><h2>NOKIA — Liquidación Venta</h2>${addBtn}</div>
+          <div style="padding:0;overflow-x:auto">
+            <table class="tbl tbl-nokia">
+              <thead><tr>
+                <th>Actividad</th><th>Unidad</th><th>Cant</th>
+                <th class="num th-nokia">P. Nokia</th><th class="num th-nokia">Total Nokia</th><th class="no-print"></th>
+              </tr></thead>
+              <tbody>${actRows}</tbody>
+            </table>
+          </div>
+        </div>
+        ${cwBlock}
+        <div class="card nokia-card">
+          <div class="card-h"><h2>Resumen Venta Nokia</h2></div>
+          <div class="card-b">
+            <table style="width:100%;font-size:11px">
+              <tr><td style="color:var(--g4);padding:3px 0">TI</td><td style="text-align:right;font-weight:600" id="liq-ti-val-${sitio.id}">${cop(c.nokiaTI)}</td></tr>
+              <tr><td style="color:var(--g4);padding:3px 0">ADJ</td><td style="text-align:right;font-weight:600" id="liq-adj-val-${sitio.id}">${cop(c.nokiaADJ)}</td></tr>
+              <tr><td style="color:var(--g4);padding:3px 0">CW Nokia</td><td style="text-align:right;font-weight:600">${c.nokiaCW>0?cop(c.nokiaCW):'N/A'}</td></tr>
+              <tr><td style="color:var(--g4);padding:3px 0">CR (Skytool)</td><td style="text-align:right;font-weight:600" id="liq-cr-val-${sitio.id}">${cop(c.nokiaCR)}</td></tr>
+              <tr><td colspan="2"><hr class="div"></td></tr>
+              <tr><td style="color:var(--b);font-weight:800">TOTAL VENTA</td><td style="text-align:right;font-weight:800;font-size:15px;color:var(--b)" id="liq-tv-val-${sitio.id}">${cop(c.totalVenta)}</td></tr>
+            </table>
+          </div>
+        </div>
+        ${resumenPanel}
+      </div>
+      <!-- SUBC CARD -->
+      <div>
+        <div class="card subc-card">
+          <div class="card-h" style="color:#000"><h2>SUBCONTRATISTA — Liquidación Pago</h2>${addBtnSubc}</div>
+          <div style="padding:0;overflow-x:auto">
+            <table class="tbl tbl-subc">
+              <thead><tr>
+                <th>Actividad</th><th>Unidad</th><th>Cant</th>
+                <th class="num th-subc">P. SubC</th><th class="num th-subc">Total SubC</th><th class="no-print"></th>
+              </tr></thead>
+              <tbody>${actRowsSubc}</tbody>
+            </table>
+          </div>
+        </div>
+        ${costoPanel}
+        ${gastosCard}
+      </div>
+    </div>`;
+}
+
+function renderLiqTSS(sitio){
+  const c=calcSitio(sitio);
+  const mc2=c.margen>=.3?'#1a7a1a':c.margen>=.2?'#FFC000':'#c0392b';
+  const rowsN=sitio.actividades.map((act,i)=>{
+    const p=getPrecio('BASE',act.id,null,sitio.cat,act.ciudad);
+    return`<tr>
+      <td><span class="badge bg-b">${act.id}</span></td>
+      <td>${act.sitioid||'—'}</td>
+      <td><select class="fc" style="font-size:10px;padding:2px 5px" onchange="updTSSAct('${sitio.id}',${i},'ciudad',this.value)">
+        ${ZONAS.map(z=>`<option value="${z}" ${act.ciudad===z?'selected':''}>${z.replace('Ciudad_','')}</option>`).join('')}
+      </select></td>
+      <td><input class="iq" type="number" value="${act.cant||0}" min="0"
+        onchange="updTSSAct('${sitio.id}',${i},'cant',this.value)"></td>
+      <td class="num">${cop(p.nokia)}</td>
+      <td class="num fw7">${cop(p.nokia*(act.cant||0))}</td>
+      <td><button class="btn-del" onclick="delTSSAct('${sitio.id}',${i})">✕</button></td>
+    </tr>`;
+  }).join('');
+  const rowsS=sitio.actividades.map((act,i)=>{
+    const p=getPrecio('BASE',act.id,null,sitio.cat,act.ciudad);
+    return`<tr>
+      <td><span class="badge bg-b">${act.id}</span></td>
+      <td>${act.sitioid||'—'}</td>
+      <td style="font-size:10px">${act.ciudad?.replace('Ciudad_','')||'—'}</td>
+      <td class="num">${act.cant||0}</td>
+      <td class="num">${cop(p.subc)}</td>
+      <td class="num fw7">${cop(p.subc*(act.cant||0))}</td>
+      <td></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('liq-content').innerHTML=`
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-h"><h2>${sitio.nombre} — TSS</h2><span class="badge bg-b">Technical Site Survey</span></div>
+      <div class="card-b">
+        <div class="g2">
+          <div class="fg mb0"><label class="fl">LC</label>
+            <select class="fc" onchange="updSitio('${sitio.id}','lc',this.value)">
+              ${SUBCS.map(s=>`<option value="${s.lc}" ${sitio.lc===s.lc?'selected':''}>${s.lc}</option>`).join('')}
+            </select></div>
+          <div class="fg mb0"><label class="fl">Fecha</label>
+            <input type="date" class="fc" value="${sitio.fecha}" onchange="updSitio('${sitio.id}','fecha',this.value)">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+      <div class="card nokia-card">
+        <div class="card-h"><h2>NOKIA — Liquidación TSS</h2>
+          <button class="btn bo btn-sm no-print" onclick="addTSSVisitaToSitio('${sitio.id}')">＋ Visita</button>
+        </div>
+        <div style="padding:0;overflow-x:auto">
+          <table class="tbl">
+            <thead><tr><th>Tipo</th><th>Sitio</th><th>Ciudad</th><th>Cant</th>
+              <th class="num th-nokia">P. Nokia</th><th class="num th-nokia">Total Nokia</th><th></th></tr></thead>
+            <tbody>${rowsN}</tbody>
+            <tfoot><tr class="tr-tot"><td colspan="5"><strong>Total Nokia</strong></td>
+              <td class="num">${cop(c.nokiaTI)}</td><td></td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="card subc-card">
+          <div class="card-h"><h2>SUBCONTRATISTA — Pago TSS</h2></div>
+          <div style="padding:0;overflow-x:auto">
+            <table class="tbl">
+              <thead><tr><th>Tipo</th><th>Sitio</th><th>Ciudad</th><th>Cant</th>
+                <th class="num th-subc">P. SubC</th><th class="num th-subc">Total SubC</th><th></th></tr></thead>
+              <tbody>${rowsS}</tbody>
+              <tfoot><tr class="tr-tot"><td colspan="5"><strong>Total SubC</strong></td>
+                <td class="num">${cop(c.subcTI)}</td><td></td></tr></tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-h"><h2>Resumen TSS</h2></div>
+          <div class="card-b">
+            <table style="width:100%;font-size:11px">
+              <tr><td style="color:var(--b);font-weight:700">Venta Nokia</td><td style="text-align:right;font-weight:800;color:var(--b)">${cop(c.nokiaTI)}</td></tr>
+              <tr><td style="color:#856404">Pago SubC</td><td style="text-align:right;font-weight:700;color:#856404">${cop(c.subcTI)}</td></tr>
+              <tr><td colspan="2"><hr class="div"></td></tr>
+              <tr><td style="font-weight:800">UTILIDAD</td><td style="text-align:right;font-weight:800;font-size:18px;color:${mc2}">${cop(c.utilidad)}</td></tr>
+            </table>
+            <div style="margin-top:8px">
+              <div class="fb" style="margin-bottom:2px"><span style="font-size:10px;font-weight:700">% MARGEN</span><span style="font-size:16px;font-weight:800;color:${mc2}">${pct(c.margen)}</span></div>
+              <div class="mbar"><div class="mfill ${mfcls(c.margen)}" style="width:${Math.min(c.margen*100,100)}%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ============================================================
+// ACTIVIDADES HELPERS
+// ============================================================
+const SECC_BASE=['MODERNIZACION','5G','MIMO','SITIO_NUEVO'];
+
+function updAddActList(){
+  const sec=document.getElementById('aa-sec').value;
+  const isBase=SECC_BASE.includes(sec);
+  const isCR=sec==='CR';
+  const lista=isBase?CAT.BASE:isCR?CAT.CR:CAT.ADJ;
+  const tipo=isBase?'BASE':isCR?'CR':'ADJ';
+  document.getElementById('aa-act').innerHTML=lista.map(a=>`<option value="${a.id}|${tipo}">${a.nombre} (${a.unidad})</option>`).join('');
+}
+
+let _addActSitioId='';
+function openAddAct(sid){
+  _addActSitioId=sid;
+  updAddActList();
+  openModal('m-add-act');
+}
+function confirmarAddAct(){
+  const val=document.getElementById('aa-act').value;
+  const[id,tipo]=val.split('|');
+  const sec=document.getElementById('aa-sec').value;
+  const cant=parseFloat(document.getElementById('aa-cant').value)||0;
+  const s=ST.sitios.find(x=>x.id===_addActSitioId);
+  if(s){s.actividades.push({sec,tipo,id,cant});saveState();closeModal('m-add-act');cargarSitio(_addActSitioId);toast('Actividad agregada')}
+}
+
+let _editIdx=-1,_editSid='';
+function editAct(sid,idx){
+  _editSid=sid;_editIdx=idx;
+  const s=ST.sitios.find(x=>x.id===sid);
+  const act=s.actividades[idx];
+  const isBase=act.tipo==='BASE';
+  const lista=isBase?CAT.BASE:act.tipo==='ADJ'?CAT.ADJ:CAT.CR;
+  document.getElementById('ea-act').innerHTML=lista.map(a=>`<option value="${a.id}" ${a.id===act.id?'selected':''}>${a.nombre}</option>`).join('');
+  document.getElementById('ea-cant').value=act.cant||0;
+  document.getElementById('ea-sec').value=act.sec||'MODERNIZACION';
+  openModal('m-edit-act');
+}
+function confirmarEditAct(){
+  const s=ST.sitios.find(x=>x.id===_editSid);
+  if(!s)return;
+  const act=s.actividades[_editIdx];
+  act.id=document.getElementById('ea-act').value;
+  act.cant=parseFloat(document.getElementById('ea-cant').value)||0;
+  act.sec=document.getElementById('ea-sec').value;
+  const newSec=act.sec;
+  act.tipo=SECC_BASE.includes(newSec)?'BASE':newSec==='ADJ'?'ADJ':'CR';
+  saveState();closeModal('m-edit-act');cargarSitio(_editSid);toast('Actividad actualizada');
+}
+function delAct(sid,idx){
+  const s=ST.sitios.find(x=>x.id===sid);
+  if(s){s.actividades.splice(idx,1);saveState();cargarSitio(sid);toast('Actividad eliminada')}
+}
+function setSitioEspecial(sid,catOver){
+  const s=ST.sitios.find(x=>x.id===sid);
+  if(!s) return;
+  if(catOver) s.catEfectiva=catOver; else delete s.catEfectiva;
+  saveState();
+  cargarSitio(sid);
+  toast(catOver?`Sitio especial: Cat ${catOver} aplicada`:'Categoría especial eliminada');
+}
+
+
+
+function _migrateExistingSites(){
+  var n=0;
+  ST.sitios.forEach(function(s){
+    if(!s.estado){
+      s.actividades.forEach(function(act){
+        if(act.snapNokia==null){
+          var p=getPrecio(act.tipo,act.id,s.ciudad,s.catEfectiva||s.cat,act.ciudad||null);
+          act.snapNokia=p.nokia; act.snapSubc=p.subc;
+          if(p.def&&!act.nombre) act.nombre=p.def.nombre;
+          if(p.def&&!act.unidad) act.unidad=p.def.unidad;
+        }
+      });
+      s.estado='pre'; n++;
+    }
+  });
+  if(n>0){ saveState(); console.log('Migrated '+n+' sites to Liquidación Final'); }
+}
+
+function _catEspHtml(sitio){
+  var baseCat=sitio.cat||'A';
+  var opts=baseCat==='A'?['AA','AAA']:baseCat==='AA'?['AAA']:[];
+  var disabled=baseCat==='AAA';
+  var q="'";
+  var sel='<select class="fc" style="border:2px solid #7c3aed" '+(disabled?'disabled':'')+' onchange="setSitioEspecial('+q+sitio.id+q+',this.value)">';
+  var curVal=sitio.catEfectiva||'';
+  sel+='<option value="" '+(curVal===''?'selected':'')+'>Categoría '+baseCat+(disabled?' (máx)':'')+'</option>';
+  opts.forEach(function(o){sel+='<option value="'+o+'" '+(curVal===o?'selected':'')+'>Subir a  '+o+' ⭐</option>';});
+  sel+='</select>';
+  var badge=sitio.catEfectiva?'<span style="background:#7c3aed;color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;margin-left:4px">E</span>':'';
+  return '<div style="display:flex;align-items:center;gap:4px">'+sel+badge+'</div>';
+}
+function _getLiqBadge(sitio){
+  if(sitio.estado==='final')
+    return '<span style="background:#1a7a1a;color:#fff;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:800">✓ LIQUIDACIÓN FINAL</span>';
+  return '<span style="background:#d68910;color:#fff;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:800">⏳ PRE LIQUIDACIÓN</span>';
+}
+function _getLiqBtn(sid,estado){
+  var q="'";
+  if(estado==='final'){
+    // Only admin can reopen
+    if(ST.isAdmin)
+      return '<button class="btn bou btn-sm no-print" style="font-size:9px;border-color:#c0392b;color:#c0392b" onclick="desmarcarLiquidado('+q+sid+q+')">↩ Reabrir</button>';
+    return '';
+  }
+  return '<button class="btn bp btn-sm no-print" style="font-size:9px;font-weight:700" onclick="marcarLiquidado('+q+sid+q+')">✓ Marcar Liquidación Final</button>';
+}
+function desmarcarLiquidado(sid){
+  const s=ST.sitios.find(x=>x.id===sid);if(!s)return;
+  s.estado='pre';
+  saveState();cargarSitio(sid);
+  toast('Sitio reabierto — PRE LIQUIDACIÓN');
+}
+function marcarLiquidado(sid){
+  const s=ST.sitios.find(x=>x.id===sid);if(!s)return;
+  s.actividades.forEach(act=>{
+    const p=getPrecio(act.tipo,act.id,s.ciudad,s.catEfectiva||s.cat,act.ciudad||null);
+    act.snapNokia=p.nokia;act.snapSubc=p.subc;
+    if(p.def&&!act.nombre)act.nombre=p.def.nombre;
+    if(p.def&&!act.unidad)act.unidad=p.def.unidad;
+  });
+  s.estado='final';saveState();cargarSitio(sid);
+  toast('✓ Liquidación Final — precios congelados');
+}
+function exclCRSubc(sid,idx){
+  const s=ST.sitios.find(x=>x.id===sid);if(!s)return;
+  if(!s.crSubcExcluded)s.crSubcExcluded=[];
+  if(!s.crSubcExcluded.includes(idx))s.crSubcExcluded.push(idx);
+  saveState();cargarSitio(sid);
+  toast('CR excluido del SubC — permanece en Nokia');
+}
+function updCant(sid,idx,val){
+  const s=ST.sitios.find(x=>x.id===sid);
+  if(!s||!s.actividades[idx]) return;
+  s.actividades[idx].cant=parseFloat(val)||0;
+  saveState();
+  // Live update all totals
+  const cc=calcSitio(s);
+  const mc=cc.margen>=.3?'#1a7a1a':cc.margen>=.2?'#FFC000':'#c0392b';
+  const set=(id,v)=>{const el=document.getElementById(id+sid);if(el)el.textContent=v;};
+  const setC=(id,clr)=>{const el=document.getElementById(id+sid);if(el)el.style.color=clr;};
+  // Per-row totals + sync SubC qty inputs to match Nokia qty
+  cc.acts.forEach((act,i)=>{
+    const nEl=document.getElementById(`act-tot-${sid}-${i}`);
+    const sEl=document.getElementById(`act-tots-${sid}-${i}`);
+    if(nEl) nEl.textContent=cop(act.totalNokia||0);
+    if(sEl) sEl.textContent=cop(act.totalSubc||0);
+    // Sync the SubC qty input (same activity, different card) if it exists
+    const subcQtyInputs=document.querySelectorAll(`#liq-content input.iq`);
+    subcQtyInputs.forEach(inp=>{
+      // Find inputs in the subc card (act-tots- prefix identifies subc rows)
+      const row=inp.closest('tr');
+      if(row){const totCell=row.querySelector(`[id="act-tots-${sid}-${i}"]`);if(totCell)inp.value=act.cant||0;}
+    });
+  });
+  // Summary totals
+  set('liq-ti-val-',cop(cc.nokiaTI));
+  set('liq-adj-val-',cop(cc.nokiaADJ));
+  set('liq-cr-val-',cop(cc.nokiaCR));
+  set('liq-tv-val-',cop(cc.totalVenta));
+  set('liq-subc-val-',cop(cc.subcTI+cc.subcADJ+cc.subcCR));
+  set('liq-tot-val-',cop(cc.totalCosto));
+  set('liq-tot2-val-',cop(cc.totalCosto));
+  // Update the TOTAL row in both Nokia and SubC act tables
+  const nTotRow=document.getElementById('liq-tot-nokia-row-'+sid);
+  const sTotRow=document.getElementById('liq-tot-subc-row-'+sid);
+  const hasCW=cc.nokiaCW>0||cc.subcCW>0;
+  const totNokia=cc.nokiaTI+cc.nokiaADJ+cc.nokiaCR+(hasCW?cc.nokiaCW:0);
+  const totSubc=(cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0)+(hasCW?cc.subcCW:0);
+  if(nTotRow) nTotRow.textContent=cop(totNokia);
+  if(sTotRow) sTotRow.textContent=cop(totSubc);
+  set('liq-ut-val-',cop(cc.utilidad)); setC('liq-ut-val-',mc);
+  set('liq-mg-val-',pct(cc.margen));   setC('liq-mg-val-',mc);
+  const bar=document.getElementById('liq-bar-'+sid);
+  if(bar){bar.style.width=Math.min(cc.margen*100,100)+'%';bar.style.background=mc;}
+}
+function updTSSAct(sid,idx,f,val){
+  const s=ST.sitios.find(x=>x.id===sid);
+  if(s&&s.actividades[idx]){if(f==='cant')s.actividades[idx].cant=parseFloat(val)||0;else s.actividades[idx][f]=val;saveState();renderLiqTSS(s)}
+}
+function delTSSAct(sid,idx){const s=ST.sitios.find(x=>x.id===sid);if(s){s.actividades.splice(idx,1);saveState();renderLiqTSS(s)}}
+function addTSSVisitaToSitio(sid){
+  const s=ST.sitios.find(x=>x.id===sid);
+  if(s){s.actividades.push({sec:'TSS',tipo:'BASE',id:'TSS_V',ciudad:'Ciudad_Secundaria',sitioid:'',cant:1});saveState();renderLiqTSS(s)}
+}
+function updSitio(id,field,val){
+  const s=ST.sitios.find(x=>x.id===id);if(!s)return;
+  if(field==='lc'){const sub=SUBCS.find(x=>x.lc===val);s.lc=val;s.cat=sub?.cat||'A'}
+  else if(field==='cw_nokia'||field==='cw_costo')s[field]=parseFloat(val)||0;
+  else s[field]=val;
+  if(s.tipo==='TSS')renderLiqTSS(s);else renderLiqSitio(s);
+}
+function activarCW(sid,modo){
+  const s=ST.sitios.find(x=>x.id===sid);
+  if(!s)return;
+  if(modo==='no'){
+    s.tiene_cw=false;s.cw_conjunto=false;s.cw_nokia=0;s.cw_costo=0;
+    toast('CW desactivada');
+  } else if(modo==='individual'){
+    s.tiene_cw=true;s.cw_conjunto=false;
+    toast('CW Individual activada — ingresa los valores');
+  } else if(modo==='conjunto'){
+    s.tiene_cw=true;s.cw_conjunto=true;
+    toast('CW en Conjunto activada — ingresa los valores');
+  }
+  saveState();
+  cargarSitio(sid);
+}
+function parseCop(v){
+  // Handle es-CO format: 1.234.567 (dots as thousands sep)
+  if(!v)return 0;
+  const clean=String(v).replace(/\./g,'').replace(/,.*$/,'').replace(/[^0-9]/g,'');
+  return parseInt(clean)||0;
+}
+function updCosto(sid,campo,val){
+  const s=ST.sitios.find(x=>x.id===sid);
+  if(!s)return;
+  if(!s.costos)s.costos={backoffice:0};
+  s.costos[campo]=parseCop(val);
+  const inpEl=document.getElementById('inp-bo-'+sid);
+  if(inpEl&&campo==='backoffice')inpEl.value=copInput(s.costos.backoffice);
+  saveState();
+  const cc=calcSitio(s);
+  // Dynamic color same logic as mc2 in renderLiqSitio
+  const mc=cc.margen>=.3?'#1a7a1a':cc.margen>=.2?'#FFC000':'#c0392b';
+  const setTxt=(id,v)=>{const el=document.getElementById(id+sid);if(el)el.textContent=v;};
+  const setClr=(id,clr)=>{const el=document.getElementById(id+sid);if(el)el.style.color=clr;};
+  setTxt('liq-bo-val-',cop(cc.backoffice));
+  setTxt('liq-tot-val-',cop(cc.totalCosto));
+  setTxt('liq-tot2-val-',cop(cc.totalCosto));
+  setTxt('liq-ut-val-',cop(cc.utilidad));  setClr('liq-ut-val-',mc);
+  setTxt('liq-mg-val-',pct(cc.margen));    setClr('liq-mg-val-',mc);
+  // Update progress bar width and color
+  const bar=document.getElementById('liq-bar-'+sid);
+  if(bar){bar.style.width=Math.min(cc.margen*100,100)+'%';bar.style.background=mc;}
+}
+// ── Google Sheets Sync ─────────────────────────────────────
+// Reemplaza esta URL con la de tu Google Apps Script desplegado
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzNTxzUAK6znFiq3nmQED-WU2dGnj6DCwb6yKLajpGWQJEQWmO49lTTgDbwmaEAnGyI/exec';
+const USE_SHEETS = false; // Disabled — using Supabase
+
+let _syncTimer = null;
+let _syncPending = false;
+
+function saveState(){
+  // Siempre guardar en localStorage como respaldo
+  try{localStorage.setItem('igt26',JSON.stringify({sitios:ST.sitios,gastos:ST.gastos}));}catch(e){}
+  // Enviar a Google Sheets con debounce (espera 1.5s sin cambios antes de enviar)
+  if(USE_SUPABASE){
+    clearTimeout(_syncTimer);
+    _syncTimer = setTimeout(()=>syncToSupabase(), 1500);
+  }
+}
+
+function syncToSheets(){
+  if(!USE_SHEETS) return;
+  // Include pre-calculated values so GAS gets accurate numbers
+  const calcs=ST.sitios.map(s=>{
+    const cc=calcSitio(s);
+    const sub=SUBCS.find(x=>x.lc===s.lc);
+    return{
+      id:s.id, nombre:s.nombre, tipo:s.tipo, fecha:s.fecha,
+      lc:s.lc, empresa:sub?.empresa||'', cat:s.catEfectiva||s.cat,
+      ciudad:(s.ciudad||'').replace('Ciudad_',''),
+      tiene_cw:s.tiene_cw, estado:s.estado||'pre',
+      nokiaTI:cc.nokiaTI, nokiaADJ:cc.nokiaADJ,
+      nokiaCW:cc.nokiaCW, nokiaCR:cc.nokiaCR,
+      totalVenta:cc.totalVenta,
+      subcTI:cc.subcTI, subcADJ:cc.subcADJ||0,
+      subcCW:cc.subcCW, subcCR:cc.subcCR||0,
+      matTI:cc.matTI, matCW:cc.matCW,
+      logist:cc.logist, adicion:cc.adicion,
+      backoffice:cc.backoffice||0,
+      totalCosto:cc.totalCosto,
+      utilidad:cc.utilidad,
+      margen:parseFloat((cc.margen*100).toFixed(1)),
+      acts:cc.acts.map(a=>({id:a.id,nombre:a.nombre||a.def?.nombre||a.id,sec:a.sec,unidad:a.unidad||a.def?.unidad||'',cant:a.cant,preNokia:a.preNokia,preSubc:a.preSubc,totalNokia:a.totalNokia,totalSubc:a.totalSubc}))
+    };
+  });
+  const payload = JSON.stringify({sitios:ST.sitios, gastos:ST.gastos, calcs:calcs});
+  fetch(GAS_URL, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain'},
+    body: payload
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.ok)toast('✓ Guardado en Sheets ('+d.sitios+' sitios)');
+    else console.warn('Sheets error:',d.error);
+  })
+  .catch(e=>console.warn('Sync failed:',e));
+}
+
+async function loadFromSheets(){
+  if(!USE_SHEETS) return false;
+  try{
+    const r = await fetch(GAS_URL+'?action=get', {cache:'no-store'});
+    const d = await r.json();
+    if(d && d.sitios && d.sitios.length > 0){
+      // Only load from Sheets if it has more or equal sites than local
+      if(d.sitios.length >= ST.sitios.length){
+        ST.sitios = d.sitios; // respect saved estado
+        if(d.gastos) ST.gastos = d.gastos;
+        toast('✓ Datos sincronizados con Google Sheets ('+d.sitios.length+' sitios)');
+      }
+      return true;
+    }
+  }catch(e){console.warn('Load from Sheets failed:',e);}
+  return false;
+}
+
+function loadState(){
+  try{
+    const d=JSON.parse(localStorage.getItem('igt26')||'{}');
+    if(d.sitios&&d.sitios.length>=_DEFAULT_SITIOS_COUNT){
+      // Reset all loaded sites to 'pre' so user marks them final manually
+      ST.sitios=d.sitios; // respect saved estado
+      if(d.gastos)ST.gastos=d.gastos;
+    } else if(d.gastos&&d.gastos.length){ST.gastos=d.gastos;}
+  }catch(e){}
+}
+
+
+async function loadFromSupabase(){
+  if(!USE_SUPABASE) return false;
+  const supa=getSupabase();
+  if(!supa) return false;
+  try{
+    const {data:sitiosData,error:eS}=await supa
+      .from('sitios').select('*').order('created_at',{ascending:true});
+    if(eS||!sitiosData||sitiosData.length===0) return false;
+    const {data:gastosData}=await supa.from('gastos').select('*');
+    ST.sitios=sitiosData.map(row=>({
+      id:row.id, nombre:row.nombre, tipo:row.tipo,
+      fecha:row.fecha, ciudad:row.ciudad, lc:row.lc||'',
+      cat:row.cat||'A', catEfectiva:row.cat_efectiva||undefined,
+      tiene_cw:row.tiene_cw||false, cw_nokia:row.cw_nokia||0,
+      cw_costo:row.cw_costo||0, cw_conjunto:row.cw_conjunto||false,
+      estado:row.estado||'pre',
+      costos:row.costos||{}, actividades:row.actividades||[],
+      crSubcExcluded:row.cr_subc_excluded||[]
+    }));
+    ST.gastos=(gastosData||[]).map(row=>({
+      sitio:row.sitio_id, tipo:row.tipo||'',
+      desc:row.descripcion||'', valor:row.valor||0
+    }));
+    toast('✓ Sincronizado con Supabase ('+ST.sitios.length+' sitios)');
+    return true;
+  }catch(e){console.warn('Load from Supabase failed:',e);return false;}
+}
+
+async function syncToSupabase(){
+  if(!USE_SUPABASE) return;
+  const supa=getSupabase();
+  if(!supa){console.warn('Supabase not ready');toast('⚠ Supabase no iniciado','err');return;}
+  console.log('syncToSupabase firing, sitios:',ST.sitios.length);
+  try{
+    const sitiosData=ST.sitios.map(s=>({
+      id:s.id, nombre:s.nombre, tipo:s.tipo, fecha:s.fecha||null,
+      ciudad:s.ciudad||'Ciudad_Principal', lc:s.lc||null,
+      cat:s.cat||'A', cat_efectiva:s.catEfectiva||null,
+      tiene_cw:s.tiene_cw||false, cw_nokia:s.cw_nokia||0,
+      cw_costo:s.cw_costo||0, cw_conjunto:s.cw_conjunto||false,
+      estado:s.estado||'pre', costos:s.costos||{},
+      actividades:s.actividades||[],
+      cr_subc_excluded:s.crSubcExcluded||[]
+    }));
+    const {error:eS}=await supa.from('sitios').upsert(sitiosData,{onConflict:'id'});
+    if(eS){console.warn('Supabase sitios error:',eS.message);toast('Error Supabase: '+eS.message,'err');return;}
+    const siteIds=ST.sitios.map(s=>s.id);
+    await supa.from('gastos').delete().in('sitio_id',siteIds);
+    if(ST.gastos.length>0){
+      const gastosData=ST.gastos.map(g=>({
+        sitio_id:g.sitio, tipo:g.tipo||'', descripcion:g.desc||'', valor:g.valor||0
+      }));
+      await supa.from('gastos').insert(gastosData);
+    }
+    toast('✓ Guardado en Supabase ('+ST.sitios.length+' sitios)');
+  }catch(e){console.warn('Supabase sync failed:',e);}
+}
+
+
+// ── Supabase Realtime ─────────────────────────────────────────
+let _realtimeChannel = null;
+
+
+function _handleRealtimeSubc(payload){
+  if(_catSyncInProgress){console.log('Skipping realtime subc — own update');return;}
+  const supa=getSupabase();if(!supa)return;
+  // Reload all subcontratistas
+  supa.from('subcontratistas').select('*').order('lc').then(({data})=>{
+    if(data&&data.length>0){
+      const mapped=data.map(r=>({
+        lc:r.lc,empresa:r.empresa||r.lc,cat:r.cat||'A',
+        tel:r.tel||'',email:r.email||'',tipoCuadrilla:r.tipo_cuadrilla||'TI Ingetel'
+      }));
+      SUBCS.splice(0,SUBCS.length,...mapped);
+      localStorage.setItem('igt26_cat',JSON.stringify({CAT,SUBCS}));
+      refreshSelects();renderCatalogo();
+      toast('📡 Catálogo de LCs actualizado');
+    }
+  });
+}
+function _handleRealtimeCatalogo(){
+  if(_catSyncInProgress){console.log('Skipping realtime catalogo — own update');return;}
+  const supa=getSupabase();if(!supa)return;
+  // Reload all catalog prices
+  const ZONAS_ORDER=['Ciudad_Principal','Ciudad_Secundaria','Ciudad_Intermedia','Dificil Acceso'];
+  supa.from('catalogo').select('*').then(({data:catRows})=>{
+    if(catRows&&catRows.length>0){
+      const grouped={BASE:{},ADJ:{},CR:{}};
+      catRows.forEach(r=>{
+        const g=grouped[r.tipo_lista];if(!g)return;
+        if(!g[r.actividad_id])g[r.actividad_id]={id:r.actividad_id,nombre:r.nombre,unidad:r.unidad,
+          nokia:[0,0,0,0],A:[0,0,0,0],AA:[0,0,0,0],AAA:[0,0,0,0]};
+        const zi=ZONAS_ORDER.indexOf(r.ciudad);if(zi<0)return;
+        g[r.actividad_id].nokia[zi]=r.precio_nokia||0;
+        g[r.actividad_id][r.categoria][zi]=r.precio_subc||0;
+      });
+      CAT.BASE=Object.values(grouped.BASE);
+      CAT.ADJ =Object.values(grouped.ADJ);
+      CAT.CR  =Object.values(grouped.CR);
+      localStorage.setItem('igt26_cat',JSON.stringify({CAT,SUBCS}));
+      renderCatalogo();
+      toast('📡 Precios del catálogo actualizados');
+    }
+  });
+}
+function initRealtime(){
+  const supa = getSupabase();
+  if(!supa || !USE_SUPABASE) return;
+
+  // Unsubscribe previous channel if exists
+  if(_realtimeChannel){
+    supa.removeChannel(_realtimeChannel);
+    _realtimeChannel = null;
+  }
+
+  _realtimeChannel = supa.channel('db-changes')
+    .on('postgres_changes',
+      {event:'*', schema:'public', table:'sitios'},
+      (payload) => {
+        console.log('Realtime sitios:', payload.eventType, payload.new?.id || payload.old?.id);
+        _handleRealtimeChange(payload);
+      }
+    )
+    .on('postgres_changes',
+      {event:'*', schema:'public', table:'gastos'},
+      (payload) => {
+        console.log('Realtime gastos:', payload.eventType);
+        _handleRealtimeGasto(payload);
+      }
+    )
+    .on('postgres_changes',
+      {event:'*', schema:'public', table:'subcontratistas'},
+      (payload) => {
+        console.log('Realtime subcontratistas:', payload.eventType);
+        _handleRealtimeSubc(payload);
+      }
+    )
+    .on('postgres_changes',
+      {event:'*', schema:'public', table:'catalogo'},
+      (payload) => {
+        console.log('Realtime catalogo:', payload.eventType);
+        _handleRealtimeCatalogo();
+      }
+    )
+    .subscribe((status) => {
+      console.log('Realtime status:', status);
+      if(status === 'SUBSCRIBED') toast('🔴 Tiempo real activo');
+    });
+}
+
+function _handleRealtimeChange(payload){
+  const {eventType, new: newRow, old: oldRow} = payload;
+
+  if(eventType === 'DELETE'){
+    const id = oldRow?.id;
+    if(id && ST.sitios.find(s=>s.id===id)){
+      ST.sitios = ST.sitios.filter(s=>s.id!==id);
+      ST.gastos = ST.gastos.filter(g=>g.sitio!==id);
+      try{localStorage.setItem('igt26',JSON.stringify({sitios:ST.sitios,gastos:ST.gastos}));}catch(e){}
+      renderDashboard(); renderConsolidado();
+      toast('📡 Sitio eliminado por otro usuario: '+id);
+    }
+    return;
+  }
+
+  if(eventType === 'INSERT' || eventType === 'UPDATE'){
+    const s = {
+      id: newRow.id, nombre: newRow.nombre, tipo: newRow.tipo,
+      fecha: newRow.fecha, ciudad: newRow.ciudad, lc: newRow.lc||'',
+      cat: newRow.cat||'A', catEfectiva: newRow.cat_efectiva||undefined,
+      tiene_cw: newRow.tiene_cw||false, cw_nokia: newRow.cw_nokia||0,
+      cw_costo: newRow.cw_costo||0, cw_conjunto: newRow.cw_conjunto||false,
+      estado: newRow.estado||'pre', costos: newRow.costos||{},
+      actividades: newRow.actividades||[], crSubcExcluded: newRow.cr_subc_excluded||[]
+    };
+    const idx = ST.sitios.findIndex(x=>x.id===s.id);
+    if(idx>=0) ST.sitios[idx]=s;
+    else ST.sitios.push(s);
+    try{localStorage.setItem('igt26',JSON.stringify({sitios:ST.sitios,gastos:ST.gastos}));}catch(e){}
+    renderDashboard(); renderConsolidado();
+    if(eventType==='INSERT') toast('📡 Nuevo sitio: '+s.nombre);
+  }
+}
+
+function _handleRealtimeGasto(payload){
+  // Reload all gastos from Supabase on any change
+  const supa = getSupabase();
+  if(!supa) return;
+  supa.from('gastos').select('*').then(({data})=>{
+    if(data){
+      ST.gastos = data.map(row=>({
+        sitio: row.sitio_id, tipo: row.tipo||'',
+        desc: row.descripcion||'', valor: row.valor||0
+      }));
+      try{localStorage.setItem('igt26',JSON.stringify({sitios:ST.sitios,gastos:ST.gastos}));}catch(e){}
+      renderDashboard();
+    }
+  });
+}
+
+// ── EMPRESA CONFIG ─────────────────────────────────────────────
+let _empresaConfig = {
+  nombre: 'Empresa',
+  nombre_corto: 'Nokia',
+  color_primario: '#144E4A',
+  logo_url: '',
+  tipo_cuadrilla_propia: 'TI Empresa'
+};
+
+async function loadEmpresaConfig(){
+  if(!USE_SUPABASE) return;
+  const supa=getSupabase();if(!supa)return;
+  try{
+    const {data}=await supa.from('sync_metadata')
+      .select('value').eq('key','empresa_config').single();
+    if(data?.value){
+      _empresaConfig={..._empresaConfig,...JSON.parse(data.value)};
+    }
+  }catch(e){console.warn('empresaConfig error:',e);}
+  applyEmpresaConfig();
+}
+
+function applyEmpresaConfig(){
+  const cfg=_empresaConfig;
+  // Title
+  document.title=cfg.nombre+' · Liquidador Nokia 2026';
+  const mt=document.getElementById('meta-app-title');
+  if(mt) mt.content=cfg.nombre_corto||cfg.nombre;
+  // Header logo
+  const lh=document.getElementById('empresa-logo-header');
+  const nh=document.getElementById('empresa-nombre-header');
+  if(lh&&nh){
+    if(cfg.logo_url){lh.src=cfg.logo_url;lh.style.display='';nh.style.display='none';}
+    else{lh.style.display='none';nh.style.display='';nh.textContent=cfg.nombre.toUpperCase();}
+  }
+  // Login logo
+  const ll=document.getElementById('empresa-logo-login');
+  const nl=document.getElementById('empresa-nombre-login');
+  if(ll&&nl){
+    if(cfg.logo_url){ll.src=cfg.logo_url;ll.style.display='';nl.style.display='none';}
+    else{ll.style.display='none';nl.style.display='';nl.textContent=cfg.nombre;}
+  }
+  // Color primario
+  if(cfg.color_primario){
+    document.documentElement.style.setProperty('--ct',cfg.color_primario);
+  }
+}
+
+async function saveEmpresaConfig(){
+  const supa=getSupabase();if(!supa)return;
+  const {error}=await supa.from('sync_metadata').upsert(
+    {key:'empresa_config',value:JSON.stringify(_empresaConfig)},
+    {onConflict:'key'}
+  );
+  if(error) toast('Error guardando config: '+error.message,'err');
+  else {applyEmpresaConfig();toast('✓ Configuración de empresa guardada');}
+}
+async function syncInit(){
+  // Al arrancar: primero local (rápido), luego Supabase (actualizado)
+  loadState();
+  _migrateExistingSites();
+  await loadEmpresaConfig();
+  if(USE_SUPABASE){
+    // Load catalog first so SUBCS are ready before init()
+    await loadCatalogoFromSupabase();
+    const loaded = await loadFromSupabase();
+    if(loaded){ renderDashboard(); initSelLiq(); refreshSelects(); }
+    initRealtime();
+  }
+}
+
+// ============================================================
+// FORMATO MONEDA EN INPUTS
+// ============================================================
+function fmtCopInput(el){
+  const raw=el.value.replace(/\./g,'').replace(/[^0-9]/g,'');
+  const num=parseInt(raw)||0;
+  el.value=num.toLocaleString('es-CO');
+}
+function crearSitio(){
+  const nom=document.getElementById('ns-nom').value.trim();
+  const fecha=document.getElementById('ns-fecha').value;
+  const ciudad=document.getElementById('ns-ciudad').value;
+  const lc=document.getElementById('ns-lc').value;
+  const tiene_cw=document.getElementById('ns-cw').value!=='no';
+  const cw_conjunto=document.getElementById('ns-cw').value==='conjunto';
+  const cw_nokia=parseInt(document.getElementById('ns-cw-val').value)||0;
+  if(!nom||!lc){toast('Nombre y LC son requeridos','err');return}
+  if(ST.sitios.find(s=>s.id===nom)){toast('Ya existe ese nombre','err');return}
+  const sub=SUBCS.find(s=>s.lc===lc);
+  ST.sitios.push({id:nom,nombre:nom,tipo:'TI',fecha:fecha||hoy(),ciudad,lc,cat:sub?.cat||'A',
+    cw_nokia:tiene_cw?cw_nokia:0,cw_costo:0,tiene_cw,cw_conjunto,costos:{matTI:0,matCW:0,backoffice:0},
+    actividades:[{sec:'MODERNIZACION',tipo:'BASE',id:'PM',cant:1}]});
+  saveState();
+  closeModal('m-nuevo-sitio');
+  document.getElementById('ns-nom').value='';
+  toast(`Sitio ${nom} creado`);
+  abrirLiquidador(nom);
+}
+async function eliminarSitio(id){
+  if(!confirm(`¿Eliminar ${id}?`))return;
+  ST.sitios=ST.sitios.filter(s=>s.id!==id);
+  ST.gastos=ST.gastos.filter(g=>g.sitio!==id);
+  saveState();
+  if(USE_SUPABASE){
+    const supa=getSupabase();
+    if(supa){
+      // Check session first
+      const {data:sess}=await supa.auth.getSession();
+      console.log('Session al eliminar:',sess?.session?.user?.email||'SIN SESION');
+      const {data,error,status}=await supa.from('sitios').delete().eq('id',id);
+      console.log('DELETE status:',status,'error:',error?.message||'ninguno');
+      if(error) toast('Error al eliminar: '+error.message,'err');
+      else console.log('Sitio eliminado de Supabase:',id);
+    }
+  }
+  renderConsolidado();renderDashboard();toast(`${id} eliminado`);
+}
+
+// ============================================================
+// TSS
+// ============================================================
+let _tssVis=[];
+function addTSSVisita(){
+  const i=_tssVis.length;
+  _tssVis.push({tipo:'TSS_V',sitio:'',ciudad:'Ciudad_Secundaria',cant:1});
+  const c=document.getElementById('tss-vis-cont');
+  const d=document.createElement('div');
+  d.style.cssText='background:var(--g1);border-radius:5px;padding:10px;margin-bottom:7px';
+  d.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1.5fr 1fr 80px auto;gap:6px;align-items:end">
+    <div><label class="fl">Tipo</label>
+      <select class="fc" style="font-size:11px" onchange="_tssVis[${i}].tipo=this.value">
+        <option value="TSS_VR">TSS_VR (V+R)</option>
+        <option value="TSS_V" selected>TSS_V (Visita)</option>
+        <option value="TSS_R">TSS_R (Reporte)</option>
+      </select></div>
+    <div><label class="fl">Nombre sitio</label>
+      <input type="text" class="fc" style="font-size:11px" placeholder="Ej: TOL.Espinal" oninput="_tssVis[${i}].sitio=this.value"></div>
+    <div><label class="fl">Ciudad</label>
+      <select class="fc" style="font-size:11px" onchange="_tssVis[${i}].ciudad=this.value">
+        ${ZONAS.map(z=>`<option value="${z}">${z.replace('Ciudad_','')}</option>`).join('')}
+      </select></div>
+    <div><label class="fl">Cant</label>
+      <input type="number" class="iq" value="1" min="1" oninput="_tssVis[${i}].cant=parseInt(this.value)||1"></div>
+    <button class="btn-del" style="align-self:end;margin-bottom:1px" onclick="this.closest('div[style]').remove();_tssVis.splice(${i},1)">✕</button>
+  </div>`;
+  c.appendChild(d);
+}
+function crearTSS(){
+  const nom=document.getElementById('tss-nom').value.trim();
+  const fecha=document.getElementById('tss-fecha').value;
+  const lc=document.getElementById('tss-lc').value;
+  if(!nom||!lc){toast('Nombre y LC requeridos','err');return}
+  if(!_tssVis.length){toast('Agrega al menos una visita','err');return}
+  const sub=SUBCS.find(s=>s.lc===lc);
+  ST.sitios.push({id:nom,nombre:nom,tipo:'TSS',fecha:fecha||hoy(),ciudad:'varios',lc,cat:sub?.cat||'A',
+    cw_nokia:0,cw_costo:0,tiene_cw:false,costos:{matTI:0,matCW:0},
+    actividades:_tssVis.map(v=>({sec:'TSS',tipo:'BASE',id:v.tipo,ciudad:v.ciudad,sitioid:v.sitio,cant:v.cant}))});
+  _tssVis=[];
+  document.getElementById('tss-vis-cont').innerHTML='';
+  saveState();
+  closeModal('m-nuevo-tss');
+  document.getElementById('tss-nom').value='';
+  toast(`TSS ${nom} creado`);
+  abrirLiquidador(nom);
+}
+
+// ============================================================
+// GASTOS
+// ============================================================
+function renderGastos(){
+  // Populate sitio selector
+  const sel=document.getElementById('fil-gasto-sitio');
+  if(sel){
+    const cur=sel.value;
+    const sitiosConGastos=[...new Set(ST.gastos.map(g=>g.sitio))].sort();
+    sel.innerHTML='<option value="">Todos los sitios</option>'+sitiosConGastos.map(s=>`<option value="${s}" ${s===cur?'selected':''}>${s}</option>`).join('');
+    if(cur) sel.value=cur;
+  }
+  const filSitio=sel?.value||'';
+  const gastosFiltrados=filSitio?ST.gastos.filter(g=>g.sitio===filSitio):ST.gastos;
+  // Continue with filtered gastos
+  const _orig=ST.gastos; ST.gastos=gastosFiltrados;
+  let tot=0;
+  document.getElementById('tbody-gastos').innerHTML=ST.gastos.length?
+    ST.gastos.map((g,i)=>{tot+=g.valor||0;return`<tr>
+      <td><strong>${g.sitio}</strong></td>
+      <td><span class="badge bg-o" style="font-size:9px">${g.tipo}</span></td>
+      <td>${g.desc}</td><td class="num">${cop(g.valor)}</td>
+      <td><button class="btn-del" onclick="eliminarGasto(${i})">✕</button></td>
+    </tr>`}).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--g3);padding:16px">Sin gastos</td></tr>';
+  document.getElementById('tfoot-gastos').innerHTML=ST.gastos.length?`<tr class="tr-tot"><td colspan="3"><strong>TOTAL</strong></td><td class="num">${cop(tot)}</td><td></td></tr>`:'';
+  ST.gastos=_orig;
+}
+function agregarGasto(){
+  const sitio=document.getElementById('g-sitio').value;
+  const tipo=document.getElementById('g-tipo').value;
+  const desc=document.getElementById('g-desc').value.trim();
+  const valor=parseFloat(document.getElementById('g-valor').value)||0;
+  if(!sitio||!desc){toast('Completa todos los campos','err');return}
+  ST.gastos.push({sitio,tipo,desc,valor});
+  saveState();
+  closeModal('m-gastos');
+  document.getElementById('g-desc').value='';document.getElementById('g-valor').value='';
+  toast('Gasto guardado');
+  renderGastos();
+  // FIX #9: if liquidador is showing that site, refresh it immediately
+  const liqSel=document.getElementById('sel-liq');
+  if(liqSel&&liqSel.value===sitio&&document.getElementById('screen-liquidador').classList.contains('active')){
+    cargarSitio(sitio);
+  }
+}
+function eliminarGasto(i){ST.gastos.splice(i,1);saveState();renderGastos();toast('Gasto eliminado')}
+function openGastoFor(id){
+  document.getElementById('g-sitio').innerHTML=ST.sitios.map(s=>`<option value="${s.id}" ${s.id===id?'selected':''}>${s.id}</option>`).join('');
+  openModal('m-gastos');
+}
+
+// ============================================================
+// REPORTES
+// ============================================================
+let _charts={};
+function destroyChart(id){if(_charts[id]){_charts[id].destroy();delete _charts[id]}}
+
+function renderReportes(){
+  initFechaPicker('fp-rep', renderReportes);
+  const year=fpGetYear('fp-rep')==='todos'?null:parseInt(fpGetYear('fp-rep'))||2026;
+  const mesFiltro=fpGetMes('fp-rep');
+  const isTodos=mesFiltro==='todos' || mesFiltro===null || mesFiltro===undefined;
+  const filTCRep=(document.getElementById('rep-tipo-cuadrilla')?.value)||'todos';
+
+  const mesesData=Array.from({length:12},(_,m)=>{
+    const sitiosMes=ST.sitios.filter(s=>{
+      if(!matchTipoCuadrilla(s, filTCRep)) return false;
+      if(!s.fecha)return false;
+      const d=new Date(s.fecha);
+      if(year!==null&&d.getFullYear()!==year) return false;
+      return d.getMonth()===m;
+    });
+    const calcs=sitiosMes.map(s=>calcSitio(s));
+    const venta=calcs.reduce((s,c)=>s+c.totalVenta,0);
+    const costo=calcs.reduce((s,c)=>s+c.totalCosto,0);
+    const util=venta-costo;
+    const mg=venta>0?util/venta:0;
+    return{mes:MESES[m],mesIdx:m,sitiosMes,calcs,venta,costo,util,mg};
+  });
+
+  // Filter if specific month selected
+  const display=isTodos?mesesData:[mesesData[parseInt(mesFiltro)]];
+  const totV=display.reduce((s,m)=>s+m.venta,0);
+  const totC=display.reduce((s,m)=>s+m.costo,0);
+  const totU=totV-totC;
+  const totMg=totV>0?totU/totV:0;
+  const totSitios=display.reduce((s,m)=>s+m.sitiosMes.length,0);
+
+  document.getElementById('rep-stats').innerHTML=`
+    <div class="stat"><div class="sl">Período</div><div class="sv">${year===null?'Todos':(isTodos?year:MESES[parseInt(mesFiltro)])}</div><div class="ss">${totSitios} sitios</div></div>
+    <div class="stat" style="border-color:var(--b)"><div class="sl">Venta Nokia</div><div class="sv" style="font-size:15px">${cop(totV)}</div></div>
+    <div class="stat" style="border-color:var(--o)"><div class="sl">Costo SubC</div><div class="sv" style="font-size:15px;color:var(--o)">${cop(totC)}</div></div>`;
+
+  document.getElementById('tbody-rep').innerHTML=display.map(m=>`<tr style="cursor:pointer" onclick="mostrarDetalleMes(${m.mesIdx},${year},'${m.mes}')">
+    <td><strong>${m.mes}</strong> ${m.sitiosMes.length?`<span class="badge bg-b">${m.sitiosMes.length}</span>`:''}</td>
+    <td class="num">${m.sitiosMes.length||'—'}</td>
+    <td class="num" style="color:var(--b);font-weight:${m.venta?600:400}">${m.venta?cop(m.venta):'—'}</td>
+    <td class="num" style="color:var(--o)">${m.costo?cop(m.costo):'—'}</td>
+    <td class="num fw7 ${m.util>=0?'tg':'tr'}">${m.venta?cop(m.util):'—'}</td>
+    <td class="num">${m.venta?`<span class="badge ${mcls(m.mg)}">${pct(m.mg)}</span>`:'—'}</td>
+  </tr>`).join('');
+
+  document.getElementById('tfoot-rep').innerHTML=`<tr class="tr-tot">
+    <td><strong>TOTAL</strong></td><td class="num">${totSitios}</td>
+    <td class="num">${cop(totV)}</td><td class="num">${cop(totC)}</td>
+    <td class="num fw8 ${totU>=0?'tg':'tr'}">${cop(totU)}</td>
+    <td class="num"><span class="badge ${mcls(totMg)}">${pct(totMg)}</span></td>
+  </tr>`;
+
+  destroyChart('chart-meses');destroyChart('chart-margen-mes');
+  const active=mesesData.filter(m=>m.venta>0);
+  const labels=active.map(m=>m.mes);
+  const ctx1=document.getElementById('chart-meses').getContext('2d');
+  _charts['chart-meses']=new Chart(ctx1,{type:'bar',data:{labels,datasets:[
+    {label:'Venta Nokia',data:active.map(m=>m.venta),backgroundColor:'rgba(30,58,95,0.85)',borderRadius:4},
+    {label:'Costo SubC',data:active.map(m=>m.costo),backgroundColor:'rgba(146,64,14,0.75)',borderRadius:4}
+  ]},options:{responsive:true,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:v=>'$'+Math.round(v/1e6)+'M'}}}}});
+  const ctx2=document.getElementById('chart-margen-mes').getContext('2d');
+  _charts['chart-margen-mes']=new Chart(ctx2,{type:'line',data:{labels,datasets:[
+    {label:'Margen %',data:active.map(m=>parseFloat((m.mg*100).toFixed(1))),
+      borderColor:'#1a9c1a',backgroundColor:'rgba(26,156,26,.08)',fill:true,tension:.4,
+      pointBackgroundColor:active.map(m=>m.mg>=.4?'#1a9c1a':m.mg>=.2?'#d68910':'#c0392b'),
+      pointRadius:6,pointHoverRadius:8}
+  ]},options:{responsive:true,plugins:{legend:{position:'top'}},scales:{y:{ticks:{callback:v=>v+'%'},min:0,max:100}}}});
+}
+
+function mostrarDetalleMes(mesIdx,year,mesNom){
+  const sitiosMes=ST.sitios.filter(s=>{
+    if(!s.fecha)return false;
+    const d=new Date(s.fecha);
+    return d.getFullYear()===year&&d.getMonth()===mesIdx;
+  });
+  const det=document.getElementById('rep-sitios-detalle');
+  const tit=document.getElementById('rep-detalle-titulo');
+  tit.textContent=`Detalle — ${mesNom} ${year}`;
+  document.getElementById('tbody-rep-det').innerHTML=sitiosMes.map(s=>{
+    const c=calcSitio(s);
+    return`<tr>
+      <td style="white-space:nowrap"><strong>${s.nombre}</strong>${s.actividades?.some(a=>a.sec==='SITIO NUEVO'||a.sec==='SITIO_NUEVO')?' <span style="color:#7c3aed;font-size:9px;font-weight:700">(SN)</span>':''}</td><td>${s.lc}</td>
+      <td class="num">${cop(c.totalVenta)}</td><td class="num">${cop(c.totalCosto)}</td>
+      <td class="num fw7 ${c.utilidad>=0?'tg':'tr'}">${cop(c.utilidad)}</td>
+      <td class="num"><span class="badge ${mcls(c.margen)}">${pct(c.margen)}</span></td>
+    </tr>`;
+  }).join('');
+  det.style.display=sitiosMes.length?'block':'none';
+}
+
+function exportarReporteExcel(){
+  const year=parseInt(document.getElementById('rep-year').value)||2026;
+  const mesFiltro=document.getElementById('rep-mes').value;
+  const wb=XLSX.utils.book_new();
+  const data=[['Mes','Sitios','Venta Nokia','Costo SubC','Utilidad','% Margen']];
+  Array.from({length:12},(_,m)=>{
+    const sitiosMes=ST.sitios.filter(s=>{
+      if(!s.fecha)return false;
+      const d=new Date(s.fecha);
+      return d.getFullYear()===year&&d.getMonth()===m&&(mesFiltro==='todos'||parseInt(mesFiltro)===m);
+    });
+    if(!sitiosMes.length)return;
+    const calcs=sitiosMes.map(s=>calcSitio(s));
+    const venta=calcs.reduce((s,c)=>s+c.totalVenta,0);
+    const costo=calcs.reduce((s,c)=>s+c.totalCosto,0);
+    const util=venta-costo;
+    const mg=venta>0?util/venta:0;
+    data.push([MESES[m],sitiosMes.length,venta,costo,util,parseFloat((mg*100).toFixed(1))]);
+    sitiosMes.forEach(s=>{
+      const c=calcSitio(s);
+      data.push([`  └ ${s.nombre}`,'',c.totalVenta,c.totalCosto,c.utilidad,parseFloat((c.margen*100).toFixed(1))]);
+    });
+  });
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(data),`Reporte_${year}`);
+  XLSX.writeFile(wb,`Reporte_${_empresaConfig.nombre_corto||'Nokia'}_${year}.xlsx`);
+  toast('Reporte exportado');
+}
+
+// ============================================================
+// ANALÍTICA
+// ============================================================
+// ============================================================
+// ANALÍTICA GERENCIAL - PROFESSIONAL CHARTS
+// ============================================================
+function renderAnalitica(){
+  const filTCAna='todos'; // single LC filter only
+  const filLCAna=(document.getElementById('ana-lc-filter')?.value)||'';
+  const lcSelAna=document.getElementById('ana-lc-filter');
+  if(lcSelAna){const cur=lcSelAna.value;const lcs=[...new Set(ST.sitios.filter(s=>matchTipoCuadrilla(s,filTCAna)).map(s=>s.lc).filter(Boolean))].sort();lcSelAna.innerHTML='<option value="">Todas las Cuadrillas</option>'+lcs.map(l=>`<option value="${l}" ${l===cur?'selected':''}>${l}</option>`).join('');if(cur)lcSelAna.value=cur;}
+  const sitiosAna=ST.sitios.filter(s=>matchTipoCuadrilla(s,filTCAna)&&(!filLCAna||s.lc===filLCAna));
+  const calcs=sitiosAna.map(s=>({s,c:calcSitio(s)}));
+  if(!calcs.length){document.getElementById('ana-stats').innerHTML='<div class="alert al-i">Sin datos aún.</div>';return;}
+
+  const tV=calcs.reduce((s,x)=>s+x.c.totalVenta,0);
+  const tC=calcs.reduce((s,x)=>s+x.c.totalCosto,0);
+  const tU=tV-tC;
+  const avgM=tV>0?tU/tV:0;
+  const best=calcs.reduce((a,b)=>b.c.margen>a.c.margen?b:a);
+  const worst=calcs.reduce((a,b)=>b.c.margen<a.c.margen?b:a);
+
+  document.getElementById('ana-stats').innerHTML=`
+    <div class="stat"><div class="sl">Mejor Margen</div><div class="sv tg">${pct(best.c.margen)}</div><div class="ss">${best.s.nombre}</div></div>
+    <div class="stat" style="border-color:var(--b)"><div class="sl">Mayor Venta</div><div class="sv" style="font-size:13px">${cop(Math.max(...calcs.map(x=>x.c.totalVenta)))}</div></div>
+    <div class="stat" style="border-color:var(--r)"><div class="sl">Menor Margen</div><div class="sv tr">${pct(worst.c.margen)}</div><div class="ss">${worst.s.nombre}</div></div>
+    <div class="stat" style="border-color:var(--o)"><div class="sl">SubCs Activos</div><div class="sv">${[...new Set(sitiosAna.map(s=>s.lc))].length}</div><div class="ss">de ${SUBCS.length} registrados</div></div>`;
+
+  ['chart-venta-acum','chart-lc','chart-sitio-mg','chart-util-mes','chart-scatter','chart-dist'].forEach(id=>destroyChart(id));
+
+  // 1. Venta acumulada en el tiempo (line chart, ordered by date)
+  const sorted=[...calcs].sort((a,b)=>new Date(a.s.fecha)-new Date(b.s.fecha));
+  let acum=0;
+  const acumData=sorted.map(x=>{acum+=x.c.totalVenta;return{x:x.s.fecha||x.s.nombre,y:acum}});
+  const ctx1=document.getElementById('chart-venta-acum').getContext('2d');
+  _charts['chart-venta-acum']=new Chart(ctx1,{type:'line',data:{
+    labels:acumData.map(d=>d.x),
+    datasets:[{
+      label:'Venta Acumulada',
+      data:acumData.map(d=>d.y),
+      borderColor:'#1e3a5f',backgroundColor:'rgba(30,58,95,.08)',
+      fill:true,tension:.4,pointRadius:5,pointBackgroundColor:'#1e3a5f',
+      pointHoverRadius:8
+    }]
+  },options:{responsive:true,plugins:{legend:{position:'top'},tooltip:{callbacks:{label:c=>'$'+Math.round(c.parsed.y/1e6)+'M'}}},
+    scales:{y:{ticks:{callback:v=>'$'+Math.round(v/1e6)+'M'}}}}});
+
+  // 2. Producción por LC (horizontal bar)
+  const lcMap={};
+  calcs.forEach(({s,c})=>{if(!lcMap[s.lc])lcMap[s.lc]={venta:0,sitios:0};lcMap[s.lc].venta+=c.totalVenta;lcMap[s.lc].sitios++;});
+  const lcSorted=Object.entries(lcMap).sort((a,b)=>b[1].venta-a[1].venta);
+  const paleta=['#1e3a5f','#14532d','#7c2d12','#4a1d96','#0f4c75','#1a6130','#6b21a8','#991b1b'];
+  const ctx2=document.getElementById('chart-lc').getContext('2d');
+  _charts['chart-lc']=new Chart(ctx2,{type:'bar',data:{
+    labels:lcSorted.map(x=>x[0].split(' ')[0]),
+    datasets:[
+      {label:'Venta Nokia',data:lcSorted.map(x=>x[1].venta),backgroundColor:lcSorted.map((_,i)=>paleta[i%paleta.length]),borderRadius:5,yAxisID:'y'},
+      {label:'# Sitios',data:lcSorted.map(x=>x[1].sitios),backgroundColor:'rgba(200,200,200,.5)',borderRadius:5,yAxisID:'y1',type:'line',borderColor:'#888',pointRadius:4}
+    ]
+  },options:{responsive:true,indexAxis:'y',plugins:{legend:{position:'top'}},
+    scales:{y:{ticks:{font:{size:10}}},y1:{position:'right',grid:{drawOnChartArea:false},ticks:{stepSize:1}}}}});
+
+  // 3. Margen por sitio (bar with colored bars)
+  const cSort=[...calcs].sort((a,b)=>b.c.margen-a.c.margen);
+  const ctx3=document.getElementById('chart-sitio-mg').getContext('2d');
+  _charts['chart-sitio-mg']=new Chart(ctx3,{type:'bar',data:{
+    labels:cSort.map(x=>x.s.nombre),
+    datasets:[{
+      label:'Margen %',
+      data:cSort.map(x=>parseFloat((x.c.margen*100).toFixed(1))),
+      backgroundColor:cSort.map(x=>x.c.margen>=.4?'rgba(21,128,61,.8)':x.c.margen>=.2?'rgba(180,83,9,.8)':'rgba(185,28,28,.8)'),
+      borderRadius:5,
+    }]
+  },options:{responsive:true,plugins:{legend:{display:false},
+    annotation:{annotations:{line40:{type:'line',yMin:40,yMax:40,borderColor:'#16a34a',borderDash:[6,3],label:{display:true,content:'Meta 40%',position:'end',font:{size:9}}}}}},
+    scales:{y:{ticks:{callback:v=>v+'%'},min:0}}}});
+
+  // 4. Utilidad por mes (line)
+  const utilMes=Array.from({length:12},(_,m)=>{
+    const year=2026;
+    const mc=ST.sitios.filter(s=>{if(!s.fecha)return false;const d=new Date(s.fecha);return d.getFullYear()===year&&d.getMonth()===m;}).map(s=>calcSitio(s));
+    return mc.reduce((s,c)=>s+c.utilidad,0);
+  });
+  const ctx4=document.getElementById('chart-util-mes').getContext('2d');
+  _charts['chart-util-mes']=new Chart(ctx4,{type:'line',data:{
+    labels:MESES,
+    datasets:[{
+      label:'Utilidad',
+      data:utilMes,
+      borderColor:'#15803d',backgroundColor:'rgba(21,128,61,.06)',
+      fill:true,tension:.4,
+      pointBackgroundColor:utilMes.map(v=>v>0?'#15803d':'#dc2626'),
+      pointRadius:utilMes.map(v=>v!==0?5:0),
+      segment:{borderColor:ctx=>ctx.p1.parsed.y<0?'#dc2626':'#15803d'}
+    }]
+  },options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'$'+Math.round(c.parsed.y/1e6)+'M'}}},
+    scales:{y:{ticks:{callback:v=>'$'+Math.round(v/1e6)+'M'}}}}});
+
+  // 5. Scatter: Venta vs Costo
+  const ctx5=document.getElementById('chart-scatter').getContext('2d');
+  _charts['chart-scatter']=new Chart(ctx5,{type:'scatter',data:{
+    datasets:[{
+      label:'Sitios',
+      data:calcs.map(({s,c})=>({x:c.totalVenta/1e6,y:c.totalCosto/1e6,nombre:s.nombre})),
+      backgroundColor:calcs.map(({c})=>c.margen>=.4?'rgba(21,128,61,.7)':c.margen>=.2?'rgba(180,83,9,.7)':'rgba(185,28,28,.7)'),
+      pointRadius:8,pointHoverRadius:12,
+    },{
+      label:'Línea equilibrio',
+      data:[{x:0,y:0},{x:Math.max(...calcs.map(x=>x.c.totalVenta))/1e6,y:Math.max(...calcs.map(x=>x.c.totalVenta))/1e6}],
+      type:'line',borderColor:'rgba(156,163,175,.5)',borderDash:[4,4],pointRadius:0,
+    }]
+  },options:{responsive:true,plugins:{legend:{position:'top'},
+    tooltip:{callbacks:{label:ctx=>{const d=ctx.raw;return d.nombre?`${d.nombre}: V=$${d.x.toFixed(1)}M C=$${d.y.toFixed(1)}M`:`Equilibrio`;}}}},
+    scales:{x:{title:{display:true,text:'Venta Nokia ($M)'},ticks:{callback:v=>v+'M'}},
+      y:{title:{display:true,text:'Costo SubC ($M)'},ticks:{callback:v=>v+'M'}}}}});
+
+  // 6. Doughnut distribución
+  const totTI=calcs.reduce((s,x)=>s+x.c.nokiaTI,0);
+  const totADJ=calcs.reduce((s,x)=>s+x.c.nokiaADJ,0);
+  const totCW=calcs.reduce((s,x)=>s+x.c.nokiaCW,0);
+  const totCR=calcs.reduce((s,x)=>s+x.c.nokiaCR,0);
+  const ctx6=document.getElementById('chart-dist').getContext('2d');
+  _charts['chart-dist']=new Chart(ctx6,{type:'doughnut',data:{
+    labels:['TI','ADJ','CW','CR'],
+    datasets:[{data:[totTI,totADJ,totCW,totCR],
+      backgroundColor:['#1e3a5f','#14532d','#4a1d96','#7c2d12'],
+      borderWidth:3,borderColor:'#fff'}]
+  },options:{responsive:true,plugins:{legend:{position:'bottom'},
+    tooltip:{callbacks:{label:c=>`${c.label}: $${Math.round(c.parsed/1e6)}M (${((c.parsed/tV)*100).toFixed(1)}%)`}}}}}); 
+}
+
+// ============================================================
+// CATÁLOGO
+// ============================================================
+
+async function eliminarLC(i){
+  const lc=SUBCS[i];
+  if(!lc)return;
+  if(!confirm('¿Eliminar LC: '+lc.lc+'?'))return;
+  const lcId=lc.lc;
+  SUBCS.splice(i,1);
+  // Only save SUBCS to localStorage and re-render — no price sync
+  try{localStorage.setItem('igt26_cat',JSON.stringify({CAT,SUBCS}));}catch(e){}
+  renderCatalogo();refreshSelects();
+  // Delete explicitly from Supabase
+  if(USE_SUPABASE){
+    const supa=getSupabase();
+    if(supa){
+      _catSyncInProgress=true;
+      setTimeout(()=>{_catSyncInProgress=false;},3000);
+      const {error}=await supa.from('subcontratistas').delete().eq('lc',lcId);
+      if(error) console.warn('Error eliminando LC de Supabase:',error.message);
+      else console.log('LC eliminado de Supabase:',lcId);
+    }
+  }
+}
+
+// ── IMPORTAR PRECIOS MASIVO ──────────────────────────────────
+async function importarPrecios(input){
+  const file=input.files[0];
+  if(!file)return;
+  input.value='';
+  const ext=file.name.split('.').pop().toLowerCase();
+  
+  if(ext==='csv'){
+    const text=await file.text();
+    _procesarCSVPrecios(text);
+  } else if(ext==='xlsx'||ext==='xls'){
+    // Use SheetJS if available, else fallback message
+    if(typeof XLSX==='undefined'){
+      toast('Para Excel instala SheetJS. Usa CSV por ahora.','err');
+      return;
+    }
+    const buf=await file.arrayBuffer();
+    const wb=XLSX.read(buf);
+    const ws=wb.Sheets[wb.SheetNames[0]];
+    const csv=XLSX.utils.sheet_to_csv(ws);
+    _procesarCSVPrecios(csv);
+  } else {
+    toast('Formato no soportado. Usa CSV o Excel.','err');
+  }
+}
+
+function _procesarCSVPrecios(text){
+  const lines=text.trim().split('\n');
+  // Expected columns: actividad_id, tipo_lista, ciudad, categoria, precio_nokia, precio_subc
+  // OR: Actividad, Unidad, Tipo, Tipo de Ciudad, Categoria, Precio_Nokia, Precio_SubC
+  let updated=0, errors=0;
+  const ZONAS={'Ciudad_Principal':0,'Ciudad_Secundaria':1,'Ciudad_Intermedia':2,'Dificil Acceso':3};
+  const TIPO_MAP={
+    'BASE':'BASE','ADJ':'ADJ','CR':'CR',
+    'SERVIVIOS ADICIONALES (ADJ_NB2B / ADJ_B2B)':'ADJ',
+    'CR (Adicionales creados en Skytool)':'CR'
+  };
+
+  for(let i=1;i<lines.length;i++){
+    const row=lines[i].split(',').map(s=>s.trim().replace(/^"|"$/g,''));
+    if(row.length<6)continue;
+    
+    // Detect format: short (6 cols: id,tipo,ciudad,cat,nokia,subc) or long (7 cols: nombre,unidad,tipo,ciudad,cat,nokia,subc)
+    let actId,tipoRaw,ciudad,cat,pNokia,pSubc;
+    if(row.length===6){
+      [actId,tipoRaw,ciudad,cat,pNokia,pSubc]=row;
+    } else {
+      // Long format from catalog export
+      actId=row[0];tipoRaw=row[2];ciudad=row[3];cat=row[4];
+      pNokia=row[5];pSubc=row[6]||'0';
+    }
+    
+    const tipo=TIPO_MAP[tipoRaw]||tipoRaw;
+    const zi=ZONAS[ciudad];
+    const lista=CAT[tipo];
+    if(!lista||zi===undefined){errors++;continue;}
+    
+    const act=lista.find(a=>a.id===actId);
+    if(!act){errors++;continue;}
+    
+    const n=parseFloat(String(pNokia).replace(',','.'));
+    const s=parseFloat(String(pSubc).replace(',','.'));
+    if(!isNaN(n)) act.nokia[zi]=n;
+    if(!isNaN(s)&&['A','AA','AAA'].includes(cat)){
+      if(!act[cat])act[cat]=[0,0,0,0];
+      act[cat][zi]=s;
+    }
+    updated++;
+  }
+  
+  renderCatalogo();
+  toast(`✓ Importados: ${updated} precios. Errores: ${errors}. Guarda para confirmar.`);
+  console.log('Importación CSV: '+updated+' OK, '+errors+' errores');
+}
+function guardarCatalogo(){
+  try{localStorage.setItem('igt26_cat',JSON.stringify({CAT,SUBCS}));}catch(e){}
+  if(USE_SUPABASE) syncPreciosToSupabase();
+  toast('✓ Precios guardados correctamente');
+}
+async function loadCatalogoFromSupabase(){
+  if(!USE_SUPABASE) return;
+  const supa=getSupabase();if(!supa)return;
+  try{
+    // Load SUBCS (LCs)
+    const {data:subcData}=await supa.from('subcontratistas').select('*').order('lc');
+    if(subcData&&subcData.length>0){
+      const mapped=subcData.map(r=>({
+        lc:r.lc,empresa:r.empresa||r.lc,cat:r.cat||'A',
+        tel:r.tel||'',email:r.email||'',tipoCuadrilla:r.tipo_cuadrilla||'TI Ingetel'
+      }));
+      _subcLoadedFromSupabase=true;
+      SUBCS.splice(0,SUBCS.length,...mapped);
+      console.log('LCs cargados desde Supabase: '+SUBCS.length);
+    }
+    // Load CAT prices from catalogo table (flat: 1 row per actividad/ciudad/categoria)
+    const {data:catRows}=await supa.from('catalogo').select('*');
+    if(catRows&&catRows.length>0){
+      // Convert flat rows back to CAT array format used by getPrecio()
+      // Group by tipo_lista + actividad_id, build nokia/A/AA/AAA arrays [Prin,Sec,Int,Dif]
+      const ZONAS_ORDER=['Ciudad_Principal','Ciudad_Secundaria','Ciudad_Intermedia','Dificil Acceso'];
+      const grouped={BASE:{},ADJ:{},CR:{}};
+      catRows.forEach(r=>{
+        const g=grouped[r.tipo_lista];if(!g)return;
+        if(!g[r.actividad_id])g[r.actividad_id]={id:r.actividad_id,nombre:r.nombre,unidad:r.unidad,
+          nokia:[0,0,0,0],A:[0,0,0,0],AA:[0,0,0,0],AAA:[0,0,0,0]};
+        const zi=ZONAS_ORDER.indexOf(r.ciudad);if(zi<0)return;
+        g[r.actividad_id].nokia[zi]=r.precio_nokia||0;
+        g[r.actividad_id][r.categoria][zi]=r.precio_subc||0;
+      });
+      CAT.BASE=Object.values(grouped.BASE);
+      CAT.ADJ =Object.values(grouped.ADJ);
+      CAT.CR  =Object.values(grouped.CR);
+      console.log('Precios CAT cargados desde Supabase: '+catRows.length+' filas → BASE:'+CAT.BASE.length+' ADJ:'+CAT.ADJ.length+' CR:'+CAT.CR.length);
+    }
+    localStorage.setItem('igt26_cat',JSON.stringify({CAT,SUBCS}));
+    refreshSelects();renderCatalogo();
+  }catch(e){console.warn('loadCatalogo Supabase error:',e);}
+}
+
+async function syncPreciosToSupabase(){
+  const supa=getSupabase();if(!supa)return;
+  _catSyncInProgress=true;
+  setTimeout(()=>{_catSyncInProgress=false;},5000);
+  try{
+    const ZONAS_O=['Ciudad_Principal','Ciudad_Secundaria','Ciudad_Intermedia','Dificil Acceso'];
+    const catRows=[];
+    [[CAT.BASE,'BASE'],[CAT.ADJ,'ADJ'],[CAT.CR||[],'CR']].forEach(function(pair){
+      var list=pair[0],tipo=pair[1];
+      list.forEach(function(r){
+        ZONAS_O.forEach(function(ciudad,zi){
+          ['A','AA','AAA'].forEach(function(cat){
+            catRows.push({tipo_lista:tipo,actividad_id:r.id,nombre:r.nombre,unidad:r.unidad,
+              ciudad:ciudad,categoria:cat,
+              precio_nokia:(r.nokia||[])[zi]||0,precio_subc:(r[cat]||[])[zi]||0});
+          });
+        });
+      });
+    });
+    const {error:eC}=await supa.from('catalogo').upsert(catRows,{onConflict:'tipo_lista,actividad_id,ciudad,categoria'});
+    if(eC) console.warn('CAT error:',eC.message);
+    else console.log('Precios guardados en Supabase: '+catRows.length+' filas');
+  }catch(e){console.warn('syncPrecios error:',e);}
+}
+async function syncCatalogoToSupabase(){
+  _catSyncInProgress=true;
+  setTimeout(()=>{ _catSyncInProgress=false; }, 3000); // reset after 3s
+  const supa=getSupabase();if(!supa)return;
+  try{
+    // Save SUBCS
+    const subcRows=SUBCS.map(s=>({
+      lc:s.lc,empresa:s.empresa||s.lc,cat:s.cat||'A',
+      tel:s.tel||'',email:s.email||'',tipo_cuadrilla:s.tipoCuadrilla||'TI Ingetel'
+    }));
+    const {error:eS}=await supa.from('subcontratistas').upsert(subcRows,{onConflict:'lc'});
+    if(eS) console.warn('SUBCS error:',eS.message);
+    // Save CAT prices — flat (1 row per actividad/ciudad/categoria)
+    const ZONAS_O=['Ciudad_Principal','Ciudad_Secundaria','Ciudad_Intermedia','Dificil Acceso'];
+    const catRows=[];
+    [[CAT.BASE,'BASE'],[CAT.ADJ,'ADJ'],[CAT.CR||[],'CR']].forEach(function(pair){
+      var list=pair[0],tipo=pair[1];
+      list.forEach(function(r){
+        ZONAS_O.forEach(function(ciudad,zi){
+          ['A','AA','AAA'].forEach(function(cat){
+            catRows.push({tipo_lista:tipo,actividad_id:r.id,nombre:r.nombre,unidad:r.unidad,
+              ciudad:ciudad,categoria:cat,
+              precio_nokia:(r.nokia||[])[zi]||0,precio_subc:(r[cat]||[])[zi]||0});
+          });
+        });
+      });
+    });
+    const {error:eC}=await supa.from('catalogo').upsert(catRows,{onConflict:'tipo_lista,actividad_id,ciudad,categoria'});
+    if(eC) console.warn('CAT error:',eC.message);
+    else console.log('Catálogo guardado en Supabase: '+catRows.length+' filas');
+  }catch(e){console.warn('syncCatalogo error:',e);}
+}
+function loadCatalogo(){
+  try{
+    const d=JSON.parse(localStorage.getItem('igt26_cat')||'{}');
+    if(d.CAT&&d.CAT.BASE){CAT.BASE=d.CAT.BASE;CAT.ADJ=d.CAT.ADJ;CAT.CR=d.CAT.CR;}
+    // Fully replace SUBCS so deletions persist
+    if(d.SUBCS&&d.SUBCS.length&&!_subcLoadedFromSupabase) SUBCS.splice(0,SUBCS.length,...d.SUBCS);
+  }catch(e){}
+}
+
+function renderConfigEmpresa(){
+  document.getElementById('cfg-nombre').value=_empresaConfig.nombre||'';
+  document.getElementById('cfg-nombre-corto').value=_empresaConfig.nombre_corto||'';
+  document.getElementById('cfg-logo-url').value=_empresaConfig.logo_url||'';
+  document.getElementById('cfg-color').value=_empresaConfig.color_primario||'#144E4A';
+  document.getElementById('cfg-color-hex').value=_empresaConfig.color_primario||'#144E4A';
+  document.getElementById('cfg-tipo-cuadrilla').value=_empresaConfig.tipo_cuadrilla_propia||'';
+  // Sync color picker <-> text
+  document.getElementById('cfg-color').oninput=function(){
+    document.getElementById('cfg-color-hex').value=this.value;
+  };
+  document.getElementById('cfg-color-hex').oninput=function(){
+    if(/^#[0-9A-Fa-f]{6}$/.test(this.value))
+      document.getElementById('cfg-color').value=this.value;
+  };
+}
+
+async function guardarConfigEmpresa(){
+  _empresaConfig.nombre=document.getElementById('cfg-nombre').value.trim()||'Empresa';
+  _empresaConfig.nombre_corto=document.getElementById('cfg-nombre-corto').value.trim()||'Nokia';
+  _empresaConfig.logo_url=document.getElementById('cfg-logo-url').value.trim();
+  _empresaConfig.color_primario=document.getElementById('cfg-color-hex').value.trim()||'#144E4A';
+  _empresaConfig.tipo_cuadrilla_propia=document.getElementById('cfg-tipo-cuadrilla').value.trim()||'TI Empresa';
+  await saveEmpresaConfig();
+}
+function renderCatalogo(){
+  const zona=document.getElementById('cat-zona').value;
+  const zi=ZI[zona]??0;
+  const isAdmin=ST.isAdmin; // reads live from state
+  document.getElementById('cat-lock-badge').textContent=isAdmin?'🔓 Admin':'🔒 Lectura';
+  document.getElementById('cat-lock-badge').className='badge '+(isAdmin?'bg-gl':'bg-r');
+  document.getElementById('cat-admin-msg').innerHTML=isAdmin?'<strong>✓ Modo Administrador activo.</strong> Puedes editar precios y subcontratistas directamente en las celdas.':'Catálogo en modo lectura. Inicia sesión como Administrador para editar.';
+  document.getElementById('cat-admin-msg').className='alert '+(isAdmin?'al-s':'al-i');
+  ['th-cat-base-act','th-cat-adj-act','th-cat-cr-act','th-subc-act'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.textContent=isAdmin?'Acciones':'';
+  });
+  document.getElementById('btn-add-subc').style.display=isAdmin?'':'none';
+  ['btn-add-cat-base','btn-add-cat-adj','btn-add-cat-cr'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display=isAdmin?'':'none';});
+  // Admin-only buttons inside catalog page
+  var btnUp=document.getElementById('btn-cat-upload');
+  if(btnUp) btnUp.style.display=isAdmin?'':'none';
+  var btnSave=document.getElementById('btn-cat-save');
+  if(btnSave) btnSave.style.display=isAdmin?'':'none';
+  const editableNum=(val,cb)=>isAdmin
+    ?`<input type="number" style="width:110px;border:1px solid var(--g2);border-radius:4px;padding:3px 6px;font-size:11px;text-align:right" value="${val||0}" onchange="${cb}">`
+    :cop(val);
+  const renderCatRow=(a,lista)=>`<tr>
+    <td>${a.nombre}</td>
+    <td><span class="badge bg-k">${a.unidad}</span></td>
+    <td class="num" style="background:#eff6ff">${editableNum(a.nokia[zi],`updCatPrice('${a.id}','${lista}','nokia',${zi},this.value)`)}</td>
+    <td class="num" style="background:#fffbeb">${editableNum(a.A?.[zi],`updCatPrice('${a.id}','${lista}','A',${zi},this.value)`)}</td>
+    <td class="num" style="background:#fffbeb">${editableNum(a.AA?.[zi],`updCatPrice('${a.id}','${lista}','AA',${zi},this.value)`)}</td>
+    <td class="num" style="background:#fffbeb">${editableNum(a.AAA?.[zi],`updCatPrice('${a.id}','${lista}','AAA',${zi},this.value)`)}</td>
+    <td></td>
+  </tr>`;
+  document.getElementById('tbody-cat-base').innerHTML=CAT.BASE.map(a=>renderCatRow(a,'BASE')).join('');
+  document.getElementById('tbody-cat-adj').innerHTML=CAT.ADJ.map(a=>renderCatRow(a,'ADJ')).join('');
+  document.getElementById('tbody-cat-cr').innerHTML=CAT.CR.map(a=>renderCatRow(a,'CR')).join('');
+  document.getElementById('tbody-subc').innerHTML=SUBCS.map((s,i)=>`<tr>
+    <td>${isAdmin?`<input class="fc" style="padding:2px 7px;font-size:11px" value="${s.lc}" onchange="SUBCS[${i}].lc=this.value;refreshSelects();upsertSubc(${i})">`:`<strong>${s.lc}</strong>`}</td>
+    <td>${isAdmin?`<input class="fc" style="padding:2px 7px;font-size:11px" value="${s.empresa}" onchange="SUBCS[${i}].empresa=this.value;upsertSubc(${i})">`:`${s.empresa}`}</td>
+    <td>${isAdmin?`<select class="fc" style="padding:2px 7px;font-size:11px" onchange="SUBCS[${i}].cat=this.value;refreshSelects();upsertSubc(${i})">
+      <option ${s.cat==='A'?'selected':''}>A</option><option ${s.cat==='AA'?'selected':''}>AA</option>
+      <option ${s.cat==='AAA'?'selected':''}>AAA</option><option value="INGETEL" ${s.cat==='INGETEL'?'selected':''}>INGETEL</option>
+    </select>`:`<span class="badge bg-gl">${s.cat}</span>`}</td>
+    <td><select class="fc" style="padding:2px 7px;font-size:11px" ${!isAdmin?'disabled':''} onchange="SUBCS[${i}].tipoCuadrilla=this.value;upsertSubc(${i})">
+      <option value="TI Ingetel" ${(s.tipoCuadrilla||'TI Ingetel')==='TI Ingetel'?'selected':''}>TI Ingetel</option>
+      <option value="TSS Ingetel" ${(s.tipoCuadrilla||'TI Ingetel')==='TSS Ingetel'?'selected':''}>TSS Ingetel</option>
+      <option value="TI Scytel" ${(s.tipoCuadrilla||'TI Ingetel')==='TI Scytel'?'selected':''}>TI Scytel</option>
+      <option value="TSS Scytel" ${(s.tipoCuadrilla||'TI Ingetel')==='TSS Scytel'?'selected':''}>TSS Scytel</option>
+    </select></td>
+    <td>${isAdmin?`<input class="fc" style="padding:2px 7px;font-size:11px" value="${s.tel}" onchange="SUBCS[${i}].tel=this.value;upsertSubc(${i})">`:`${s.tel||'—'}`}</td>
+    <td>${isAdmin?`<input class="fc" style="padding:2px 7px;font-size:11px" value="${s.email}" onchange="SUBCS[${i}].email=this.value;upsertSubc(${i})">`:`${s.email||'—'}`}</td>
+    <td>${isAdmin?`<button class="btn-del" onclick="eliminarLC(${i})">✕</button>`:''}</td>
+  </tr>`).join('');
+}
+function updCatPrice(id,lista,col,zi,val){
+  const lst=lista==='BASE'?CAT.BASE:lista==='ADJ'?CAT.ADJ:CAT.CR;
+  const a=lst.find(x=>x.id===id);if(!a)return;
+  if(!a[col])a[col]=[0,0,0,0];
+  a[col][zi]=parseInt(val)||0;
+  toast('Precio actualizado');
+}
+
+async function upsertSubc(i){
+  const s=SUBCS[i];if(!s)return;
+  try{localStorage.setItem('igt26_cat',JSON.stringify({CAT,SUBCS}));}catch(e){}
+  if(!USE_SUPABASE)return;
+  const supa=getSupabase();if(!supa)return;
+  _catSyncInProgress=true;
+  setTimeout(()=>{_catSyncInProgress=false;},3000);
+  const {error}=await supa.from('subcontratistas').upsert(
+    {lc:s.lc,empresa:s.empresa||s.lc,cat:s.cat||'A',tel:s.tel||'',email:s.email||'',tipo_cuadrilla:s.tipoCuadrilla||'TI Ingetel'},
+    {onConflict:'lc'});
+  if(error) console.warn('Error guardando LC:',error.message);
+  else console.log('LC guardado en Supabase:',s.lc);
+  refreshSelects();
+}
+async function addSubcRow(){
+  const newLC={lc:'Nuevo LC',empresa:'Empresa',cat:'A',tel:'',email:'',tipoCuadrilla:'TI Ingetel'};
+  SUBCS.push(newLC);
+  renderCatalogo();refreshSelects();
+  if(USE_SUPABASE){
+    const supa=getSupabase();if(!supa)return;
+    const {error}=await supa.from('subcontratistas').upsert(
+      {lc:newLC.lc,empresa:newLC.empresa,cat:newLC.cat,tel:newLC.tel,email:newLC.email,tipo_cuadrilla:newLC.tipoCuadrilla},
+      {onConflict:'lc'});
+    if(error) console.warn('Error creando LC:',error.message);
+    else console.log('LC creado en Supabase');
+  }
+}
+function addCatRow(lista){CAT[lista].push({id:'act_'+Date.now(),nombre:'Nueva Actividad',unidad:'Sitio',nokia:[0,0,0,0],A:[0,0,0,0],AA:[0,0,0,0],AAA:[0,0,0,0]});renderCatalogo();toast('Actividad agregada');}
+
+// ============================================================
+// EXPORTAR EXCEL
+// ============================================================
+function exportarExcel(){
+  const wb=XLSX.utils.book_new();
+  // CONSOLIDATED
+  const consData=[['Sitio','Fecha','LC','Empresa','TI','ADJ','CW','CR','Venta Nokia','SubC TI','SubC CW','Mat TI','Mat CW','Logística','Adicionales','Costo SubC','Utilidad','% Margen']];
+  ST.sitios.forEach(s=>{
+    const c=calcSitio(s),sub=SUBCS.find(x=>x.lc===s.lc);
+    const costoSubc=(c.subcTI||0)+(c.subcADJ||0)+(c.subcCR||0)+(c.subcCW||0);
+    consData.push([s.nombre,s.fecha,s.lc,sub?.empresa||'',c.nokiaTI,c.nokiaADJ,c.nokiaCW,c.nokiaCR,c.totalVenta,c.subcTI,c.subcCW,c.matTI,c.matCW,c.logist,c.adicion,costoSubc,c.utilidad,parseFloat((c.margen*100).toFixed(1))]);
+  });
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(consData),'Consolidado');
+  const gastData=[['Sitio','Tipo','Descripcion','Valor']];
+  ST.gastos.forEach(g=>gastData.push([g.sitio,g.tipo,g.desc,g.valor]));
+  XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(gastData),'Gastos');
+  ST.sitios.forEach(s=>{
+    const cc=calcSitio(s),sub=SUBCS.find(x=>x.lc===s.lc);
+    const wsn=s.nombre.replace(/[:\/\[\]*?]/g,'').substring(0,28);
+    const rows=[
+      ['LIQUIDACION DE SITIO','','','','',''],
+      ['Sitio:',s.nombre,'Fecha:',s.fecha,'Ciudad:',s.ciudad],
+      ['LC:',s.lc,'Empresa:',sub?sub.empresa:'','Cat:',s.cat],
+      ['','','','','',''],
+      ['NOKIA - LIQUIDACION VENTA','','','','',''],
+      ['Actividad','Seccion','Unidad','Cantidad','P. Nokia','Total Nokia'],
+    ];
+    cc.acts.forEach(a=>rows.push([a.def?a.def.nombre:a.id,a.sec,a.def?a.def.unidad:'',a.cant,a.preNokia,a.totalNokia]));
+    if(s.cw_nokia>0)rows.push(['CW Obra Civil','CW','Sitio',1,s.cw_nokia,s.cw_nokia]);
+    rows.push(['','','','','TOTAL VENTA:',cc.totalVenta]);
+    rows.push(['','','','','','']);
+    rows.push(['SUBCONTRATISTA - LIQUIDACION COSTO','','','','','']);
+    rows.push(['Actividad','Seccion','Unidad','Cantidad','P. SubC','Total SubC']);
+    cc.acts.filter(a=>a.id!=='PM'&&a.preSubc>0).forEach(a=>rows.push([a.def?a.def.nombre:a.id,a.sec,a.def?a.def.unidad:'',a.cant,a.preSubc,a.totalSubc]));
+    if(s.cw_costo>0)rows.push(['CW SubContratista','CW','Sitio',1,s.cw_costo,s.cw_costo]);
+    rows.push(['','Materiales TI:',cc.matTI,'Materiales CW:',cc.matCW,'']);
+    rows.push(['','Logistica:',cc.logist,'Adicionales:',cc.adicion,'']);
+    rows.push(['','BackOffice:',cc.backoffice,'TOTAL COSTO:',cc.totalCosto,'']);
+    rows.push(['','UTILIDAD:',cc.utilidad,'% MARGEN:',(cc.margen*100).toFixed(1)+'%','']);
+    const gSitio=ST.gastos.filter(g=>g.sitio===s.id);
+    if(gSitio.length){rows.push(['GASTOS','','','','','']);gSitio.forEach(g=>rows.push([g.tipo,g.desc,g.valor,'','','']));}
+    XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),wsn);
+  });
+  XLSX.writeFile(wb,'Liquidador_'+(_empresaConfig.nombre_corto||'Nokia')+'_'+new Date().toISOString().split('T')[0]+'.xlsx');
+  toast('Excel exportado con todas las liquidaciones');
+}
+
+function renderLCPanel(){
+  var lc=document.getElementById('ana-lc-sel').value;
+  var panel=document.getElementById('ana-lc-panel');
+  if(!lc){panel.style.display='none';return;}
+  panel.style.display='block';
+  var sitiosLC=ST.sitios.filter(function(s){return s.lc===lc;});
+  var calcsLC=sitiosLC.map(function(s){return{s:s,c:calcSitio(s)};});
+  if(!calcsLC.length){document.getElementById('ana-lc-kpis').innerHTML='Sin sitios para este LC.';return;}
+  var tV=calcsLC.reduce(function(s,x){return s+x.c.totalVenta;},0);
+  var tC=calcsLC.reduce(function(s,x){return s+x.c.totalCosto;},0);
+  var avgMg=tV>0?(tV-tC)/tV:0;
+  var sub=SUBCS.find(function(s){return s.lc===lc;});
+  document.getElementById('ana-lc-t1').textContent='Venta por Sitio - '+lc;
+  var kpis='';
+  kpis+='<div class="stat"><div class="sl">Sitios</div><div class="sv">'+calcsLC.length+'</div><div class="ss">'+(sub?sub.empresa:'')+' Cat '+(sub?sub.cat:'')+'</div></div>';
+  kpis+='<div class="stat" style="border-color:var(--b)"><div class="sl">Venta Total</div><div class="sv" style="font-size:14px">'+cop(tV)+'</div></div>';
+  kpis+='<div class="stat" style="border-color:var(--o)"><div class="sl">Costo Total</div><div class="sv" style="font-size:14px;color:var(--o)">'+cop(tC)+'</div></div>';
+  var mc=avgMg>=.4?'var(--g)':avgMg>=.2?'var(--o)':'var(--r)';
+  kpis+='<div class="stat" style="border-color:'+mc+'"><div class="sl">Margen Prom.</div><div class="sv" style="color:'+mc+'">'+pct(avgMg)+'</div></div>';
+  document.getElementById('ana-lc-kpis').innerHTML=kpis;
+  ['chart-lc-v','chart-lc-m'].forEach(destroyChart);
+  var pa=['#0f2744','#1e3a5f','#1d4ed8','#3b82f6','#60a5fa','#93c5fd'];
+  var ctx1=document.getElementById('chart-lc-v').getContext('2d');
+  _charts['chart-lc-v']=new Chart(ctx1,{type:'bar',data:{labels:calcsLC.map(function(x){return x.s.nombre;}),datasets:[{label:'Venta',data:calcsLC.map(function(x){return x.c.totalVenta;}),backgroundColor:calcsLC.map(function(_,i){return pa[i%pa.length];}),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return '$'+Math.round(v/1e6)+'M';}}}}}});
+  var ctx2=document.getElementById('chart-lc-m').getContext('2d');
+  _charts['chart-lc-m']=new Chart(ctx2,{type:'bar',data:{labels:calcsLC.map(function(x){return x.s.nombre;}),datasets:[{label:'Margen %',data:calcsLC.map(function(x){return parseFloat((x.c.margen*100).toFixed(1));}),backgroundColor:calcsLC.map(function(x){return x.c.margen>=.4?'rgba(21,128,61,.8)':x.c.margen>=.2?'rgba(13,148,136,.7)':'rgba(185,28,28,.8)';}),borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'%';}},min:0,max:100}}}});
+}
+
+// ============================================================
+// MISC
+// ============================================================
+function buscarSitio(q){
+  if(!q){renderDashboard();return}
+  const f=ST.sitios.filter(s=>s.nombre.toLowerCase().includes(q.toLowerCase())||s.lc.toLowerCase().includes(q.toLowerCase()));
+  document.getElementById('tbody-dash').innerHTML=f.map(s=>{
+    const c=calcSitio(s);
+    return`<tr>
+      <td style="white-space:nowrap"><strong>${s.nombre}</strong>${s.actividades?.some(a=>a.sec==='SITIO NUEVO'||a.sec==='SITIO_NUEVO')?' <span style="color:#7c3aed;font-size:9px;font-weight:700">(SN)</span>':''}</td>
+      <td><span class="badge ${s.tipo==='TSS'?'bg-b':'bg-k'}">${s.tipo}</span></td>
+      <td style="font-size:10px">${s.lc}</td>
+      <td><span class="badge bg-b" style="font-size:8px">${s.ciudad==='varios'?'Var':s.ciudad.replace('Ciudad_','').substring(0,4)}</span></td>
+      <td class="num" style="color:var(--b);font-weight:700">${cop(c.totalVenta)}</td>
+      <td class="num" style="color:var(--o)">${cop(c.totalCosto)}</td>
+      <td class="num fw7 ${c.utilidad>=0?'tg':'tr'}">${cop(c.utilidad)}</td>
+      <td class="num"><span class="badge ${mcls(c.margen)}">${pct(c.margen)}</span></td>
+      <td><button class="btn bou btn-sm" onclick="abrirLiquidador('${s.id}')">Abrir</button></td>
+    </tr>`;
+  }).join('');
+}
+function refreshSelects(){
+  const opts=SUBCS.map(s=>`<option value="${s.lc}">${s.lc} (Cat ${s.cat})</option>`).join('');
+  ['ns-lc','tss-lc'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML='<option value="">— Seleccionar —</option>'+opts});
+}
+function hoy(){return new Date().toISOString().split('T')[0]}
+
+function init(){
+  loadCatalogo();
+  refreshSelects();
+  document.getElementById('ns-fecha').value=hoy();
+  document.getElementById('tss-fecha').value=hoy();
+  document.getElementById('g-sitio').innerHTML=ST.sitios.map(s=>`<option value="${s.id}">${s.id}</option>`).join('');
+  addTSSVisita();
+  updAddActList();
+}
+
+// ── Service Worker registration (PWA offline) ────────────────
+if('serviceWorker' in navigator){
+  const swCode=`
+    const CACHE='liq-v8';
+    const ASSETS=['./',document.location.href];
+    self.addEventListener('install',e=>e.waitUntil(
+      caches.open(CACHE).then(cache=>cache.add(document.location.href||'/'))
+    ));
+    self.addEventListener('fetch',e=>e.respondWith(
+      fetch(e.request).catch(()=>caches.match(e.request))
+    ));
+  `;
+  const blob=new Blob([swCode],{type:'application/javascript'});
+  navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+}
+
+// ── Sync indicator in header ─────────────────────────────────
+// Sheets disabled — using Supabase
+
+syncInit().then(()=>init());
+</script>
+</body>
+</html>

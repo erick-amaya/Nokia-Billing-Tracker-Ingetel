@@ -1,0 +1,25 @@
+{
+  "name": "Ingetel Liquidador Nokia 2026",
+  "short_name": "Ingetel Liq",
+  "description": "Liquidador de sitios Nokia - Ingetel SAS",
+  "start_url": "/Nokia-Billing-Tracker/index.html",
+  "scope": "/Nokia-Billing-Tracker/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#144E4A",
+  "orientation": "landscape",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
