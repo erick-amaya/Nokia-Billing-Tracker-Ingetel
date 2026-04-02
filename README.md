@@ -1,2 +1,2 @@
-# Nokia-Billing-Tracker-Servintelco
+# Nokia-Billing-Tracker-Ingetel
 Liquidador de Actividades Proyecto Nokia
