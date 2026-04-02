@@ -14,7 +14,7 @@
 <link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/xlsx-js-style@1.2.0/dist/xlsx-js-style.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
@@ -3844,176 +3844,90 @@ function renderConsolidadoCW(){
 }
 
 // ============================================================
-// EXPORTAR EXCEL — con formato y colores
+// EXPORTAR EXCEL
 // ============================================================
 function exportarExcel(){
   const wb = XLSX.utils.book_new();
 
-  // ── Paleta de colores ──
-  const C = {
-    teal:'144E4A', tealMid:'1B6E50',
-    gold:'FFC000', goldHdr:'FFD54F', goldLight:'FFF2CC',
-    white:'FFFFFF', black:'000000',
-    grey:'F5F5F5', green:'1A7A1A', red:'C0392B'
-  };
-
-  // ── Constructores de celda ──
-  function xc(v, bg, fg, bold, align, bdr){
-    const t = (typeof v==='number')?'n':'s';
-    const s = {
-      fill: bg?{patternType:'solid',fgColor:{rgb:bg}}:{patternType:'none'},
-      font: {color:{rgb:fg||C.black}, bold:!!bold, sz:10, name:'Calibri'},
-      alignment: {horizontal:align||'left', vertical:'center', wrapText:false}
-    };
-    if(bdr) s.border={top:{style:'thin',color:{rgb:'CCCCCC'}},bottom:{style:'thin',color:{rgb:'CCCCCC'}},left:{style:'thin',color:{rgb:'CCCCCC'}},right:{style:'thin',color:{rgb:'CCCCCC'}}};
-    return {v:v??'', t, s};
-  }
-  const hdrC = (v,bg,fg)=>xc(v,bg,fg||C.white,true,'center');
-  const lbl  = v=>xc(v,C.teal,C.white,true,'left');
-  const val  = (v,bold,align)=>xc(v,C.white,C.black,bold,align||'left',true);
-  const num  = (v,bold,bg)=>xc(v,bg||C.white,C.black,bold,'right',true);
-  const emp  = (n=6)=>Array(n).fill(xc('',C.white));
-
-  // ── Aplica celdas con estilo al worksheet ──
-  function buildWS(rows, merges, colW){
-    const data=rows.map(r=>r.map(c=>(c&&typeof c==='object'&&'v'in c)?c.v:c));
-    const ws=XLSX.utils.aoa_to_sheet(data);
-    rows.forEach((row,ri)=>{
-      row.forEach((c,ci)=>{
-        if(c&&typeof c==='object'&&c.s){
-          const addr=XLSX.utils.encode_cell({r:ri,c:ci});
-          if(!ws[addr])ws[addr]={v:c.v??'',t:typeof c.v==='number'?'n':'s'};
-          ws[addr].s=c.s;
-        }
-      });
-    });
-    if(merges)ws['!merges']=merges;
-    if(colW)ws['!cols']=colW.map(w=>({wch:w}));
-    return ws;
+  function ws(rows, colW){
+    const s = XLSX.utils.aoa_to_sheet(rows);
+    if(colW) s['!cols'] = colW.map(w=>({wch:w}));
+    return s;
   }
 
   // ── HOJA CONSOLIDADO ──────────────────────────────────────
-  const cHdrs=['Sitio','Fecha','LC','Empresa','Ciudad','Cat','Estado',
+  const cHdrs = ['Sitio','Fecha','LC','Empresa','Ciudad','Cat','Estado',
     'TI Nokia','ADJ Nokia','CW Nokia','CR Nokia','Venta Total',
-    'SubC TI','SubC CW','Mat TI','Mat CW','Logística','Adic.','BackOffice',
+    'SubC TI','SubC CW','Mat TI','Mat CW','Logística','Adicionales','BackOffice',
     'Costo Total','Utilidad','% Margen'];
-  const cRows=[];
-  cRows.push([hdrC('CONSOLIDADO — SITIOS TI',C.teal),...Array(cHdrs.length-1).fill(xc('',C.teal))]);
-  cRows.push(cHdrs.map(h=>hdrC(h,C.tealMid)));
-  ST.sitios.filter(s=>s.tipo==='TI').forEach((s,i)=>{
-    const c=calcSitio(s),sub=SUBCS.find(x=>x.lc===s.lc);
-    const bg=i%2===0?C.white:C.grey;
-    const costoSubc=(c.subcTI||0)+(c.subcADJ||0)+(c.subcCR||0)+(c.subcCW||0);
+  const cRows = [cHdrs];
+  ST.sitios.filter(s=>s.tipo==='TI').forEach(s=>{
+    const c=calcSitio(s), sub=SUBCS.find(x=>x.lc===s.lc);
     cRows.push([
-      xc(s.nombre,bg,C.black,true,'left',true), xc(s.fecha,bg,C.black,false,'center',true),
-      xc(s.lc,bg,C.black,false,'left',true), xc(sub?.empresa||'',bg,C.black,false,'left',true),
-      xc(s.ciudad,bg,C.black,false,'left',true), xc(s.cat,bg,C.black,false,'center',true),
-      xc(s.estado||'pre',bg,C.black,false,'center',true),
-      num(c.nokiaTI,false,bg), num(c.nokiaADJ,false,bg), num(c.nokiaCW,false,bg), num(c.nokiaCR,false,bg),
-      num(c.totalVenta,true,bg), num(c.subcTI,false,bg), num(c.subcCW,false,bg),
-      num(c.matTI,false,bg), num(c.matCW,false,bg), num(c.logist,false,bg),
-      num(c.adicion,false,bg), num(c.backoffice||0,false,bg), num(c.totalCosto,false,bg),
-      xc(c.utilidad,bg,c.utilidad>=0?C.green:C.red,true,'right',true),
-      xc(parseFloat((c.margen*100).toFixed(1))+'%',bg,C.black,false,'right',true)
+      s.nombre, s.fecha, s.lc, sub?.empresa||'', s.ciudad, s.cat, s.estado||'pre',
+      c.nokiaTI, c.nokiaADJ, c.nokiaCW, c.nokiaCR, c.totalVenta,
+      c.subcTI, c.subcCW, c.matTI, c.matCW, c.logist, c.adicion, c.backoffice||0,
+      c.totalCosto, c.utilidad, parseFloat((c.margen*100).toFixed(1))
     ]);
   });
-  const consWS=buildWS(cRows,[{s:{r:0,c:0},e:{r:0,c:cHdrs.length-1}}],
-    [32,12,16,20,18,6,8,13,13,13,13,14,13,13,11,11,11,9,10,13,13,9]);
-  XLSX.utils.book_append_sheet(wb,consWS,'Consolidado TI');
+  XLSX.utils.book_append_sheet(wb, ws(cRows,[32,12,16,20,18,6,8,13,13,13,13,14,13,13,11,11,11,11,10,13,13,9]), 'Consolidado TI');
 
   // ── HOJAS POR SITIO ───────────────────────────────────────
   ST.sitios.filter(s=>s.tipo==='TI').forEach(s=>{
     const cc=calcSitio(s), sub=SUBCS.find(x=>x.lc===s.lc);
     const gSitio=ST.gastos.filter(g=>g.sitio===s.id);
     const wsn=s.nombre.replace(/[:\/\[\]*?]/g,'').substring(0,28);
-    const rows=[], merges=[];
-    let r=0;
+    const rows=[];
 
-    // Info header
-    rows.push([lbl('SITIO:'),     val(s.nombre,true),      xc('',C.white),xc('',C.white), lbl('Fecha:'),  val(s.fecha,false,'center')]);
-    rows.push([lbl('Tipo:'),      val('TI'),                xc('',C.white),xc('',C.white), lbl('Ciudad:'), val(s.ciudad)]);
-    rows.push([lbl('LC:'),        val(s.lc,true),           xc('',C.white),xc('',C.white), lbl('Cat:'),    val(s.cat,false,'center')]);
-    rows.push([lbl('Estado:'),    val(s.estado||'pre'),     xc('',C.white),xc('',C.white), lbl('CW:'),     val(s.tiene_cw?(s.cw_conjunto?'Conjunto':'Sí'):'No',false,'center')]);
-    r+=4;
+    // ── Info ──
+    rows.push(['SITIO:',      s.nombre,         '', '', 'Fecha:',   s.fecha]);
+    rows.push(['Tipo:',       'TI',             '', '', 'Ciudad:',  s.ciudad]);
+    rows.push(['LC:',         s.lc,             '', '', 'Cat:',     s.cat]);
+    rows.push(['Estado:',     s.estado||'pre',  '', '', 'CW:',      s.tiene_cw?(s.cw_conjunto?'Conjunto':'Sí'):'No']);
+    rows.push([]);
 
-    rows.push(emp()); r++;
+    // ── Nokia ──
+    rows.push(['NOKIA — LIQUIDACIÓN VENTA', '', '', '', '', '']);
+    rows.push(['Actividad', 'Sección', 'Unidad', 'Cantidad', 'P. Nokia', 'Total Nokia']);
+    cc.acts.forEach(a=>rows.push([a.def?a.def.nombre:a.id, a.sec||'', a.def?a.def.unidad:'', a.cant||0, a.preNokia, a.totalNokia]));
+    if(s.cw_nokia>0) rows.push(['CW Obra Civil', 'CW', 'Sitio', 1, s.cw_nokia, s.cw_nokia]);
+    rows.push(['TOTAL VENTA NOKIA', '', '', '', '', cc.totalVenta]);
+    rows.push([]);
 
-    // Nokia section
-    rows.push([hdrC('NOKIA — LIQUIDACIÓN VENTA',C.teal),...Array(5).fill(xc('',C.teal))]);
-    merges.push({s:{r,c:0},e:{r,c:5}}); r++;
-    rows.push(['Actividad','Sección','Unidad','Cantidad','P. Nokia','Total Nokia'].map(h=>hdrC(h,C.tealMid)));
-    r++;
-    cc.acts.forEach(a=>{
-      rows.push([xc(a.def?a.def.nombre:a.id,C.white,C.black,false,'left',true),xc(a.sec||'',C.white,C.black,false,'left',true),xc(a.def?a.def.unidad:'',C.white,C.black,false,'center',true),num(a.cant||0),num(a.preNokia),num(a.totalNokia,true)]);
-      r++;
-    });
-    if(s.cw_nokia>0){rows.push([xc('CW Obra Civil',C.white,C.black,false,'left',true),xc('CW',C.white,C.black,false,'center',true),xc('Sitio',C.white,C.black,false,'center',true),num(1),num(s.cw_nokia),num(s.cw_nokia,true)]);r++;}
-    rows.push([hdrC('TOTAL VENTA NOKIA',C.goldLight,C.black),...Array(4).fill(xc('',C.goldLight)),num(cc.totalVenta,true,C.goldLight)]);
-    merges.push({s:{r,c:0},e:{r,c:4}}); r++;
+    // ── SubC ──
+    rows.push(['SUBCONTRATISTA — LIQUIDACIÓN PAGO', '', '', '', '', '']);
+    rows.push(['Actividad', 'Sección', 'Unidad', 'Cantidad', 'P. SubC', 'Total SubC']);
+    cc.acts.filter(a=>a.id!=='PM'&&a.preSubc>0&&!a.subcExcluded).forEach(a=>rows.push([a.def?a.def.nombre:a.id, a.sec||'', a.def?a.def.unidad:'', a.cant||0, a.preSubc, a.totalSubc]));
+    if(s.cw_costo>0) rows.push(['CW SubContratista', 'CW', 'Sitio', 1, s.cw_costo, s.cw_costo]);
+    rows.push(['TOTAL SUBC', '', '', '', '', (cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0)+(cc.subcCW||0)]);
+    rows.push([]);
 
-    rows.push(emp()); r++;
+    // ── Costos operativos ──
+    rows.push(['COSTOS OPERATIVOS', '', '', '', '', '']);
+    rows.push(['SubC TI+ADJ+CR:', '', '', '', '', (cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0)]);
+    rows.push(['SubC CW:',        '', '', '', '', cc.subcCW||0]);
+    rows.push(['Mat TI:',         '', '', '', '', cc.matTI||0]);
+    rows.push(['Mat CW:',         '', '', '', '', cc.matCW||0]);
+    rows.push(['Logística:',      '', '', '', '', cc.logist||0]);
+    rows.push(['Adicionales:',    '', '', '', '', cc.adicion||0]);
+    rows.push(['BackOffice:',     '', '', '', '', cc.backoffice||0]);
+    rows.push(['TOTAL COSTO:',    '', '', '', '', cc.totalCosto]);
+    rows.push(['UTILIDAD:',       '', '', '', '', cc.utilidad]);
+    rows.push(['% MARGEN:',       '', '', '', '', parseFloat((cc.margen*100).toFixed(1))+'%']);
 
-    // SubC section
-    rows.push([hdrC('SUBCONTRATISTA — LIQUIDACIÓN PAGO',C.gold,C.black),...Array(5).fill(xc('',C.gold))]);
-    merges.push({s:{r,c:0},e:{r,c:5}}); r++;
-    rows.push(['Actividad','Sección','Unidad','Cantidad','P. SubC','Total SubC'].map(h=>hdrC(h,C.goldHdr,C.black)));
-    r++;
-    cc.acts.filter(a=>a.id!=='PM'&&a.preSubc>0&&!a.subcExcluded).forEach(a=>{
-      rows.push([xc(a.def?a.def.nombre:a.id,C.white,C.black,false,'left',true),xc(a.sec||'',C.white,C.black,false,'left',true),xc(a.def?a.def.unidad:'',C.white,C.black,false,'center',true),num(a.cant||0),num(a.preSubc),num(a.totalSubc,true)]);
-      r++;
-    });
-    if(s.cw_costo>0){rows.push([xc('CW SubContratista',C.white,C.black,false,'left',true),xc('CW',C.white,C.black,false,'center',true),xc('Sitio',C.white,C.black,false,'center',true),num(1),num(s.cw_costo),num(s.cw_costo,true)]);r++;}
-    const totSubcVal=(cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0)+(cc.subcCW||0);
-    rows.push([hdrC('TOTAL SUBC',C.goldLight,C.black),...Array(4).fill(xc('',C.goldLight)),num(totSubcVal,true,C.goldLight)]);
-    merges.push({s:{r,c:0},e:{r,c:4}}); r++;
-
-    rows.push(emp()); r++;
-
-    // Costos operativos
-    rows.push([hdrC('COSTOS OPERATIVOS',C.teal),...Array(5).fill(xc('',C.teal))]);
-    merges.push({s:{r,c:0},e:{r,c:5}}); r++;
-    const co=(label,v)=>{
-      const row=[xc(label,C.white,C.black,false,'left',true),xc('',C.white),xc('',C.white),xc('',C.white),xc('',C.white),num(v)];
-      merges.push({s:{r,c:0},e:{r,c:4}}); r++;
-      return row;
-    };
-    rows.push(co('SubC TI+ADJ+CR:',(cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0)));
-    rows.push(co('SubC CW:',cc.subcCW||0));
-    rows.push(co('Mat TI:',cc.matTI||0));
-    rows.push(co('Mat CW:',cc.matCW||0));
-    rows.push(co('Logística:',cc.logist||0));
-    rows.push(co('Adicionales:',cc.adicion||0));
-    rows.push(co('BackOffice:',cc.backoffice||0));
-    rows.push([hdrC('TOTAL COSTO:',C.teal),...Array(4).fill(xc('',C.teal)),num(cc.totalCosto,true,C.teal)]);
-    merges.push({s:{r,c:0},e:{r,c:4}}); r++;
-    const ucol=cc.utilidad>=0?C.green:C.red;
-    rows.push([xc('UTILIDAD:',C.white,ucol,true,'left',true),...Array(4).fill(xc('',C.white)),xc(cc.utilidad,C.white,ucol,true,'right',true)]);
-    merges.push({s:{r,c:0},e:{r,c:4}}); r++;
-    const pctVal=parseFloat((cc.margen*100).toFixed(1))+'%';
-    const pcol=cc.margen>=0.3?C.green:cc.margen>=0.2?'E65C00':C.red;
-    rows.push([xc('% MARGEN:',C.white,C.black,true,'left',true),...Array(4).fill(xc('',C.white)),xc(pctVal,C.white,pcol,true,'right',true)]);
-    merges.push({s:{r,c:0},e:{r,c:4}}); r++;
-
-    // Gastos
+    // ── Gastos ──
     if(gSitio.length){
-      rows.push(emp()); r++;
-      rows.push([hdrC('GASTOS REGISTRADOS',C.teal),...Array(5).fill(xc('',C.teal))]);
-      merges.push({s:{r,c:0},e:{r,c:5}}); r++;
-      rows.push([hdrC('Tipo',C.tealMid),hdrC('Descripción',C.tealMid),xc('',C.tealMid),xc('',C.tealMid),xc('',C.tealMid),hdrC('Valor',C.tealMid)]);
-      merges.push({s:{r,c:1},e:{r,c:4}}); r++;
-      gSitio.forEach((g,i)=>{
-        const bg=i%2===0?C.white:C.grey;
-        rows.push([xc(g.tipo,bg,C.black,false,'left',true),xc(g.desc,bg,C.black,false,'left',true),xc('',bg),xc('',bg),xc('',bg),num(g.valor,false,bg)]);
-        merges.push({s:{r,c:1},e:{r,c:4}}); r++;
-      });
+      rows.push([]);
+      rows.push(['GASTOS REGISTRADOS', '', '', '', '', '']);
+      rows.push(['Tipo', 'Descripción', '', '', '', 'Valor']);
+      gSitio.forEach(g=>rows.push([g.tipo, g.desc, '', '', '', g.valor]));
     }
 
-    const ws=buildWS(rows,merges,[35,18,10,10,16,16]);
-    XLSX.utils.book_append_sheet(wb,ws,wsn);
+    XLSX.utils.book_append_sheet(wb, ws(rows,[35,18,10,10,16,16]), wsn);
   });
 
   XLSX.writeFile(wb,'Liquidador_'+(_empresaConfig.nombre_corto||'Nokia')+'_'+new Date().toISOString().split('T')[0]+'.xlsx');
-  toast('Excel exportado con formato completo');
+  toast('Excel exportado');
 }
 
 // ── Export Excel CW ───────────────────────────────────────────
