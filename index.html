@@ -15,6 +15,7 @@
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.3.0/dist/exceljs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <style>
@@ -325,6 +326,7 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
   </div>
   <div class="htit">Liquidador Nokia 2026</div>
   <div class="flex gap8" style="align-items:center">
+    <span id="rt-indicator" title="Conectando…" style="width:9px;height:9px;border-radius:50%;background:#f59e0b;display:inline-block;flex-shrink:0"></span>
     <span id="hdr-user-badge" class="user-badge ub-op" onclick="doLogout()">👤 Operador ▸ Salir</span>
   </div>
 </div>
@@ -367,6 +369,7 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
     </div>
   </div>
   <div class="g5 mb14" id="stats-cards" style="grid-template-columns:repeat(5,1fr)"></div>
+
   <div style="display:grid;grid-template-columns:1fr 340px;gap:14px">
     <div class="card">
       <div class="card-h"><h2>Sitios del Proyecto</h2></div>
@@ -407,7 +410,8 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Consolidado — Sitios TI</h1>
       <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
     <div class="flex gap8">
-      <select class="fc" id="fil-lc-sitios" style="width:200px" onchange="renderConsolidado()">
+      <input type="text" class="fc" id="fil-buscar-sitios" placeholder="🔍 Buscar sitio, LC, ciudad…" style="width:220px" oninput="renderConsolidado()">
+      <select class="fc" id="fil-lc-sitios" style="width:180px" onchange="renderConsolidado()">
         <option value="">Todas las Cuadrillas (LC)</option>
       </select>
       <button class="btn bp no-print" onclick="openModal('m-nuevo-sitio')">＋ Nuevo</button>
@@ -663,6 +667,7 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
         <option value="URBANO">Precios URBANO</option>
         <option value="RURAL">Precios RURAL</option>
       </select>
+      <button id="btn-cw-save" class="btn btn-sm" style="display:none;background:#144E4A;color:#CDFBF2;font-weight:700;border-radius:20px;padding:6px 16px" onclick="guardarCatalogoCW()">💾 Guardar CW</button>
     </div>
   </div>
   <div class="card"><div style="padding:0;overflow-x:auto">
@@ -973,6 +978,30 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
     <div style="margin-top:20px;display:flex;gap:8px">
       <button class="btn" style="background:#144E4A;color:#CDFBF2;font-weight:700;border-radius:20px;padding:8px 20px" onclick="guardarConfigEmpresa()">💾 Guardar Configuración</button>
       <button class="btn bk btn-sm" onclick="renderConfigEmpresa()">↩ Descartar</button>
+    </div>
+  </div>
+
+  <!-- HISTORIAL -->
+  <div class="card" style="margin-top:16px">
+    <div class="card-h" style="background:#1e293b;border-left-color:#94a3b8">
+      <h2 style="color:#fff">📋 Historial de Cambios</h2>
+      <button class="btn btn-sm bk no-print" onclick="cargarHistorial()">↻ Actualizar</button>
+    </div>
+    <div style="padding:0;overflow-x:auto;max-height:400px;overflow-y:auto">
+      <table class="tbl" id="tbl-historial">
+        <thead style="position:sticky;top:0;z-index:2">
+          <tr>
+            <th style="min-width:140px">Fecha / Hora</th>
+            <th style="min-width:130px">Usuario</th>
+            <th style="min-width:160px">Acción</th>
+            <th style="min-width:160px">Referencia</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-historial">
+          <tr><td colspan="5" style="padding:20px;text-align:center;color:var(--g3)">Cargando historial…</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -1464,12 +1493,14 @@ function renderDashboard(){
 function renderConsolidado(){
   const filTC='todos';
   const filLCSit=(document.getElementById('fil-lc-sitios')?.value)||'';
+  const filQ=((document.getElementById('fil-buscar-sitios')?.value)||'').toLowerCase().trim();
   const lcSelSit=document.getElementById('fil-lc-sitios');
   if(lcSelSit){const cur=lcSelSit.value;const lcs=[...new Set(ST.sitios.filter(s=>matchTipoCuadrilla(s,filTC)).map(s=>s.lc).filter(Boolean))].sort();lcSelSit.innerHTML='<option value="">Todas las Cuadrillas (LC)</option>'+lcs.map(l=>`<option value="${l}" ${l===cur?'selected':''}>${l}</option>`).join('');if(cur)lcSelSit.value=cur;}
   let tV=0,tC=0,tTI=0,tADJ=0,tCW=0,tCR=0,tSTC=0,tSCW=0,tMTI=0,tMCW=0,tLog=0,tAd=0,tMIMOtot=0;
   const sitiosFiltrados=ST.sitios.filter(s=>{
     if(!matchTipoCuadrilla(s,filTC)) return false;
     if(filLCSit&&s.lc!==filLCSit) return false;
+    if(filQ&&!`${s.nombre} ${s.lc} ${s.ciudad} ${s.cat}`.toLowerCase().includes(filQ)) return false;
     return true;
   });
   const rows=sitiosFiltrados.map(s=>{
@@ -2100,6 +2131,7 @@ function desmarcarLiquidado(sid){
   const s=ST.sitios.find(x=>x.id===sid);if(!s)return;
   s.estado='pre';
   saveState();cargarSitio(sid);
+  logCambio('Reabrir TI', sid);
   toast('Sitio reabierto — PRE LIQUIDACIÓN');
 }
 function marcarLiquidado(sid){
@@ -2111,6 +2143,7 @@ function marcarLiquidado(sid){
     if(p.def&&!act.unidad)act.unidad=p.def.unidad;
   });
   s.estado='final';saveState();cargarSitio(sid);
+  logCambio('Marcar Final TI', sid);
   toast('✓ Liquidación Final — precios congelados');
 }
 function exclCRSubc(sid,idx){
@@ -2474,9 +2507,22 @@ function initRealtime(){
         _handleRealtimeCatalogo();
       }
     )
+    .on('postgres_changes',
+      {event:'*', schema:'public', table:'liquidaciones_cw'},
+      (payload) => {
+        console.log('Realtime liquidaciones_cw:', payload.eventType);
+        _handleRealtimeLiqCW(payload);
+      }
+    )
     .subscribe((status) => {
       console.log('Realtime status:', status);
-      if(status === 'SUBSCRIBED') toast('🔴 Tiempo real activo');
+      if(status==='SUBSCRIBED'){
+        const ind=document.getElementById('rt-indicator');
+        if(ind){ind.style.background='#22c55e';ind.title='Tiempo real activo';}
+      } else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){
+        const ind=document.getElementById('rt-indicator');
+        if(ind){ind.style.background='#ef4444';ind.title='Sin tiempo real — reconectando…';}
+      }
     });
 }
 
@@ -2528,6 +2574,22 @@ function _handleRealtimeGasto(payload){
       renderDashboard();
     }
   });
+}
+
+function _handleRealtimeLiqCW(payload){
+  const {eventType, new: newRow, old: oldRow} = payload;
+  if(eventType==='DELETE'){
+    const id=oldRow?.id;
+    if(id) ST.liquidaciones_cw=ST.liquidaciones_cw.filter(l=>l.id!==id);
+  } else if(eventType==='INSERT'||eventType==='UPDATE'){
+    const liq={id:newRow.id,sitio_id:newRow.sitio_id,smp:newRow.smp||'',region:newRow.region||'',
+      tipo_zona:newRow.tipo_zona||'URBANO',lc:newRow.lc||'',estado:newRow.estado||'pre',items:newRow.items||[]};
+    const idx=ST.liquidaciones_cw.findIndex(l=>l.id===liq.id);
+    if(idx>=0) ST.liquidaciones_cw[idx]=liq;
+    else ST.liquidaciones_cw.push(liq);
+  }
+  try{localStorage.setItem('igt26_cw',JSON.stringify(ST.liquidaciones_cw));}catch(e){}
+  renderConsolidadoCW();
 }
 
 // ── EMPRESA CONFIG ─────────────────────────────────────────────
@@ -2593,6 +2655,23 @@ async function syncInit(){
   _migrateExistingSites();
   await loadEmpresaConfig();
   if(USE_SUPABASE){
+    const supa=getSupabase();
+    // Detectar sesión expirada o cierre externo
+    if(supa){
+      supa.auth.onAuthStateChange((event,session)=>{
+        if(event==='SIGNED_OUT'||(!session&&event==='TOKEN_REFRESHED')){
+          toast('⚠ Sesión expirada — vuelve a iniciar sesión','err');
+          document.getElementById('login-overlay').style.display='flex';
+          document.getElementById('login-email').value='';
+          document.getElementById('login-password').value='';
+          const btn=document.getElementById('login-btn');
+          if(btn){btn.textContent='Ingresar';btn.disabled=false;}
+        }
+        if(event==='TOKEN_REFRESHED'&&session){
+          console.log('Token renovado automáticamente');
+        }
+      });
+    }
     // Load catalog first so SUBCS are ready before init()
     await loadCatalogoFromSupabase();
     const loaded = await loadFromSupabase();
@@ -2633,6 +2712,7 @@ function crearSitio(){
   closeModal('m-nuevo-sitio');
   document.getElementById('ns-nom').value='';
   toast(`Sitio ${nom} creado`);
+  logCambio('Crear Sitio', nom, `Ciudad: ${ciudad} · LC: ${lc}`);
   abrirLiquidador(nom);
 }
 function eliminarSitio(id){
@@ -2662,6 +2742,7 @@ function eliminarSitio(id){
         }
       })();
       renderConsolidado();renderDashboard();
+      logCambio('Eliminar Sitio', id, tieneLiqCW?(eliminarCW?'incluye CW':'CW conservada'):'');
       toast(`${id} eliminado${tieneLiqCW?(eliminarCW?' (con CW)':' — CW conservada'):''}`);
     };
     if(tieneLiqCW){
@@ -2760,6 +2841,7 @@ function agregarGasto(){
   saveState();
   closeModal('m-gastos');
   document.getElementById('g-desc').value='';document.getElementById('g-valor').value='';
+  logCambio('Agregar Gasto', sitio, `${tipo}: ${desc} · $${valor.toLocaleString('es-CO')}`);
   toast('Gasto guardado');
   renderGastos();
   // FIX #9: if liquidador is showing that site, refresh it immediately
@@ -2768,7 +2850,12 @@ function agregarGasto(){
     cargarSitio(sitio);
   }
 }
-function eliminarGasto(i){ST.gastos.splice(i,1);saveState();renderGastos();toast('Gasto eliminado')}
+function eliminarGasto(i){
+  const g=ST.gastos[i];
+  ST.gastos.splice(i,1);saveState();renderGastos();
+  if(g) logCambio('Eliminar Gasto', g.sitio||'', `${g.tipo}: ${g.desc}`);
+  toast('Gasto eliminado');
+}
 
 let _editGastoIdx=null, _editGastoSitioId=null;
 function editarGasto(i, sitioId){
@@ -2789,6 +2876,7 @@ function guardarEditGasto(){
   closeModal('m-edit-gasto');
   renderGastos();
   if(_editGastoSitioId)cargarSitio(_editGastoSitioId);
+  logCambio('Editar Gasto', _editGastoSitioId||'', `${tipo}: ${desc} · $${valor.toLocaleString('es-CO')}`);
   toast('Gasto actualizado');
 }
 function openGastoFor(id){
@@ -3154,6 +3242,7 @@ function _procesarCSVPrecios(text){
 function guardarCatalogo(){
   try{localStorage.setItem('igt26_cat',JSON.stringify({CAT,SUBCS}));}catch(e){}
   if(USE_SUPABASE) syncPreciosToSupabase();
+  logCambio('Actualizar Catálogo TI','catalogo',`BASE:${CAT.BASE.length} ADJ:${CAT.ADJ.length} CR:${CAT.CR.length}`);
   toast('✓ Precios guardados correctamente');
 }
 async function loadCatalogoFromSupabase(){
@@ -3283,7 +3372,6 @@ function renderConfigEmpresa(){
   document.getElementById('cfg-color').value=_empresaConfig.color_primario||'#144E4A';
   document.getElementById('cfg-color-hex').value=_empresaConfig.color_primario||'#144E4A';
   document.getElementById('cfg-tipo-cuadrilla').value=_empresaConfig.tipo_cuadrilla_propia||'';
-  // Sync color picker <-> text
   document.getElementById('cfg-color').oninput=function(){
     document.getElementById('cfg-color-hex').value=this.value;
   };
@@ -3291,6 +3379,58 @@ function renderConfigEmpresa(){
     if(/^#[0-9A-Fa-f]{6}$/.test(this.value))
       document.getElementById('cfg-color').value=this.value;
   };
+  if(ST.isAdmin) cargarHistorial();
+}
+
+// ── Historial de cambios ──────────────────────────────────────
+async function logCambio(accion, entidadId='', detalle=''){
+  if(!USE_SUPABASE) return;
+  const supa=getSupabase(); if(!supa) return;
+  try{
+    await supa.from('historial').insert({
+      user_email: ST.user||'desconocido',
+      accion, entidad_id: String(entidadId), detalle: String(detalle)
+    });
+  }catch(e){ console.warn('logCambio error:',e); }
+}
+
+async function cargarHistorial(){
+  const tbody=document.getElementById('tbody-historial');
+  if(!tbody) return;
+  if(!USE_SUPABASE||!ST.isAdmin){
+    tbody.innerHTML='<tr><td colspan="5" style="padding:16px;text-align:center;color:var(--g3)">Solo disponible para admin con Supabase activo</td></tr>';
+    return;
+  }
+  const supa=getSupabase(); if(!supa) return;
+  tbody.innerHTML='<tr><td colspan="5" style="padding:16px;text-align:center;color:var(--g3)">Cargando…</td></tr>';
+  const {data,error}=await supa.from('historial').select('*').order('created_at',{ascending:false}).limit(100);
+  if(error||!data){
+    tbody.innerHTML='<tr><td colspan="5" style="padding:16px;text-align:center;color:var(--r)">Error al cargar historial</td></tr>';
+    return;
+  }
+  if(!data.length){
+    tbody.innerHTML='<tr><td colspan="5" style="padding:16px;text-align:center;color:var(--g3)">Sin registros aún</td></tr>';
+    return;
+  }
+  const accionColor={
+    'Crear Sitio':'#1a7a1a','Eliminar Sitio':'#c0392b',
+    'Marcar Final TI':'#0f4c75','Reabrir TI':'#d68910',
+    'Marcar Final CW':'#0f4c75','Reabrir CW':'#d68910',
+    'Agregar Gasto':'#144E4A','Editar Gasto':'#144E4A','Eliminar Gasto':'#c0392b',
+    'Actualizar Catálogo TI':'#7c3aed','Actualizar Catálogo CW':'#7c3aed'
+  };
+  tbody.innerHTML=data.map((h,i)=>{
+    const fecha=new Date(h.created_at).toLocaleString('es-CO',{dateStyle:'short',timeStyle:'short'});
+    const bg=i%2===0?'':'background:#f9f9f9';
+    const col=accionColor[h.accion]||'#333';
+    return`<tr style="${bg}">
+      <td style="font-size:10px;color:var(--g4);white-space:nowrap">${fecha}</td>
+      <td style="font-size:10px">${h.user_email}</td>
+      <td><span style="background:${col}20;color:${col};border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700">${h.accion}</span></td>
+      <td style="font-size:10px;font-weight:600">${h.entidad_id||'—'}</td>
+      <td style="font-size:10px;color:var(--g4)">${h.detalle||''}</td>
+    </tr>`;
+  }).join('');
 }
 
 async function guardarConfigEmpresa(){
@@ -3519,6 +3659,7 @@ function _marcarLiqCW(sitioId,estado){
   saveLiqCWSupabase(liq);
   const sitio=ST.sitios.find(s=>s.id===sitioId);
   if(sitio)renderLiquidadorCWSitio(sitio,liq);
+  logCambio(estado==='final'?'Marcar Final CW':'Reabrir CW', sitioId);
   toast(estado==='final'?'✓ Liquidación CW marcada como FINAL':'↩ Liquidación CW reabierta');
 }
 
@@ -3816,22 +3957,49 @@ function delCWItem(sitioId,actId){
 function renderCatalogoCW(){
   const tbody=document.getElementById('tbody-cat-cw');
   if(!tbody)return;
+  const btnSave=document.getElementById('btn-cw-save');
+  if(btnSave)btnSave.style.display=ST.isAdmin?'':'none';
   if(!CAT_CW.length){
     tbody.innerHTML='<tr><td colspan="5" style="padding:20px;text-align:center;color:var(--g3)">Catálogo CW no cargado — verifica la tabla catalogo_cw en Supabase</td></tr>';
     return;
   }
   const esRural=(document.getElementById('cat-cw-zona')?.value)==='RURAL';
-  tbody.innerHTML=CAT_CW.map(c=>{
-    const pN=esRural?c.precio_nokia_rural:c.precio_nokia_urbano;
-    const pS=esRural?c.precio_subc_rural:c.precio_subc_urbano;
-    return`<tr>
-      <td style="white-space:nowrap;font-weight:700;color:var(--b)">${c.actividad_id}</td>
-      <td style="font-size:10px">${c.nombre}</td>
-      <td><span class="badge bg-k" style="font-size:8px">${c.unidad}</span></td>
-      <td class="num" style="background:#eff6ff">${cop(pN)}</td>
-      <td class="num" style="background:#fffbeb">${cop(pS)}</td>
-    </tr>`;
-  }).join('');
+  const editN=(c)=>ST.isAdmin
+    ?`<input type="number" style="width:110px;border:1px solid var(--g2);border-radius:4px;padding:3px 6px;font-size:11px;text-align:right" value="${esRural?c.precio_nokia_rural:c.precio_nokia_urbano}" onchange="updCatCWPrice('${c.actividad_id}','nokia',${esRural?1:0},this.value)">`
+    :cop(esRural?c.precio_nokia_rural:c.precio_nokia_urbano);
+  const editS=(c)=>ST.isAdmin
+    ?`<input type="number" style="width:110px;border:1px solid var(--g2);border-radius:4px;padding:3px 6px;font-size:11px;text-align:right" value="${esRural?c.precio_subc_rural:c.precio_subc_urbano}" onchange="updCatCWPrice('${c.actividad_id}','subc',${esRural?1:0},this.value)">`
+    :cop(esRural?c.precio_subc_rural:c.precio_subc_urbano);
+  tbody.innerHTML=CAT_CW.map(c=>`<tr>
+    <td style="white-space:nowrap;font-weight:700;color:var(--b)">${c.actividad_id}</td>
+    <td style="font-size:10px">${c.nombre}</td>
+    <td><span class="badge bg-k" style="font-size:8px">${c.unidad}</span></td>
+    <td class="num" style="background:#eff6ff">${editN(c)}</td>
+    <td class="num" style="background:#fffbeb">${editS(c)}</td>
+  </tr>`).join('');
+}
+
+function updCatCWPrice(actId, campo, esRural, val){
+  const c=CAT_CW.find(x=>x.actividad_id===actId);if(!c)return;
+  const v=parseInt(val)||0;
+  if(campo==='nokia') esRural?c.precio_nokia_rural=v:c.precio_nokia_urbano=v;
+  else                esRural?c.precio_subc_rural=v:c.precio_subc_urbano=v;
+}
+
+async function guardarCatalogoCW(){
+  if(!USE_SUPABASE){toast('Sin conexión Supabase','err');return;}
+  const supa=getSupabase();if(!supa)return;
+  let ok=0,err=0;
+  for(const c of CAT_CW){
+    const {error}=await supa.from('catalogo_cw').upsert({
+      actividad_id:c.actividad_id, nombre:c.nombre, unidad:c.unidad,
+      precio_nokia_urbano:c.precio_nokia_urbano, precio_nokia_rural:c.precio_nokia_rural,
+      precio_subc_urbano:c.precio_subc_urbano,   precio_subc_rural:c.precio_subc_rural
+    },{onConflict:'actividad_id'});
+    error?err++:ok++;
+  }
+  if(!err) logCambio('Actualizar Catálogo CW','catalogo_cw',`${ok} ítems actualizados`);
+  err?toast(`Guardado con ${err} errores`,'err'):toast(`✓ Catálogo CW guardado (${ok} ítems)`);
 }
 
 // ── Consolidado CW ──────────────────────────────────────────
@@ -3892,88 +4060,210 @@ function renderConsolidadoCW(){
 // ============================================================
 // EXPORTAR EXCEL
 // ============================================================
-function exportarExcel(){
-  const wb = XLSX.utils.book_new();
+async function exportarExcel(){
+  if(typeof ExcelJS==='undefined'){toast('ExcelJS no cargado','err');return;}
+  const wb=new ExcelJS.Workbook();
+  wb.creator=_empresaConfig.nombre||'Ingetel';
 
-  function ws(rows, colW){
-    const s = XLSX.utils.aoa_to_sheet(rows);
-    if(colW) s['!cols'] = colW.map(w=>({wch:w}));
-    return s;
+  const CLR={
+    teal:'FF144E4A', tealMid:'FF1B6E50', tealLt:'FFE8F4F2',
+    gold:'FFFFC000', goldHdr:'FFFFD54F', goldLight:'FFFFF2CC',
+    green:'FF1A7A1A', red:'FFC0392B',
+    white:'FFFFFFFF', black:'FF000000',
+    grayLt:'FFF5F5F5'
+  };
+  const fill=a=>({type:'pattern',pattern:'solid',fgColor:{argb:a}});
+  const brd=()=>({top:{style:'thin'},left:{style:'thin'},bottom:{style:'thin'},right:{style:'thin'}});
+  function sc(cell,{f,fn,fa,fb,align,border:b}={}){
+    if(f)cell.fill=f; if(fn)cell.font=fn; if(fa)cell.numFmt=fa;
+    if(fb)cell.border=fb; if(align)cell.alignment=align;
   }
 
-  // ── HOJA CONSOLIDADO ──────────────────────────────────────
-  const cHdrs = ['Sitio','Fecha','LC','Empresa','Ciudad','Cat','Estado',
+  // ── HOJA CONSOLIDADO ─────────────────────────────────────
+  const shC=wb.addWorksheet('Consolidado TI');
+  shC.columns=[
+    {width:32},{width:12},{width:16},{width:20},{width:18},{width:6},{width:8},
+    {width:13},{width:13},{width:13},{width:13},{width:14},
+    {width:13},{width:13},{width:11},{width:11},{width:11},{width:11},{width:10},
+    {width:13},{width:13},{width:9}
+  ];
+  // Título
+  const tRow=shC.addRow(['CONSOLIDADO TI — '+(_empresaConfig.nombre||'Nokia')+'   '+new Date().toLocaleDateString('es-CO')]);
+  shC.mergeCells(shC.rowCount,1,shC.rowCount,22);
+  sc(tRow.getCell(1),{f:fill(CLR.teal),fn:{bold:true,color:{argb:CLR.white},size:13},align:{horizontal:'center',vertical:'middle'}});
+  tRow.height=24;
+  // Cabeceras
+  const cHdrs=['Sitio','Fecha','LC','Empresa','Ciudad','Cat','Estado',
     'TI Nokia','ADJ Nokia','CW Nokia','CR Nokia','Venta Total',
     'SubC TI','SubC CW','Mat TI','Mat CW','Logística','Adicionales','BackOffice',
     'Costo Total','Utilidad','% Margen'];
-  const cRows = [cHdrs];
-  ST.sitios.filter(s=>s.tipo==='TI').forEach(s=>{
-    const c=calcSitio(s), sub=SUBCS.find(x=>x.lc===s.lc);
-    cRows.push([
-      s.nombre, s.fecha, s.lc, sub?.empresa||'', s.ciudad, s.cat, s.estado||'pre',
-      c.nokiaTI, c.nokiaADJ, c.nokiaCW, c.nokiaCR, c.totalVenta,
-      c.subcTI, c.subcCW, c.matTI, c.matCW, c.logist, c.adicion, c.backoffice||0,
-      c.totalCosto, c.utilidad, parseFloat((c.margen*100).toFixed(1))
-    ]);
+  const hRow=shC.addRow(cHdrs);
+  hRow.height=15;
+  hRow.eachCell((cell,col)=>{
+    const clr=col>=13&&col<=14?CLR.gold:(col>=8&&col<=12?CLR.tealMid:CLR.teal);
+    const txtClr=col>=13&&col<=14?CLR.black:CLR.white;
+    sc(cell,{f:fill(clr),fn:{bold:true,color:{argb:txtClr},size:9},align:{horizontal:'center',vertical:'middle',wrapText:true},fb:brd()});
   });
-  XLSX.utils.book_append_sheet(wb, ws(cRows,[32,12,16,20,18,6,8,13,13,13,13,14,13,13,11,11,11,11,10,13,13,9]), 'Consolidado TI');
+  // Datos
+  ST.sitios.filter(s=>s.tipo==='TI').forEach((s,ri)=>{
+    const c=calcSitio(s), sub=SUBCS.find(x=>x.lc===s.lc);
+    const dr=shC.addRow([
+      s.nombre,s.fecha,s.lc,sub?.empresa||'',s.ciudad,s.cat,s.estado||'pre',
+      c.nokiaTI,c.nokiaADJ,c.nokiaCW,c.nokiaCR,c.totalVenta,
+      c.subcTI,c.subcCW,c.matTI,c.matCW,c.logist,c.adicion,c.backoffice||0,
+      c.totalCosto,c.utilidad,parseFloat((c.margen*100).toFixed(1))
+    ]);
+    const bg=ri%2===0?CLR.grayLt:CLR.white;
+    dr.eachCell((cell,col)=>{
+      sc(cell,{f:fill(bg),align:{horizontal:col>=8?'right':'left',vertical:'middle'},fb:brd()});
+      if(col>=8&&col<=21) cell.numFmt='#,##0';
+      if(col===22) cell.numFmt='0.0"%"';
+      if(col===21){const v=c.utilidad; cell.font={color:{argb:v>=0?CLR.green:CLR.red},bold:v<0};}
+      if(col===22){const v=c.margen*100; cell.font={color:{argb:v>=0?CLR.green:CLR.red},bold:v<0};}
+    });
+    dr.height=14;
+  });
 
   // ── HOJAS POR SITIO ───────────────────────────────────────
   ST.sitios.filter(s=>s.tipo==='TI').forEach(s=>{
     const cc=calcSitio(s), sub=SUBCS.find(x=>x.lc===s.lc);
     const gSitio=ST.gastos.filter(g=>g.sitio===s.id);
     const wsn=s.nombre.replace(/[:\/\[\]*?]/g,'').substring(0,28);
-    const rows=[];
+    const sh=wb.addWorksheet(wsn);
+    sh.columns=[{width:35},{width:18},{width:10},{width:10},{width:16},{width:16}];
 
-    // ── Info ──
-    rows.push(['SITIO:',      s.nombre,         '', '', 'Fecha:',   s.fecha]);
-    rows.push(['Tipo:',       'TI',             '', '', 'Ciudad:',  s.ciudad]);
-    rows.push(['LC:',         s.lc,             '', '', 'Cat:',     s.cat]);
-    rows.push(['Estado:',     s.estado||'pre',  '', '', 'CW:',      s.tiene_cw?(s.cw_conjunto?'Conjunto':'Sí'):'No']);
-    rows.push([]);
+    // Título sitio
+    const stRow=sh.addRow([s.nombre]);
+    sh.mergeCells(sh.rowCount,1,sh.rowCount,6);
+    sc(stRow.getCell(1),{f:fill(CLR.teal),fn:{bold:true,color:{argb:CLR.white},size:13},align:{horizontal:'center',vertical:'middle'}});
+    stRow.height=24;
 
-    // ── Nokia ──
-    rows.push(['NOKIA — LIQUIDACIÓN VENTA', '', '', '', '', '']);
-    rows.push(['Actividad', 'Sección', 'Unidad', 'Cantidad', 'P. Nokia', 'Total Nokia']);
-    cc.acts.forEach(a=>rows.push([a.def?a.def.nombre:a.id, a.sec||'', a.def?a.def.unidad:'', a.cant||0, a.preNokia, a.totalNokia]));
-    if(s.cw_nokia>0) rows.push(['CW Obra Civil', 'CW', 'Sitio', 1, s.cw_nokia, s.cw_nokia]);
-    rows.push(['TOTAL VENTA NOKIA', '', '', '', '', cc.totalVenta]);
-    rows.push([]);
+    // Info
+    const addInfo=(l1,v1,l2='',v2='')=>{
+      const r=sh.addRow([l1,v1,'',l2,v2,'']);
+      sc(r.getCell(1),{fn:{bold:true,color:{argb:CLR.teal}},align:{horizontal:'right'}});
+      if(l2) sc(r.getCell(4),{fn:{bold:true,color:{argb:CLR.teal}},align:{horizontal:'right'}});
+    };
+    addInfo('Tipo:','TI','Fecha:',s.fecha);
+    addInfo('LC:',s.lc,'Ciudad:',s.ciudad);
+    addInfo('Cat:',s.cat,'Estado:',s.estado||'pre');
+    addInfo('CW:',s.tiene_cw?(s.cw_conjunto?'Conjunto':'Sí'):'No','Empresa:',sub?.empresa||'');
+    sh.addRow([]);
 
-    // ── SubC ──
-    rows.push(['SUBCONTRATISTA — LIQUIDACIÓN PAGO', '', '', '', '', '']);
-    rows.push(['Actividad', 'Sección', 'Unidad', 'Cantidad', 'P. SubC', 'Total SubC']);
-    cc.acts.filter(a=>a.id!=='PM'&&a.preSubc>0&&!a.subcExcluded).forEach(a=>rows.push([a.def?a.def.nombre:a.id, a.sec||'', a.def?a.def.unidad:'', a.cant||0, a.preSubc, a.totalSubc]));
-    if(s.cw_costo>0) rows.push(['CW SubContratista', 'CW', 'Sitio', 1, s.cw_costo, s.cw_costo]);
-    rows.push(['TOTAL SUBC', '', '', '', '', (cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0)+(cc.subcCW||0)]);
-    rows.push([]);
+    // ── Sección Nokia ──
+    const nSH=sh.addRow(['NOKIA — LIQUIDACIÓN VENTA']);
+    sh.mergeCells(sh.rowCount,1,sh.rowCount,6);
+    sc(nSH.getCell(1),{f:fill(CLR.teal),fn:{bold:true,color:{argb:CLR.white},size:10},align:{horizontal:'left',vertical:'middle',indent:1}});
+    nSH.height=16;
+
+    const nCH=sh.addRow(['Actividad','Sección','Unidad','Cantidad','P. Nokia','Total Nokia']);
+    nCH.eachCell(cell=>sc(cell,{f:fill(CLR.tealMid),fn:{bold:true,color:{argb:CLR.white},size:9},align:{horizontal:'center'},fb:brd()}));
+    nCH.height=14;
+
+    cc.acts.forEach((a,i)=>{
+      const r=sh.addRow([a.def?a.def.nombre:a.id,a.sec||'',a.def?a.def.unidad:'',a.cant||0,a.preNokia,a.totalNokia]);
+      r.eachCell((cell,col)=>{
+        sc(cell,{f:fill(i%2===0?CLR.tealLt:CLR.white),align:{horizontal:col>=4?'right':'left'},fb:brd()});
+        if(col>=5) cell.numFmt='#,##0';
+      });
+    });
+    if(s.cw_nokia>0){
+      const r=sh.addRow(['CW Obra Civil','CW','Sitio',1,s.cw_nokia,s.cw_nokia]);
+      r.eachCell((cell,col)=>{ sc(cell,{f:fill(CLR.tealLt),align:{horizontal:col>=4?'right':'left'},fb:brd()}); if(col>=5)cell.numFmt='#,##0'; });
+    }
+    const nTot=sh.addRow(['TOTAL VENTA NOKIA','','','','',cc.totalVenta]);
+    sh.mergeCells(sh.rowCount,1,sh.rowCount,5);
+    nTot.eachCell((cell,col)=>{ sc(cell,{f:fill(CLR.teal),fn:{bold:true,color:{argb:CLR.white}},align:{horizontal:col===6?'right':'left'},fb:brd()}); if(col===6)cell.numFmt='#,##0'; });
+    nTot.height=15;
+    sh.addRow([]);
+
+    // ── Sección SubC ──
+    const sSH=sh.addRow(['SUBCONTRATISTA — LIQUIDACIÓN PAGO']);
+    sh.mergeCells(sh.rowCount,1,sh.rowCount,6);
+    sc(sSH.getCell(1),{f:fill(CLR.gold),fn:{bold:true,color:{argb:CLR.black},size:10},align:{horizontal:'left',vertical:'middle',indent:1}});
+    sSH.height=16;
+
+    const sCH=sh.addRow(['Actividad','Sección','Unidad','Cantidad','P. SubC','Total SubC']);
+    sCH.eachCell(cell=>sc(cell,{f:fill(CLR.goldHdr),fn:{bold:true,color:{argb:CLR.black},size:9},align:{horizontal:'center'},fb:brd()}));
+    sCH.height=14;
+
+    cc.acts.filter(a=>a.id!=='PM'&&a.preSubc>0&&!a.subcExcluded).forEach((a,i)=>{
+      const r=sh.addRow([a.def?a.def.nombre:a.id,a.sec||'',a.def?a.def.unidad:'',a.cant||0,a.preSubc,a.totalSubc]);
+      r.eachCell((cell,col)=>{ sc(cell,{f:fill(i%2===0?CLR.goldLight:CLR.white),align:{horizontal:col>=4?'right':'left'},fb:brd()}); if(col>=5)cell.numFmt='#,##0'; });
+    });
+    if(s.cw_costo>0){
+      const r=sh.addRow(['CW SubContratista','CW','Sitio',1,s.cw_costo,s.cw_costo]);
+      r.eachCell((cell,col)=>{ sc(cell,{f:fill(CLR.goldLight),align:{horizontal:col>=4?'right':'left'},fb:brd()}); if(col>=5)cell.numFmt='#,##0'; });
+    }
+    const totalSubc=(cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0)+(cc.subcCW||0);
+    const sTot=sh.addRow(['TOTAL SUBC','','','','',totalSubc]);
+    sh.mergeCells(sh.rowCount,1,sh.rowCount,5);
+    sTot.eachCell((cell,col)=>{ sc(cell,{f:fill(CLR.gold),fn:{bold:true,color:{argb:CLR.black}},align:{horizontal:col===6?'right':'left'},fb:brd()}); if(col===6)cell.numFmt='#,##0'; });
+    sTot.height=15;
+    sh.addRow([]);
 
     // ── Costos operativos ──
-    rows.push(['COSTOS OPERATIVOS', '', '', '', '', '']);
-    rows.push(['SubC TI+ADJ+CR:', '', '', '', '', (cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0)]);
-    rows.push(['SubC CW:',        '', '', '', '', cc.subcCW||0]);
-    rows.push(['Mat TI:',         '', '', '', '', cc.matTI||0]);
-    rows.push(['Mat CW:',         '', '', '', '', cc.matCW||0]);
-    rows.push(['Logística:',      '', '', '', '', cc.logist||0]);
-    rows.push(['Adicionales:',    '', '', '', '', cc.adicion||0]);
-    rows.push(['BackOffice:',     '', '', '', '', cc.backoffice||0]);
-    rows.push(['TOTAL COSTO:',    '', '', '', '', cc.totalCosto]);
-    rows.push(['UTILIDAD:',       '', '', '', '', cc.utilidad]);
-    rows.push(['% MARGEN:',       '', '', '', '', parseFloat((cc.margen*100).toFixed(1))+'%']);
+    const cOH=sh.addRow(['COSTOS OPERATIVOS']);
+    sh.mergeCells(sh.rowCount,1,sh.rowCount,6);
+    sc(cOH.getCell(1),{f:fill(CLR.teal),fn:{bold:true,color:{argb:CLR.white},size:10},align:{horizontal:'left',vertical:'middle',indent:1}});
+    cOH.height=16;
 
-    // ── Gastos ──
+    const addCost=(lbl,val)=>{
+      const r=sh.addRow([lbl,'','','','',val]);
+      sh.mergeCells(sh.rowCount,1,sh.rowCount,5);
+      sc(r.getCell(1),{fn:{color:{argb:CLR.teal}},fb:brd()});
+      sc(r.getCell(6),{align:{horizontal:'right'},fb:brd()});
+      r.getCell(6).numFmt='#,##0';
+    };
+    addCost('SubC TI+ADJ+CR:',(cc.subcTI||0)+(cc.subcADJ||0)+(cc.subcCR||0));
+    addCost('SubC CW:',cc.subcCW||0);
+    addCost('Mat TI:',cc.matTI||0);
+    addCost('Mat CW:',cc.matCW||0);
+    addCost('Logística:',cc.logist||0);
+    addCost('Adicionales:',cc.adicion||0);
+    addCost('BackOffice:',cc.backoffice||0);
+
+    const addTotalRow=(lbl,val,clr,txtClr,numFmt='#,##0')=>{
+      const r=sh.addRow([lbl,'','','','',val]);
+      sh.mergeCells(sh.rowCount,1,sh.rowCount,5);
+      sc(r.getCell(1),{f:fill(clr),fn:{bold:true,color:{argb:txtClr}},fb:brd()});
+      sc(r.getCell(6),{f:fill(clr),fn:{bold:true,color:{argb:txtClr}},align:{horizontal:'right'},fb:brd()});
+      r.getCell(6).numFmt=numFmt;
+      r.height=15;
+    };
+    addTotalRow('TOTAL COSTO:',cc.totalCosto,CLR.teal,CLR.white);
+    addTotalRow('UTILIDAD:',cc.utilidad,cc.utilidad>=0?CLR.green:CLR.red,CLR.white);
+    addTotalRow('% MARGEN:',parseFloat((cc.margen*100).toFixed(1)),cc.margen>=0?CLR.green:CLR.red,CLR.white,'0.0"%"');
+
+    // ── Gastos registrados ──
     if(gSitio.length){
-      rows.push([]);
-      rows.push(['GASTOS REGISTRADOS', '', '', '', '', '']);
-      rows.push(['Tipo', 'Descripción', '', '', '', 'Valor']);
-      gSitio.forEach(g=>rows.push([g.tipo, g.desc, '', '', '', g.valor]));
+      sh.addRow([]);
+      const gHdr=sh.addRow(['GASTOS REGISTRADOS']);
+      sh.mergeCells(sh.rowCount,1,sh.rowCount,6);
+      sc(gHdr.getCell(1),{f:fill(CLR.teal),fn:{bold:true,color:{argb:CLR.white},size:10},align:{horizontal:'left',vertical:'middle',indent:1}});
+      gHdr.height=16;
+      const gCH=sh.addRow(['Tipo','Descripción','','','','Valor']);
+      sh.mergeCells(sh.rowCount,2,sh.rowCount,5);
+      gCH.eachCell(cell=>sc(cell,{f:fill(CLR.tealMid),fn:{bold:true,color:{argb:CLR.white},size:9},align:{horizontal:'center'},fb:brd()}));
+      gSitio.forEach((g,i)=>{
+        const r=sh.addRow([g.tipo,g.desc,'','','',g.valor]);
+        sh.mergeCells(sh.rowCount,2,sh.rowCount,5);
+        r.eachCell((cell,col)=>{ sc(cell,{f:fill(i%2===0?CLR.tealLt:CLR.white),fb:brd()}); if(col===6){cell.numFmt='#,##0';cell.alignment={horizontal:'right'};} });
+      });
     }
-
-    XLSX.utils.book_append_sheet(wb, ws(rows,[35,18,10,10,16,16]), wsn);
   });
 
-  XLSX.writeFile(wb,'Liquidador_'+(_empresaConfig.nombre_corto||'Nokia')+'_'+new Date().toISOString().split('T')[0]+'.xlsx');
-  toast('Excel exportado');
+  // ── Descargar ──
+  try{
+    const buf=await wb.xlsx.writeBuffer();
+    const blob=new Blob([buf],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download='Liquidador_'+(_empresaConfig.nombre_corto||'Nokia')+'_'+new Date().toISOString().split('T')[0]+'.xlsx';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('Excel exportado con colores');
+  }catch(e){console.error('exportarExcel error:',e);toast('Error al exportar Excel','err');}
 }
 
 // ── Export Excel CW ───────────────────────────────────────────
