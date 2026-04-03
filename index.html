@@ -956,7 +956,10 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
           <option value="CR">CR — Adicionales Skytool</option>
         </select>
       </div>
-      <div class="fg"><label class="fl">Actividad</label><select class="fc" id="aa-act" style="font-size:11px"></select></div>
+      <div class="fg"><label class="fl">Actividad</label><select class="fc" id="aa-act" style="font-size:11px" onchange="_previewAddAct()"></select></div>
+      <div class="fg" id="aa-preview" style="background:#f0f9ff;border-radius:6px;padding:10px;font-size:11px;display:none">
+        <div id="aa-preview-txt"></div>
+      </div>
       <div class="fg"><label class="fl">Cantidad</label><input type="number" class="fc" id="aa-cant" value="1" min="0"></div>
     </div>
     <div class="mf">
@@ -1649,7 +1652,7 @@ function buildActTable(sitio,c,modo){
   const crExcl=new Set(sitio.crSubcExcluded||[]);
   const secciones={};
   const filteredActs=modo==='subc'
-    ?c.acts.filter((a,i)=>a.id!=='PM'&&!(crExcl.has(i)&&(a.tipo==='CR'||a.sec==='CR')))
+    ?c.acts.filter((a,i)=>a.id!=='PM'&&a.preSubc>0&&!(crExcl.has(i)&&(a.tipo==='CR'||a.sec==='CR')))
     :c.acts;
   filteredActs.forEach(act=>{const k=act.sec||'OTROS';if(!secciones[k])secciones[k]=[];secciones[k].push(act)});
   let rows='';
@@ -2053,6 +2056,23 @@ function updAddActList(){
   const lista=isBase?CAT.BASE:isCR?CAT.CR:CAT.ADJ;
   const tipo=isBase?'BASE':isCR?'CR':'ADJ';
   document.getElementById('aa-act').innerHTML=lista.map(a=>`<option value="${a.id}|${tipo}">${a.nombre} (${a.unidad})</option>`).join('');
+  _previewAddAct();
+}
+function _previewAddAct(){
+  const val=document.getElementById('aa-act').value;
+  const prev=document.getElementById('aa-preview');
+  if(!val||!_addActSitioId){if(prev)prev.style.display='none';return;}
+  const[id,tipo]=val.split('|');
+  const sitio=ST.sitios.find(s=>s.id===_addActSitioId);
+  if(!sitio){prev.style.display='none';return;}
+  const p=getPrecio(tipo,id,sitio.ciudad,sitio.catEfectiva||sitio.cat);
+  if(!p.def){prev.style.display='none';return;}
+  const pS=p.subc>0?`SubC: <b style="color:var(--o)">${cop(p.subc)}</b>`:'<span style="color:var(--g3);font-style:italic">SubC: asumido por empresa</span>';
+  document.getElementById('aa-preview-txt').innerHTML=
+    `<strong>${p.def.nombre}</strong><br>
+     Unidad: <b>${p.def.unidad}</b> &nbsp;|&nbsp;
+     Nokia: <b style="color:var(--b)">${cop(p.nokia)}</b> &nbsp;|&nbsp; ${pS}`;
+  prev.style.display='block';
 }
 
 let _addActSitioId='';
