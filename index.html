@@ -110,6 +110,8 @@ input[type=date].fc{min-width:0;width:100%;box-sizing:border-box;-webkit-appeara
 .sl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.7px;color:var(--g4);margin-bottom:4px}
 .sv{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:400;line-height:1;color:var(--k)}
 .ss{font-size:10px;color:var(--g3);margin-top:2px}
+.stat-link{transition:color .15s}
+.stat-link:hover{color:#1d4ed8!important}
 /* MBAR */
 .mbar{height:7px;background:var(--g2);border-radius:4px;overflow:hidden;margin-top:4px}
 .mfill{height:100%;border-radius:4px;background:#1a7a1a;transition:width .4s}
@@ -349,6 +351,11 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
     <button class="btn bp btn-lg" style="width:100%;justify-content:center" id="login-btn" onclick="doLogin()">
       Ingresar
     </button>
+    <div style="margin-top:22px;padding-top:14px;border-top:1px solid var(--g2);display:flex;align-items:center;justify-content:center;gap:8px">
+      <span style="font-size:9px;color:var(--g3);letter-spacing:.6px;text-transform:uppercase">Diseñado por</span>
+      <img src="SCYTEL solologo.png" style="height:18px;width:auto;opacity:.55" alt="SCYTEL">
+      <span style="font-size:11px;font-weight:700;color:var(--g4);letter-spacing:.8px">SCYTEL</span>
+    </div>
   </div>
 </div>
 <div class="hdr">
@@ -396,6 +403,13 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
   <div class="nav-drawer-sep"></div>
   <button class="nav-drawer-item" id="ndi-catalogo" style="display:none" onclick="navTo('catalogo')"><span class="ndi">📋</span>Catálogo</button>
   <button class="nav-drawer-item" id="ndi-config" style="display:none" onclick="navTo('config')"><span class="ndi">⚙</span>Config</button>
+  <div style="margin-top:auto;padding:14px 16px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px">
+    <img src="SCYTEL solologo.png" style="height:22px;width:auto;opacity:.5;filter:brightness(0) invert(1)" alt="SCYTEL">
+    <div>
+      <div style="font-size:8px;color:rgba(255,255,255,.3);letter-spacing:.8px;text-transform:uppercase;line-height:1.2">Diseñado por</div>
+      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.8px">SCYTEL</div>
+    </div>
+  </div>
 </div>
 
 <div class="main">
@@ -620,10 +634,13 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
 <div id="screen-analitica" class="screen">
   <div class="fb mb14">
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Analítica Gerencial</h1>
+    <div class="flex gap8">
       <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
-    <select class="fc" id="ana-lc-filter" style="width:200px" onchange="renderAnalitica()">
-      <option value="">Todas las Cuadrillas (LC)</option>
-    </select>
+      <div class="fecha-picker" id="fp-ana"></div>
+      <select class="fc" id="ana-lc-filter" style="width:200px" onchange="renderAnalitica()">
+        <option value="">Todas las Cuadrillas (LC)</option>
+      </select>
+    </div>
   </div>
   <div class="g4 mb14" id="ana-stats"></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
@@ -3179,13 +3196,25 @@ function exportarReporteExcel(){
 // ANALÍTICA GERENCIAL - PROFESSIONAL CHARTS
 // ============================================================
 function renderAnalitica(){
-  const filTCAna='todos'; // single LC filter only
+  const filTCAna='todos';
   const filLCAna=(document.getElementById('ana-lc-filter')?.value)||'';
+  const filYear=fpGetYear('fp-ana');
+  const filMes=fpGetMes('fp-ana');
   const lcSelAna=document.getElementById('ana-lc-filter');
   if(lcSelAna){const cur=lcSelAna.value;const lcs=[...new Set(ST.sitios.filter(s=>matchTipoCuadrilla(s,filTCAna)).map(s=>s.lc).filter(Boolean))].sort();lcSelAna.innerHTML='<option value="">Todas las Cuadrillas</option>'+lcs.map(l=>`<option value="${l}" ${l===cur?'selected':''}>${l}</option>`).join('');if(cur)lcSelAna.value=cur;}
-  const sitiosAna=ST.sitios.filter(s=>matchTipoCuadrilla(s,filTCAna)&&(!filLCAna||s.lc===filLCAna));
+  const sitiosAna=ST.sitios.filter(s=>{
+    if(!matchTipoCuadrilla(s,filTCAna)) return false;
+    if(filLCAna&&s.lc!==filLCAna) return false;
+    if(filYear!=='todos'||filMes!=='todos'){
+      if(!s.fecha) return false;
+      const d=new Date(s.fecha);
+      if(filYear!=='todos'&&d.getFullYear()!==parseInt(filYear)) return false;
+      if(filMes!=='todos'&&d.getMonth()!==parseInt(filMes)) return false;
+    }
+    return true;
+  });
   const calcs=sitiosAna.map(s=>({s,c:calcSitio(s)}));
-  if(!calcs.length){document.getElementById('ana-stats').innerHTML='<div class="alert al-i">Sin datos aún.</div>';return;}
+  if(!calcs.length){document.getElementById('ana-stats').innerHTML='<div class="alert al-i">Sin datos aún.</div>';initFechaPicker('fp-ana',renderAnalitica);return;}
 
   const tV=calcs.reduce((s,x)=>s+x.c.totalVenta,0);
   const tC=calcs.reduce((s,x)=>s+x.c.totalCosto,0);
@@ -3193,12 +3222,19 @@ function renderAnalitica(){
   const avgM=tV>0?tU/tV:0;
   const best=calcs.reduce((a,b)=>b.c.margen>a.c.margen?b:a);
   const worst=calcs.reduce((a,b)=>b.c.margen<a.c.margen?b:a);
+  const bestVenta=calcs.reduce((a,b)=>b.c.totalVenta>a.c.totalVenta?b:a);
+
+  // Mejor producción por LC
+  const lcProd={};
+  calcs.forEach(({s,c})=>{if(s.lc){if(!lcProd[s.lc])lcProd[s.lc]=0;lcProd[s.lc]+=c.totalVenta;}});
+  const lcArr=Object.entries(lcProd).sort((a,b)=>b[1]-a[1]);
+  const bestLC=lcArr[0];
 
   document.getElementById('ana-stats').innerHTML=`
-    <div class="stat"><div class="sl">Mejor Margen</div><div class="sv tg">${pct(best.c.margen)}</div><div class="ss">${best.s.nombre}</div></div>
-    <div class="stat" style="border-color:var(--b)"><div class="sl">Mayor Venta</div><div class="sv" style="font-size:13px">${cop(Math.max(...calcs.map(x=>x.c.totalVenta)))}</div></div>
-    <div class="stat" style="border-color:var(--r)"><div class="sl">Menor Margen</div><div class="sv tr">${pct(worst.c.margen)}</div><div class="ss">${worst.s.nombre}</div></div>
-    <div class="stat" style="border-color:var(--o)"><div class="sl">SubCs Activos</div><div class="sv">${[...new Set(sitiosAna.map(s=>s.lc))].length}</div><div class="ss">de ${SUBCS.length} registrados</div></div>`;
+    <div class="stat"><div class="sl">Mejor Margen</div><div class="sv tg">${pct(best.c.margen)}</div><div class="ss"><span class="stat-link" onclick="irALiquidador('${best.s.id}')" style="cursor:pointer" title="Ver liquidación">${best.s.nombre}</span></div></div>
+    <div class="stat" style="border-color:var(--b)"><div class="sl">Mayor Venta</div><div class="sv" style="font-size:13px">${cop(bestVenta.c.totalVenta)}</div><div class="ss"><span class="stat-link" onclick="irALiquidador('${bestVenta.s.id}')" style="cursor:pointer" title="Ver liquidación">${bestVenta.s.nombre}</span></div></div>
+    <div class="stat" style="border-color:var(--r)"><div class="sl">Menor Margen</div><div class="sv tr">${pct(worst.c.margen)}</div><div class="ss"><span class="stat-link" onclick="irALiquidador('${worst.s.id}')" style="cursor:pointer" title="Ver liquidación">${worst.s.nombre}</span></div></div>
+    <div class="stat" style="border-color:var(--o)"><div class="sl">Mejor Producción</div><div class="sv" style="font-size:13px">${bestLC?cop(bestLC[1]):'—'}</div><div class="ss" style="color:var(--go);font-weight:600">${bestLC?bestLC[0]:'—'}</div></div>`;
 
   ['chart-venta-acum','chart-lc','chart-sitio-mg','chart-util-mes','chart-scatter','chart-dist'].forEach(id=>destroyChart(id));
 
@@ -3300,7 +3336,17 @@ function renderAnalitica(){
       backgroundColor:['#1e3a5f','#14532d','#4a1d96','#7c2d12'],
       borderWidth:3,borderColor:'#fff'}]
   },options:{responsive:true,plugins:{legend:{position:'bottom'},
-    tooltip:{callbacks:{label:c=>`${c.label}: $${Math.round(c.parsed/1e6)}M (${((c.parsed/tV)*100).toFixed(1)}%)`}}}}}); 
+    tooltip:{callbacks:{label:c=>`${c.label}: $${Math.round(c.parsed/1e6)}M (${((c.parsed/tV)*100).toFixed(1)}%)`}}}}});
+
+  initFechaPicker('fp-ana',renderAnalitica);
+}
+
+function irALiquidador(id){
+  navTo('liquidador');
+  setTimeout(()=>{
+    const sel=document.getElementById('sel-liq');
+    if(sel){sel.value=id;cargarSitio(id);}
+  },150);
 }
 
 // ============================================================
