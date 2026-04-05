@@ -102,8 +102,8 @@ input[type=date].fc{min-width:0;width:100%;box-sizing:border-box;-webkit-appeara
 .tbl .tr-sect td{background:#144E4A;color:#CDFBF2;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:5px 8px}.tbl .tr-sect-subc td{background:#FFF0CE;color:#000000;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:5px 8px}
 .tbl .tr-nokia td{background:#eff6ff}
 .tbl .tr-subc td{background:#fffbeb}
-.th-nokia{background:#144E4A!important;color:#CDFBF2!important;font-size:11px!important;font-weight:800!important;padding:9px 10px!important;letter-spacing:.8px!important}
-.th-subc{background:#FFF0CE!important;color:#000000!important;font-size:11px!important;font-weight:800!important;padding:9px 10px!important;letter-spacing:.8px!important}
+.th-nokia{background:#144E4A!important;color:#CDFBF2!important;font-family:'Barlow Condensed',sans-serif!important;font-size:9px!important;font-weight:700!important;padding:9px 10px!important;letter-spacing:.7px!important;text-align:center!important}
+.th-subc{background:#FFF0CE!important;color:#000000!important;font-family:'Barlow Condensed',sans-serif!important;font-size:9px!important;font-weight:700!important;padding:9px 10px!important;letter-spacing:.7px!important;text-align:center!important}
 .th-cr{background:#4a1d96!important;color:#ddd6fe!important}
 /* STAT */
 .stat{background:#fff;border-radius:var(--rad);padding:12px 16px;border-left:4px solid var(--g);box-shadow:var(--sh)}
@@ -330,6 +330,19 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
 .fecha-picker-drop .fp-selected{background:var(--gf);color:var(--g);font-weight:700}
 .fecha-picker-drop .fp-all{font-size:10px;padding:4px 8px;cursor:pointer;border-radius:4px;border-bottom:1px solid var(--g2);margin-bottom:4px;font-weight:600}
 .fecha-picker-drop .fp-all:hover{background:var(--g1)}
+/* TI CONSOLIDADO — lengüetas de grupo */
+.th-tab-nokia{background:#144E4A!important;color:#CDFBF2!important;font-family:'Barlow Condensed',sans-serif!important;font-size:8px!important;font-weight:700!important;letter-spacing:.7px!important;padding:4px 10px!important;text-align:right!important;border-radius:6px 6px 0 0!important;border:none!important;white-space:nowrap!important;line-height:1.2!important;text-transform:uppercase!important}
+.th-tab-subc{background:#FFF0CE!important;color:#000!important;font-family:'Barlow Condensed',sans-serif!important;font-size:8px!important;font-weight:700!important;letter-spacing:.7px!important;padding:4px 10px!important;text-align:right!important;border-radius:6px 6px 0 0!important;border:none!important;white-space:nowrap!important;line-height:1.2!important;text-transform:uppercase!important}
+/* CONFIG GRID */
+.cfg-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:900px){.cfg-grid{grid-template-columns:1fr}}
+/* TC TAGS */
+.tc-tags{display:flex;flex-wrap:wrap;gap:6px;min-height:38px;padding:8px;background:#f9faf9;border:1.5px solid var(--g2);border-radius:6px}
+.tc-tag{display:inline-flex;align-items:center;gap:3px;background:var(--gf);border:1px solid #c8e6c8;border-radius:20px;padding:3px 8px 3px 12px;font-size:11px;font-weight:600;color:var(--go)}
+.tc-tag [contenteditable]{outline:none;min-width:30px;cursor:text}
+.tc-tag [contenteditable]:focus{border-bottom:1px dashed var(--g)}
+.tc-del{background:none;border:none;cursor:pointer;color:var(--g3);font-size:16px;line-height:1;padding:0 2px;font-weight:300;-webkit-tap-highlight-color:transparent}
+.tc-del:hover{color:var(--r)}
 </style>
 </head>
 <body>
@@ -421,16 +434,8 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
     <div class="flex gap8">
       <input type="text" class="fc" placeholder="🔍 Buscar sitio…" style="width:160px" oninput="buscarSitio(this.value)">
       <div class="fecha-picker" id="fp-dash"></div>
-      <select class="fc" id="dash-tipo-cuadrilla" style="width:140px" onchange="renderDashboard()">
-        <option value="todos">Todas las Cuadrillas (LC)</option>
-        <option value="TI Ingetel">TI Ingetel</option>
-        <option value="TSS Ingetel">TSS Ingetel</option>
-        <option value="Ingetel">Ingetel (TI+TSS)</option>
-        <option value="TI Scytel">TI Scytel</option>
-        <option value="TSS Scytel">TSS Scytel</option>
-        <option value="Scytel">Scytel (TI+TSS)</option>
-        <option value="TSS">TSS (todas)</option>
-        <option value="TI">TI (todas)</option>
+      <select class="fc tc-select" id="dash-tipo-cuadrilla" style="width:140px" onchange="renderDashboard()">
+        <option value="todos">Todas las Cuadrillas</option>
       </select>
       <button class="btn bp no-print" onclick="openModal('m-nuevo-sitio')">＋ Nuevo Sitio</button>
       <button class="btn bo no-print" onclick="openModal('m-nuevo-tss')">＋ TSS</button>
@@ -447,7 +452,7 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
             <th>Sitio</th><th>LC</th><th>Liquidación</th><th>Ciudad</th>
             <th class="num th-nokia">Venta Nokia</th>
             <th class="num th-subc">Costo SubC</th>
-            <th class="num">Utilidad</th><th class="num">% Margen</th><th></th>
+            <th class="num">Utilidad</th><th class="num">% Margen</th>
           </tr></thead>
           <tbody id="tbody-dash"></tbody>
         </table>
@@ -490,19 +495,20 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
       <table class="tbl" id="tbl-cons">
         <thead style="position:sticky;top:0;z-index:2">
           <tr>
-            <th rowspan="2">Sitio</th><th rowspan="2">Ciudad</th>
-            <th rowspan="2">Fecha</th><th rowspan="2">LC</th><th rowspan="2">Cat</th>
-            <th class="num th-nokia" colspan="5">VENTA NOKIA</th>
-            <th class="num th-subc" colspan="6">COSTOS SITIO</th>
-            <th rowspan="2"></th>
+            <th colspan="5" style="background:#f0f7f0;border:none;padding:2px 0"></th>
+            <th class="th-tab-nokia" colspan="5">VENTA NOKIA</th>
+            <th class="th-tab-subc" colspan="6">COSTO SITIO</th>
+            <th style="background:#f0f7f0;border:none;padding:0"></th>
           </tr>
           <tr>
+            <th>Sitio</th><th>Ciudad</th><th>Fecha</th><th>LC</th><th>Cat</th>
             <th class="num th-nokia">TI</th><th class="num th-nokia">ADJ</th>
             <th class="num th-nokia">CW</th><th class="num th-nokia">CR</th>
             <th class="num th-nokia" style="border-right:2px solid #60a5fa">MIMO</th>
             <th class="num th-subc">SubC TI</th><th class="num th-subc">SubC CW</th>
             <th class="num th-subc">Mat TI</th><th class="num th-subc">Mat CW</th>
             <th class="num th-subc">Logística</th><th class="num th-subc" style="border-right:2px solid #fbbf24">Adicionales</th>
+            <th style="width:30px"></th>
           </tr>
         </thead>
         <tbody id="tbody-cons"></tbody>
@@ -586,16 +592,8 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
       <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
     <div class="flex gap8">
       <div class="fecha-picker" id="fp-rep"></div>
-      <select class="fc" id="rep-tipo-cuadrilla" data-lc="true" style="width:140px" onchange="renderReportes()">
-        <option value="todos">Todas las Cuadrillas (LC)</option>
-        <option value="TI Ingetel">TI Ingetel</option>
-        <option value="TSS Ingetel">TSS Ingetel</option>
-        <option value="Ingetel">Ingetel (TI+TSS)</option>
-        <option value="TI Scytel">TI Scytel</option>
-        <option value="TSS Scytel">TSS Scytel</option>
-        <option value="Scytel">Scytel (TI+TSS)</option>
-        <option value="TSS">TSS (todas)</option>
-        <option value="TI">TI (todas)</option>
+      <select class="fc tc-select" id="rep-tipo-cuadrilla" data-lc="true" style="width:140px" onchange="renderReportes()">
+        <option value="todos">Todas las Cuadrillas</option>
       </select>
 
       <select class="fc" id="rep-lc-filter" style="width:180px" onchange="renderReportes()">
@@ -640,8 +638,11 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
     <div class="flex gap8">
       <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
       <div class="fecha-picker" id="fp-ana"></div>
-      <select class="fc" id="ana-lc-filter" style="width:200px" onchange="renderAnalitica()">
-        <option value="">Todas las Cuadrillas (LC)</option>
+      <select class="fc tc-select" id="ana-tc-filter" style="width:140px" onchange="renderAnalitica()">
+        <option value="todos">Todas las Cuadrillas</option>
+      </select>
+      <select class="fc" id="ana-lc-filter" style="width:180px" onchange="renderAnalitica()">
+        <option value="">Todos los LC</option>
       </select>
     </div>
   </div>
@@ -774,6 +775,7 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">Consolidado — Obra Civil (CW)</h1>
     <button class="btn bk btn-sm no-print" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
     <div class="flex gap8">
+      <div class="fecha-picker" id="fp-cw"></div>
       <select class="fc" id="fil-lc-cw" style="width:200px" onchange="renderConsolidadoCW()">
         <option value="">Todas las Cuadrillas (LC)</option>
       </select>
@@ -1049,90 +1051,97 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
 
 <div id="toast"></div>
 <!-- CONFIGURACIÓN DE EMPRESA -->
-<div id="screen-config" class="screen" style="max-width:600px;margin:0 auto">
+<div id="screen-config" class="screen">
   <div class="fb mb14" style="position:sticky;top:50px;z-index:100;background:#f4f5f4;padding:10px 0;border-bottom:1px solid var(--g2)">
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:21px;font-weight:700">⚙ Configuración de Empresa</h1>
     <button class="btn bk btn-sm" onclick="showScreen('dashboard',document.querySelector('.nt'))" style="font-size:10px">← Dashboard</button>
   </div>
-  <div class="card" style="padding:20px">
-    <div class="alert al-i mb14">Solo el administrador puede modificar esta configuración. Los cambios se aplican a todos los usuarios.</div>
-    <div style="display:grid;gap:14px">
-      <div>
-        <label class="fl">Nombre de la empresa</label>
-        <input type="text" class="fc" id="cfg-nombre" placeholder="Ej: Ingetel SAS" style="width:100%">
-      </div>
-      <div>
-        <label class="fl">Nombre corto (para reportes)</label>
-        <input type="text" class="fc" id="cfg-nombre-corto" placeholder="Ej: Ingetel" style="width:100%">
-      </div>
-      <div>
-        <label class="fl">URL del logo (imagen pública)</label>
-        <input type="text" class="fc" id="cfg-logo-url" placeholder="https://..." style="width:100%">
-        <small style="color:var(--g3)">Sube tu logo a <a href="https://imgur.com" target="_blank">imgur.com</a> u otro hosting y pega la URL directa aquí</small>
-      </div>
-      <div>
-        <label class="fl">Color primario</label>
-        <div style="display:flex;gap:8px;align-items:center">
-          <input type="color" id="cfg-color" value="#144E4A" style="width:50px;height:36px;border:none;cursor:pointer;border-radius:6px">
-          <input type="text" class="fc" id="cfg-color-hex" placeholder="#144E4A" style="width:120px">
+  <div class="cfg-grid">
+
+    <!-- IZQUIERDA: campos de configuración -->
+    <div class="card" style="padding:20px">
+      <div class="alert al-i mb14">Solo el administrador puede modificar esta configuración. Los cambios se aplican a todos los usuarios.</div>
+      <div style="display:grid;gap:14px">
+        <div>
+          <label class="fl">Nombre de la empresa</label>
+          <input type="text" class="fc" id="cfg-nombre" placeholder="Ej: Ingetel SAS" style="width:100%">
+        </div>
+        <div>
+          <label class="fl">Nombre corto (para reportes)</label>
+          <input type="text" class="fc" id="cfg-nombre-corto" placeholder="Ej: Ingetel" style="width:100%">
+        </div>
+        <div>
+          <label class="fl">URL del logo (imagen pública)</label>
+          <input type="text" class="fc" id="cfg-logo-url" placeholder="https://..." style="width:100%">
+          <small style="color:var(--g3)">Sube tu logo a <a href="https://imgur.com" target="_blank">imgur.com</a> u otro hosting y pega la URL directa aquí</small>
+        </div>
+        <div>
+          <label class="fl">Color primario</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="color" id="cfg-color" value="#144E4A" style="width:50px;height:36px;border:none;cursor:pointer;border-radius:6px">
+            <input type="text" class="fc" id="cfg-color-hex" placeholder="#144E4A" style="width:120px">
+          </div>
+        </div>
+        <div>
+          <label class="fl">Tipos de Cuadrilla</label>
+          <div class="tc-tags" id="cfg-tc-tags"></div>
+          <div style="display:flex;gap:6px;margin-top:8px">
+            <input type="text" class="fc" id="cfg-tc-input" placeholder="Ej: TI Empresa" style="flex:1"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addTCTag()}">
+            <button class="btn bp btn-sm" onclick="addTCTag()">＋ Agregar</button>
+          </div>
+          <small style="color:var(--g3);margin-top:4px;display:block">Toca el texto de un tipo para editarlo. Los menús y la tabla de subcontratistas se actualizan al guardar.</small>
         </div>
       </div>
-      <div>
-        <label class="fl">Nombre tipo cuadrilla propia</label>
-        <input type="text" class="fc" id="cfg-tipo-cuadrilla" placeholder="Ej: TI Ingetel" style="width:100%">
-        <small style="color:var(--g3)">Este texto aparece en las opciones de tipo de cuadrilla</small>
+      <div style="margin-top:20px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn" style="background:#144E4A;color:#CDFBF2;font-weight:700;border-radius:20px;padding:8px 20px" onclick="guardarConfigEmpresa()">💾 Guardar Configuración</button>
+        <button class="btn bk btn-sm" onclick="renderConfigEmpresa()">↩ Descartar</button>
       </div>
     </div>
-    <div style="margin-top:20px;display:flex;gap:8px">
-      <button class="btn" style="background:#144E4A;color:#CDFBF2;font-weight:700;border-radius:20px;padding:8px 20px" onclick="guardarConfigEmpresa()">💾 Guardar Configuración</button>
-      <button class="btn bk btn-sm" onclick="renderConfigEmpresa()">↩ Descartar</button>
-    </div>
-  </div>
 
-  <!-- USUARIOS Y ROLES -->
-  <div class="card" style="margin-top:16px">
-    <div class="card-h">
-      <h2>👥 Usuarios y Roles</h2>
-      <button class="btn btn-sm bk no-print" onclick="cargarRoles()">↻ Actualizar</button>
+    <!-- DERECHA: usuarios y historial -->
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <!-- USUARIOS Y ROLES -->
+      <div class="card">
+        <div class="card-h">
+          <h2>👥 Usuarios y Roles</h2>
+          <button class="btn btn-sm bk no-print" onclick="cargarRoles()">↻ Actualizar</button>
+        </div>
+        <div style="padding:0">
+          <table class="tbl" id="tbl-roles">
+            <thead><tr>
+              <th>Nombre</th><th>Rol</th>
+              <th style="font-size:8px;color:var(--g3)">User ID</th>
+            </tr></thead>
+            <tbody id="tbody-roles">
+              <tr><td colspan="3" style="padding:16px;text-align:center;color:var(--g3)">Cargando…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- HISTORIAL -->
+      <div class="card">
+        <div class="card-h">
+          <h2>📋 Historial de Cambios</h2>
+          <button class="btn btn-sm bk no-print" onclick="cargarHistorial()">↻ Actualizar</button>
+        </div>
+        <div style="padding:0;overflow-x:auto;max-height:420px;overflow-y:auto">
+          <table class="tbl" id="tbl-historial">
+            <thead style="position:sticky;top:0;z-index:2"><tr>
+              <th style="min-width:120px">Fecha</th>
+              <th style="min-width:110px">Usuario</th>
+              <th style="min-width:140px">Acción</th>
+              <th style="min-width:130px">Referencia</th>
+              <th>Detalle</th>
+            </tr></thead>
+            <tbody id="tbody-historial">
+              <tr><td colspan="5" style="padding:20px;text-align:center;color:var(--g3)">Cargando historial…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-    <div style="padding:0">
-      <table class="tbl" id="tbl-roles">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Rol</th>
-            <th style="font-size:8px;color:var(--g3)">User ID (Supabase)</th>
-          </tr>
-        </thead>
-        <tbody id="tbody-roles">
-          <tr><td colspan="3" style="padding:16px;text-align:center;color:var(--g3)">Cargando…</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 
-  <!-- HISTORIAL -->
-  <div class="card" style="margin-top:16px">
-    <div class="card-h">
-      <h2>📋 Historial de Cambios</h2>
-      <button class="btn btn-sm bk no-print" onclick="cargarHistorial()">↻ Actualizar</button>
-    </div>
-    <div style="padding:0;overflow-x:auto;max-height:400px;overflow-y:auto">
-      <table class="tbl" id="tbl-historial">
-        <thead style="position:sticky;top:0;z-index:2">
-          <tr>
-            <th style="min-width:140px">Fecha / Hora</th>
-            <th style="min-width:130px">Usuario</th>
-            <th style="min-width:160px">Acción</th>
-            <th style="min-width:160px">Referencia</th>
-            <th>Detalle</th>
-          </tr>
-        </thead>
-        <tbody id="tbody-historial">
-          <tr><td colspan="5" style="padding:20px;text-align:center;color:var(--g3)">Cargando historial…</td></tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </div>
 
@@ -1385,12 +1394,13 @@ function tipoBadge(s){
 function matchTipoCuadrilla(s, filTC){
   if(!filTC||filTC==='todos') return true;
   const sub=SUBCS.find(x=>x.lc===s.lc);
-  const tc=sub?.tipoCuadrilla||'TI Ingetel';
-  if(filTC==='Ingetel') return tc==='TI Ingetel'||tc==='TSS Ingetel';
-  if(filTC==='Scytel')  return tc==='TI Scytel'||tc==='TSS Scytel';
-  if(filTC==='TI')      return tc==='TI Ingetel'||tc==='TI Scytel';
-  if(filTC==='TSS')     return tc==='TSS Ingetel'||tc==='TSS Scytel';
-  return tc===filTC;
+  const tc=sub?.tipoCuadrilla||(TIPOS_CUADRILLA[0]||'TI');
+  if(tc===filTC) return true;
+  const tcPrefix=tc.split(' ')[0];
+  const tcSuffix=tc.includes(' ')?tc.split(' ').slice(1).join(' '):'';
+  if(tcSuffix&&tcSuffix===filTC) return true;
+  if(tcPrefix&&tcPrefix===filTC) return true;
+  return false;
 }
 const mfcls=v=>v>=.3?'':v>=.2?'warn':'dang';
 function toast(m,t='ok'){const el=document.getElementById('toast');el.textContent=m;el.style.borderLeftColor=t==='err'?'#c0392b':'#1a9c1a';el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800)}
@@ -1602,7 +1612,7 @@ function renderDashboard(){
       if(filMes!=='todos'&&d.getMonth()!==parseInt(filMes)) return false;
     }
     return true;
-  });
+  }).sort((a,b)=>new Date(b.fecha||0)-new Date(a.fecha||0));
   const calcs=sitiosDash.map(s=>({s,c:calcSitio(s)}));
   const tV=calcs.reduce((s,x)=>s+x.c.totalVenta,0);
   const tC=calcs.reduce((s,x)=>s+x.c.totalCosto,0);
@@ -1635,7 +1645,7 @@ function renderDashboard(){
       <div class="ss">Utilidad: ${cop(tU)}</div>
     </div>`;
   document.getElementById('tbody-dash').innerHTML=calcs.map(({s,c})=>`<tr>
-    <td style="white-space:nowrap"><strong>${s.nombre}</strong> ${tipoBadge(s)}${s.catEfectiva?' <span style="background:#7c3aed;color:#fff;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800">E</span>':''}</td>
+    <td style="white-space:nowrap"><span class="stat-link" onclick="abrirLiquidador('${s.id}')" style="cursor:pointer;font-weight:700" title="Abrir liquidador">${s.nombre}</span> ${tipoBadge(s)}${s.catEfectiva?' <span style="background:#7c3aed;color:#fff;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800">E</span>':''}</td>
     <td style="font-size:10px">${s.lc}</td>
     <td>${s.estado==='final'?'<span class="badge" style="background:#1a7a1a;color:#fff;font-size:9px;padding:2px 8px">FINAL</span>':'<span class="badge" style="background:#d68910;color:#fff;font-size:9px;padding:2px 8px">PRE</span>'}</td>
     <td><span class="badge bg-b" style="font-size:8px">${s.ciudad==='varios'?'Var':s.ciudad.replace('Ciudad_','').substring(0,4)}</span></td>
@@ -1643,7 +1653,6 @@ function renderDashboard(){
     <td class="num" style="color:var(--o)">${cop(c.totalCosto)}</td>
     <td class="num fw7 ${c.utilidad>=0?'tg':'tr'}">${cop(c.utilidad)}</td>
     <td class="num"><span class="badge ${mcls(c.margen)}">${pct(c.margen)}</span></td>
-    <td><button class="btn bou btn-sm" onclick="abrirLiquidador('${s.id}')">Abrir</button></td>
   </tr>`).join('');
   document.getElementById('margen-bars').innerHTML=calcs.map(({s,c})=>`
     <div style="margin-bottom:8px">
@@ -1668,7 +1677,7 @@ function renderConsolidado(){
     if(filLCSit&&s.lc!==filLCSit) return false;
     if(filQ&&!`${s.nombre} ${s.lc} ${s.ciudad} ${s.cat}`.toLowerCase().includes(filQ)) return false;
     return true;
-  });
+  }).sort((a,b)=>new Date(b.fecha||0)-new Date(a.fecha||0));
   const rows=sitiosFiltrados.map(s=>{
     const c=calcSitio(s),sub=SUBCS.find(x=>x.lc===s.lc);
     // Calculate MIMO total from MIMO-section activities
@@ -1686,7 +1695,7 @@ function renderConsolidado(){
     tMTI+=c.matTI;tMCW+=c.matCW;tLog+=c.logist;tAd+=c.adicion;
     let tMIMO=0; tMIMO+=mimoTotal; tMIMOtot+=mimoTotal;
     return`<tr>
-      <td style="white-space:nowrap"><strong>${s.nombre}</strong> ${tipoBadge(s)}${s.catEfectiva?` <span style="background:#7c3aed;color:#fff;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800">E</span>`:''}</td>
+      <td style="white-space:nowrap"><span class="stat-link" onclick="abrirLiquidador('${s.id}')" style="cursor:pointer;font-weight:700" title="Abrir liquidador">${s.nombre}</span> ${tipoBadge(s)}${s.catEfectiva?` <span style="background:#7c3aed;color:#fff;border-radius:50%;width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;font-size:8px;font-weight:800">E</span>`:''}</td>
       <td><span class="badge bg-b" style="font-size:8px">${(s.ciudad||'').replace('Ciudad_','').substring(0,4)}</span></td>
       <td style="font-size:10px">${s.fecha}</td>
       <td style="font-size:10px">${s.lc}</td>
@@ -1702,8 +1711,7 @@ function renderConsolidado(){
       <td class="num" style="background:#fffbeb">${cop(c.matCW)}</td>
       <td class="num" style="background:#fffbeb">${cop(c.logist)}</td>
       <td class="num" style="background:#fffbeb;border-right:2px solid #fbbf24">${cop(c.adicion)}</td>
-      <td><button class="btn bou btn-sm" onclick="abrirLiquidador('${s.id}')">Abrir</button>
-      ${(s.estado!=='final')?'<button class="btn-del" onclick="eliminarSitio(\''+s.id+'\')">✕</button>':''}</td>
+      <td>${(s.estado!=='final')?'<button class="btn-del" onclick="eliminarSitio(\''+s.id+'\')">✕</button>':''}</td>
     </tr>`;
   }).join('');
   document.getElementById('tbody-cons').innerHTML=rows;
@@ -2782,8 +2790,58 @@ let _empresaConfig = {
   nombre_corto: 'Nokia',
   color_primario: '#144E4A',
   logo_url: '',
-  tipo_cuadrilla_propia: 'TI Empresa'
+  tipos_cuadrilla: ['TI Ingetel','TSS Ingetel','TI Scytel','TSS Scytel']
 };
+let TIPOS_CUADRILLA = ['TI Ingetel','TSS Ingetel','TI Scytel','TSS Scytel'];
+let _cfgTiposTemp = [];
+
+function renderTCTags(){
+  const cont=document.getElementById('cfg-tc-tags');
+  if(!cont) return;
+  if(!_cfgTiposTemp.length){
+    cont.innerHTML='<span style="font-size:11px;color:var(--g3);font-style:italic;align-self:center">Sin tipos configurados</span>';
+    return;
+  }
+  cont.innerHTML=_cfgTiposTemp.map((tc,i)=>`<span class="tc-tag">
+    <span contenteditable="true"
+      onblur="updateTCTag(${i},this.textContent.trim())"
+      onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"
+    >${tc}</span>
+    <button class="tc-del" onclick="removeTCTag(${i})" title="Eliminar">×</button>
+  </span>`).join('');
+}
+function addTCTag(){
+  const inp=document.getElementById('cfg-tc-input');
+  if(!inp) return;
+  const val=inp.value.trim();
+  if(!val||_cfgTiposTemp.includes(val)){inp.value='';return;}
+  _cfgTiposTemp.push(val);
+  inp.value='';
+  renderTCTags();
+  inp.focus();
+}
+function removeTCTag(i){_cfgTiposTemp.splice(i,1);renderTCTags();}
+function updateTCTag(i,val){
+  if(!val){_cfgTiposTemp.splice(i,1);renderTCTags();}
+  else _cfgTiposTemp[i]=val;
+}
+
+function buildTCOptions(selectedVal='todos'){
+  const prefixes=[...new Set(TIPOS_CUADRILLA.map(t=>t.split(' ')[0]).filter(Boolean))];
+  const suffixes=[...new Set(TIPOS_CUADRILLA.map(t=>t.includes(' ')?t.split(' ').slice(1).join(' '):'').filter(Boolean))];
+  let o=`<option value="todos" ${selectedVal==='todos'?'selected':''}>Todas las Cuadrillas</option>`;
+  TIPOS_CUADRILLA.forEach(tc=>{o+=`<option value="${tc}" ${selectedVal===tc?'selected':''}>${tc}</option>`;});
+  if(suffixes.length>1) suffixes.forEach(s=>{o+=`<option value="${s}" ${selectedVal===s?'selected':''}>${s} (TI+TSS)</option>`;});
+  if(prefixes.length>1) prefixes.forEach(p=>{o+=`<option value="${p}" ${selectedVal===p?'selected':''}>${p} (todas)</option>`;});
+  return o;
+}
+function refreshTCSelects(){
+  document.querySelectorAll('.tc-select').forEach(sel=>{
+    const cur=sel.value;
+    sel.innerHTML=buildTCOptions(cur);
+    if(cur&&sel.querySelector(`option[value="${cur}"]`)) sel.value=cur;
+  });
+}
 
 async function loadEmpresaConfig(){
   if(!USE_SUPABASE) return;
@@ -2800,6 +2858,8 @@ async function loadEmpresaConfig(){
 
 function applyEmpresaConfig(){
   const cfg=_empresaConfig;
+  if(cfg.tipos_cuadrilla&&cfg.tipos_cuadrilla.length) TIPOS_CUADRILLA=cfg.tipos_cuadrilla.slice();
+  refreshTCSelects();
   // Title
   document.title=cfg.nombre+' · Liquidador Nokia 2026';
   const mt=document.getElementById('meta-app-title');
@@ -3204,12 +3264,12 @@ function exportarReporteExcel(){
 // ANALÍTICA GERENCIAL - PROFESSIONAL CHARTS
 // ============================================================
 function renderAnalitica(){
-  const filTCAna='todos';
+  const filTCAna=(document.getElementById('ana-tc-filter')?.value)||'todos';
   const filLCAna=(document.getElementById('ana-lc-filter')?.value)||'';
   const filYear=fpGetYear('fp-ana');
   const filMes=fpGetMes('fp-ana');
   const lcSelAna=document.getElementById('ana-lc-filter');
-  if(lcSelAna){const cur=lcSelAna.value;const lcs=[...new Set(ST.sitios.filter(s=>matchTipoCuadrilla(s,filTCAna)).map(s=>s.lc).filter(Boolean))].sort();lcSelAna.innerHTML='<option value="">Todas las Cuadrillas</option>'+lcs.map(l=>`<option value="${l}" ${l===cur?'selected':''}>${l}</option>`).join('');if(cur)lcSelAna.value=cur;}
+  if(lcSelAna){const cur=lcSelAna.value;const lcs=[...new Set(ST.sitios.filter(s=>matchTipoCuadrilla(s,filTCAna)).map(s=>s.lc).filter(Boolean))].sort();lcSelAna.innerHTML='<option value="">Todos los LC</option>'+lcs.map(l=>`<option value="${l}" ${l===cur?'selected':''}>${l}</option>`).join('');if(cur)lcSelAna.value=cur;}
   const sitiosAna=ST.sitios.filter(s=>{
     if(!matchTipoCuadrilla(s,filTCAna)) return false;
     if(filLCAna&&s.lc!==filLCAna) return false;
@@ -3589,7 +3649,8 @@ function renderConfigEmpresa(){
   document.getElementById('cfg-logo-url').value=_empresaConfig.logo_url||'';
   document.getElementById('cfg-color').value=_empresaConfig.color_primario||'#144E4A';
   document.getElementById('cfg-color-hex').value=_empresaConfig.color_primario||'#144E4A';
-  document.getElementById('cfg-tipo-cuadrilla').value=_empresaConfig.tipo_cuadrilla_propia||'';
+  _cfgTiposTemp=(_empresaConfig.tipos_cuadrilla||[]).slice();
+  renderTCTags();
   document.getElementById('cfg-color').oninput=function(){
     document.getElementById('cfg-color-hex').value=this.value;
   };
@@ -3689,7 +3750,7 @@ async function guardarConfigEmpresa(){
   _empresaConfig.nombre_corto=document.getElementById('cfg-nombre-corto').value.trim()||'Nokia';
   _empresaConfig.logo_url=document.getElementById('cfg-logo-url').value.trim();
   _empresaConfig.color_primario=document.getElementById('cfg-color-hex').value.trim()||'#144E4A';
-  _empresaConfig.tipo_cuadrilla_propia=document.getElementById('cfg-tipo-cuadrilla').value.trim()||'TI Empresa';
+  _empresaConfig.tipos_cuadrilla=_cfgTiposTemp.slice().filter(Boolean);
   await saveEmpresaConfig();
 }
 function renderCatalogo(){
@@ -3745,10 +3806,7 @@ function renderCatalogo(){
       <option ${s.cat==='AAA'?'selected':''}>AAA</option><option value="INGETEL" ${s.cat==='INGETEL'?'selected':''}>INGETEL</option>
     </select>`:`<span class="badge bg-gl">${s.cat}</span>`}</td>
     <td><select class="fc" style="padding:2px 7px;font-size:11px" ${!isAdmin?'disabled':''} onchange="SUBCS[${i}].tipoCuadrilla=this.value;upsertSubc(${i})">
-      <option value="TI Ingetel" ${(s.tipoCuadrilla||'TI Ingetel')==='TI Ingetel'?'selected':''}>TI Ingetel</option>
-      <option value="TSS Ingetel" ${(s.tipoCuadrilla||'TI Ingetel')==='TSS Ingetel'?'selected':''}>TSS Ingetel</option>
-      <option value="TI Scytel" ${(s.tipoCuadrilla||'TI Ingetel')==='TI Scytel'?'selected':''}>TI Scytel</option>
-      <option value="TSS Scytel" ${(s.tipoCuadrilla||'TI Ingetel')==='TSS Scytel'?'selected':''}>TSS Scytel</option>
+      ${TIPOS_CUADRILLA.map(tc=>`<option value="${tc}" ${(s.tipoCuadrilla||TIPOS_CUADRILLA[0])===tc?'selected':''}>${tc}</option>`).join('')}
     </select></td>
     <td>${isAdmin?`<input class="fc" style="padding:2px 7px;font-size:11px" value="${s.tel}" onchange="SUBCS[${i}].tel=this.value;upsertSubc(${i})">`:`${s.tel||'—'}`}</td>
     <td>${isAdmin?`<input class="fc" style="padding:2px 7px;font-size:11px" value="${s.email}" onchange="SUBCS[${i}].email=this.value;upsertSubc(${i})">`:`${s.email||'—'}`}</td>
@@ -4357,6 +4415,10 @@ async function guardarCatalogoCW(){
 
 // ── Consolidado CW ──────────────────────────────────────────
 function renderConsolidadoCW(){
+  initFechaPicker('fp-cw',renderConsolidadoCW);
+  const cwYear=fpGetYear('fp-cw')==='todos'?null:parseInt(fpGetYear('fp-cw'))||2026;
+  const cwMes=fpGetMes('fp-cw');
+  const cwTodos=cwMes==='todos'||cwMes===null||cwMes===undefined;
   const filLC=(document.getElementById('fil-lc-cw')?.value)||'';
   const lcSel=document.getElementById('fil-lc-cw');
   if(lcSel){
@@ -4365,7 +4427,17 @@ function renderConsolidadoCW(){
     lcSel.innerHTML='<option value="">Todas las Cuadrillas (LC)</option>'+lcs.map(l=>`<option value="${l}" ${l===cur?'selected':''}>${l}</option>`).join('');
     if(cur)lcSel.value=cur;
   }
-  const filtered=ST.liquidaciones_cw.filter(l=>!filLC||l.lc===filLC);
+  const filtered=ST.liquidaciones_cw.filter(l=>{
+    if(filLC&&l.lc!==filLC) return false;
+    if(cwYear!==null){
+      const sitio=ST.sitios.find(s=>s.id===l.sitio_id);
+      if(!sitio||!sitio.fecha) return false;
+      const d=new Date(sitio.fecha);
+      if(d.getFullYear()!==cwYear) return false;
+      if(!cwTodos){const mes=parseInt(cwMes);if(d.getMonth()!==mes) return false;}
+    }
+    return true;
+  });
   let totN=0,totS=0,countFinal=0;
   const rows=filtered.map(liq=>{
     const c=calcLiqCW(liq);
@@ -4751,7 +4823,7 @@ function buscarSitio(q){
   document.getElementById('tbody-dash').innerHTML=f.map(s=>{
     const c=calcSitio(s);
     return`<tr>
-      <td style="white-space:nowrap"><strong>${s.nombre}</strong>${s.actividades?.some(a=>a.sec==='SITIO NUEVO'||a.sec==='SITIO_NUEVO')?' <span style="color:#7c3aed;font-size:9px;font-weight:700">(SN)</span>':''}</td>
+      <td style="white-space:nowrap"><span class="stat-link" onclick="abrirLiquidador('${s.id}')" style="cursor:pointer;font-weight:700" title="Abrir liquidador">${s.nombre}</span>${s.actividades?.some(a=>a.sec==='SITIO NUEVO'||a.sec==='SITIO_NUEVO')?' <span style="color:#7c3aed;font-size:9px;font-weight:700">(SN)</span>':''}</td>
       <td><span class="badge ${s.tipo==='TSS'?'bg-b':'bg-k'}">${s.tipo}</span></td>
       <td style="font-size:10px">${s.lc}</td>
       <td><span class="badge bg-b" style="font-size:8px">${s.ciudad==='varios'?'Var':s.ciudad.replace('Ciudad_','').substring(0,4)}</span></td>
@@ -4759,7 +4831,6 @@ function buscarSitio(q){
       <td class="num" style="color:var(--o)">${cop(c.totalCosto)}</td>
       <td class="num fw7 ${c.utilidad>=0?'tg':'tr'}">${cop(c.utilidad)}</td>
       <td class="num"><span class="badge ${mcls(c.margen)}">${pct(c.margen)}</span></td>
-      <td><button class="btn bou btn-sm" onclick="abrirLiquidador('${s.id}')">Abrir</button></td>
     </tr>`;
   }).join('');
 }
