@@ -4510,17 +4510,19 @@ async function importarPreciosCW(input){
   } else { toast('Formato no soportado. Usa CSV o Excel.','err'); }
 }
 function _procesarCSVPreciosCW(text){
-  // Columnas esperadas: actividad_id, tipo_zona (URBANO/RURAL), precio_nokia, precio_subc
+  // Columnas: actividad_id, tipo_zona (URBANO/RURAL), precio_nokia, precio_subc
+  // actividad_id usa punto como separador decimal (ej: "2.05")
   const lines=text.trim().split('\n');
   let updated=0, errors=0;
   for(let i=1;i<lines.length;i++){
-    const cols=lines[i].split(',').map(c=>c.trim().replace(/^"|"$/g,''));
-    if(cols.length<4) continue;
+    const raw=lines[i].trim();if(!raw)continue;
+    const cols=raw.split(',').map(c=>c.trim().replace(/^"|"$/g,''));
+    if(cols.length<4){errors++;continue;}
     const [actId, tipoZona, pNStr, pSStr]=cols;
     const item=CAT_CW.find(c=>c.actividad_id===actId);
     if(!item){errors++;continue;}
-    const pN=parseInt(pNStr)||0, pS=parseInt(pSStr)||0;
-    const esRural=(tipoZona||'').toUpperCase()==='RURAL';
+    const pN=parseFloat(pNStr)||0, pS=parseFloat(pSStr)||0;
+    const esRural=tipoZona.toUpperCase()==='RURAL';
     if(esRural){item.precio_nokia_rural=pN;item.precio_subc_rural=pS;}
     else       {item.precio_nokia_urbano=pN;item.precio_subc_urbano=pS;}
     updated++;
