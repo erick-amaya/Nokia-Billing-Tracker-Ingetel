@@ -122,6 +122,7 @@ input[type=date].fc{min-width:0;width:100%;box-sizing:border-box;-webkit-appeara
 .mbar{height:7px;background:var(--g2);border-radius:4px;overflow:hidden;margin-top:4px}
 .mfill{height:100%;border-radius:4px;background:#1a7a1a;transition:width .4s}
 .mfill.warn{background:#FFC000}.mfill.dang{background:#c0392b}
+@keyframes pulse-btn{0%,100%{box-shadow:0 0 0 0 rgba(26,156,26,.6)}50%{box-shadow:0 0 0 8px rgba(26,156,26,0)}}
 /* COMBOBOX BUSCABLE */
 .combo-wrap{position:relative}
 .combo-input{width:100%;border:1.5px solid var(--g2);border-radius:5px;padding:7px 9px;font-family:'Barlow',sans-serif;font-size:12px;outline:none;transition:border-color .15s}
@@ -4528,7 +4529,12 @@ function _procesarCSVPreciosCW(text){
     updated++;
   }
   renderCatalogoCW();
-  toast(`✓ CW: ${updated} precios actualizados. Errores: ${errors}. Guarda para confirmar.`);
+  if(updated>0){
+    toast(`✓ CW: ${updated} precios actualizados${errors?', '+errors+' no encontrados':''} — haz clic en 💾 Guardar CW`);
+    document.getElementById('btn-cw-save').style.animation='pulse-btn 1s ease-in-out 3';
+  } else {
+    toast(`Sin coincidencias. ¿Los actividad_id del CSV usan punto? (ej: 2.05). Errores: ${errors}`,'err');
+  }
 }
 
 async function guardarCatalogoCW(){
