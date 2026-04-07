@@ -4175,8 +4175,10 @@ function renderLiquidadorCWSitio(sitio,liq){
               onblur="_updLiqCWField('${sitio.id}','smp',this.value)" placeholder="Ej: CO_CAL_12345">
           </div>
           <div class="fg mb0"><label class="fl">Región</label>
-            <input type="text" class="fc" value="${liq.region||''}" ${locked?'disabled':''}
-              onblur="_updLiqCWField('${sitio.id}','region',this.value)" placeholder="Ej: Valle del Cauca">
+            <select class="fc" ${locked?'disabled':''} onchange="_updLiqCWField('${sitio.id}','region',this.value)">
+              <option value="">— Seleccionar —</option>
+              ${['R1 – Costa','R2 – Noroccidente','R3 – Suroccidente','R4 – Centro','R5 – Oriente'].map(r=>`<option value="${r}" ${liq.region===r?'selected':''}>${r}</option>`).join('')}
+            </select>
           </div>
           <div class="fg mb0"><label class="fl">Tipo Zona</label>
             <select class="fc" ${locked?'disabled':''} onchange="_updLiqCWTipoZona('${sitio.id}',this.value)">
@@ -4185,8 +4187,10 @@ function renderLiquidadorCWSitio(sitio,liq){
             </select>
           </div>
           <div class="fg mb0"><label class="fl">LC / Subcontratista CW</label>
-            <input type="text" class="fc" value="${liq.lc||''}" ${locked?'disabled':''}
-              onblur="_updLiqCWField('${sitio.id}','lc',this.value)" placeholder="Nombre del SubC CW">
+            <select class="fc" ${locked?'disabled':''} onchange="_updLiqCWField('${sitio.id}','lc',this.value)">
+              <option value="">— Seleccionar LC —</option>
+              ${SUBCS.map(s=>`<option value="${s.lc}" ${liq.lc===s.lc?'selected':''}>${s.lc}</option>`).join('')}
+            </select>
           </div>
         </div>
       </div>
