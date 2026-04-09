@@ -572,7 +572,7 @@ hr.div{border:none;border-top:1px solid var(--g2);margin:10px 0}
           </tr>
           <tr>
             <th>Sitio</th><th>Fecha</th><th>LC Visita</th><th>Ciudad</th><th>Cat</th><th class="num">Cant.Sitios</th>
-            <th class="num th-nokia">VISITA</th><th class="num th-nokia">REPORTE</th><th class="num th-nokia">REDISEÑO</th>
+            <th class="num th-nokia">VISITA</th><th class="num th-nokia">REPORTE</th><th class="num th-nokia">V+R</th>
             <th class="num th-subc">SubC Vis.</th><th class="num th-subc">SubC Rep.</th><th class="num th-subc">SubC Red.</th>
             <th></th>
           </tr>
@@ -2235,6 +2235,16 @@ function renderLiqTSS(sitio){
   const allSitioids=[...new Set((sitio.actividades||[]).map(a=>a.sitioid).filter(Boolean))].sort();
   const mkSitioidSel=(curr,sid,idx,w='90px')=>`<select class="fc" style="font-size:10px;padding:2px 3px;max-width:${w}" onchange="updTSSAct('${sid}',${idx},'sitioid',this.value)"><option value="" ${!curr?'selected':''}>— Sin sitio —</option>${allSitioids.map(s=>`<option value="${s}" ${curr===s?'selected':''}>${s}</option>`).join('')}</select>`;
 
+  // ── SubC cost per Nokia row (incluye gastos adicionales de VISITA) ──
+  const subcCostForNokia=(act)=>{
+    const map={'TSS_V':['TSS_V'],'TSS_R':['TSS_R'],'TSS_VR':['TSS_V','TSS_R'],'TSS_RD':['TSS_RD']};
+    const subcSum=(sitio.actividades||[]).filter(a=>a.cardType!=='nokia'&&(map[act.id]||[]).includes(a.id)&&a.sitioid===act.sitioid)
+      .reduce((sum,sa)=>{const cb=sa.id==='TSS_V'?catBaseV:sa.id==='TSS_R'?catBaseR:catBaseRd;const p=getPrecio('BASE',sa.id,null,sa.catOver||cb,sa.ciudad);return sum+p.subc*(sa.cant||0);},0);
+    // Gastos adicionales solo aplican al componente VISITA (showAdicionales=true en SUBC VISITA card)
+    const adic=(act.id==='TSS_V'||act.id==='TSS_VR')?adicForSitio(act.sitioid):0;
+    return subcSum+adic;
+  };
+
   // ── Nokia table (solo actividades Nokia / legado) ──
   const TSS_TIPOS=['TSS_V','TSS_R','TSS_VR','TSS_RD'];
   const nokiaActs=(sitio.actividades||[]).map((a,i)=>({...a,_idx:i})).filter(a=>a.cardType!=='subc');
@@ -2245,6 +2255,7 @@ function renderLiqTSS(sitio){
       const sitioidCell=act.id==='TSS_RD'
         ?mkSitioidSel(act.sitioid,sitio.id,act._idx,'90px')
         :`<input class="iq" type="text" value="${act.sitioid||''}" style="width:80px;font-size:10px" oninput="updTSSAct('${sitio.id}',${act._idx},'sitioid',this.value)">`;
+      const sc=subcCostForNokia(act);
       return`<tr style="background:#f0f7ff">
         <td><select class="fc" style="font-size:9px;padding:2px 4px" onchange="updTSSAct('${sitio.id}',${act._idx},'id',this.value)">${TSS_TIPOS.map(t=>`<option value="${t}" ${act.id===t?'selected':''}>${t}</option>`).join('')}</select></td>
         <td>${sitioidCell}</td>
@@ -2252,12 +2263,14 @@ function renderLiqTSS(sitio){
         <td><input class="iq" type="number" value="${act.cant||0}" min="0" style="width:50px" onchange="updTSSAct('${sitio.id}',${act._idx},'cant',this.value)"></td>
         <td class="num">${cop(p.nokia)}</td>
         <td class="num fw7">${cop(p.nokia*(act.cant||0))}</td>
+        <td class="num fw7" style="color:var(--o)">${sc>0?cop(sc):'—'}</td>
         <td class="no-print" style="white-space:nowrap">
           <button class="btn-edit" onclick="toggleTSSEdit('${sitio.id}',${act._idx})" title="Cerrar">✓</button>
           <button class="btn-del" onclick="delTSSAct('${sitio.id}',${act._idx})">✕</button>
         </td>
       </tr>`;
     }
+    const sc=subcCostForNokia(act);
     return`<tr>
       <td><span class="badge bg-b" style="font-size:9px">${act.id}</span></td>
       <td style="font-size:11px">${act.sitioid||'—'}</td>
@@ -2265,6 +2278,7 @@ function renderLiqTSS(sitio){
       <td style="font-weight:600;text-align:center">${act.cant||0}</td>
       <td class="num">${cop(p.nokia)}</td>
       <td class="num fw7">${cop(p.nokia*(act.cant||0))}</td>
+      <td class="num" style="color:var(--o)">${sc>0?cop(sc):'—'}</td>
       <td class="no-print" style="white-space:nowrap">${isFinal?'':`<button class="btn-edit" onclick="toggleTSSEdit('${sitio.id}',${act._idx})" title="Editar">${IC_PEN}</button><button class="btn-del" onclick="delTSSAct('${sitio.id}',${act._idx})">✕</button>`}</td>
     </tr>`;
   }).join('');
@@ -2278,7 +2292,7 @@ function renderLiqTSS(sitio){
       </td>
       <td><select id="tss-add-ciudad-${sitio.id}" class="fc" style="font-size:10px;padding:2px 4px">${ZONAS.map(z=>`<option value="${z}" ${(sitio.ciudad||'Ciudad_Principal')===z?'selected':''}>${z.replace('Ciudad_','')}</option>`).join('')}</select></td>
       <td><input id="tss-add-cant-${sitio.id}" class="iq" type="number" value="1" min="1" style="width:50px"></td>
-      <td colspan="2" style="text-align:center">
+      <td colspan="3" style="text-align:center">
         <button class="btn bp btn-sm" style="font-size:9px;padding:2px 7px" onclick="confirmarAddNokiaTSS('${sitio.id}')">✓ Agregar</button>
         <button class="btn bou btn-sm" style="font-size:9px;padding:2px 7px;margin-left:4px" onclick="addTSSVisitaToSitio('${sitio.id}')">✕</button>
       </td>
@@ -2408,12 +2422,15 @@ function renderLiqTSS(sitio){
           <thead><tr>
             <th>Tipo</th><th>Sitio ID</th><th>Ciudad</th><th>Cant</th>
             <th class="num th-nokia">P.Nokia</th><th class="num th-nokia">Total Nokia</th>
+            <th class="num th-subc">Costo SubC</th>
             <th class="no-print"></th>
           </tr></thead>
-          <tbody>${rowsN||''}${addNokiaForm||''}${(!rowsN&&!addNokiaForm)?'<tr><td colspan="7" class="tm" style="padding:16px;text-align:center">Sin actividades — usa ＋ Actividad</td></tr>':''}</tbody>
+          <tbody>${rowsN||''}${addNokiaForm||''}${(!rowsN&&!addNokiaForm)?'<tr><td colspan="8" class="tm" style="padding:16px;text-align:center">Sin actividades — usa ＋ Actividad</td></tr>':''}</tbody>
           <tfoot><tr class="tr-tot">
             <td colspan="5"><strong>Total Nokia</strong></td>
-            <td class="num fw8">${cop(totalNokia)}</td><td></td>
+            <td class="num fw8">${cop(totalNokia)}</td>
+            <td class="num fw8" style="color:var(--o)">${cop(totalSubc)}</td>
+            <td></td>
           </tr></tfoot>
         </table></div>
       </div>
